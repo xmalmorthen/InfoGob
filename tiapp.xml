@@ -3,10 +3,10 @@
     <id>com.developc.infogob</id>
     <name>InfoGob</name>
     <version>1.0</version>
-    <publisher>Proyecto2</publisher>
+    <publisher>Xmal Morthen</publisher>
     <url>http://</url>
-    <description>not specified</description>
-    <copyright>2014 by Proyecto2</copyright>
+    <description>Información de gobierno de Colima</description>
+    <copyright>2014 by Xmal Morhen</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
