@@ -24,7 +24,7 @@ function Controller() {
     $.__views.__alloyId1 = Ti.UI.createLabel({
         color: "#000",
         fontFamily: "Lucida Grande-Bold",
-        fontSize: "12px",
+        fontSize: 12,
         left: "37",
         top: "10",
         text: "Titulo del app aqui...",
@@ -34,7 +34,7 @@ function Controller() {
     $.__views.__alloyId2 = Ti.UI.createLabel({
         color: "#cacaca",
         fontFamily: "Default",
-        fontSize: "6px",
+        fontSize: 6,
         left: "37",
         top: "18",
         text: "Subtitulo, más pequeño...",
