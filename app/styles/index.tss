@@ -1,9 +1,5 @@
 ".container": {
 	backgroundColor:"white",
-	layout:'vertical'
-},
-".body":{
-	height:Ti.UI.SIZE, 
-	layout:'vertical', 
-	backgroundColor:'white'
+	layout:'vertical',
+	exitOnClose: true
 }

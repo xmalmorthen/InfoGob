@@ -14,29 +14,37 @@ function Controller() {
     $.__views.header && $.addTopLevelView($.__views.header);
     $.__views.__alloyId0 = Ti.UI.createImageView({
         image: "/images/own/48x48/cert.png",
-        left: "3",
-        top: "3",
-        width: "32",
-        height: "32",
+        left: 3,
+        top: 3,
+        width: 48,
+        height: 48,
         id: "__alloyId0"
     });
     $.__views.header.add($.__views.__alloyId0);
     $.__views.__alloyId1 = Ti.UI.createLabel({
         color: "#000",
-        fontFamily: "Lucida Grande-Bold",
-        fontSize: "12px",
-        left: "37",
-        top: "10",
+        font: {
+            fontFamily: "Helveltica",
+            fontSize: "16dp",
+            fontStyle: "normal",
+            fontWeight: "bold"
+        },
+        left: 53,
+        top: 21,
         text: "Titulo del app aqui...",
         id: "__alloyId1"
     });
     $.__views.header.add($.__views.__alloyId1);
     $.__views.__alloyId2 = Ti.UI.createLabel({
-        color: "#cacaca",
-        fontFamily: "Default",
-        fontSize: "6px",
-        left: "37",
-        top: "18",
+        color: "#A2A2A2",
+        font: {
+            fontFamily: "Helveltica",
+            fontSize: "8dp",
+            fontStyle: "italic",
+            fontWeight: "normal"
+        },
+        left: 53,
+        top: 40,
         text: "Subtitulo, más pequeño...",
         id: "__alloyId2"
     });

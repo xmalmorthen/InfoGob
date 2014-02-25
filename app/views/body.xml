@@ -1,0 +1,5 @@
+<Alloy>
+	<View class="body">
+		<Require type="view" src="/menue/index" id="menue"/>
+	</View>
+</Alloy>

@@ -9,6 +9,7 @@ function Controller() {
     $.__views.index = Ti.UI.createWindow({
         backgroundColor: "white",
         layout: "vertical",
+        exitOnClose: true,
         id: "index"
     });
     $.__views.index && $.addTopLevelView($.__views.index);
@@ -17,18 +18,16 @@ function Controller() {
         __parentSymbol: $.__views.index
     });
     $.__views.header.setParent($.__views.index);
-    $.__views.__alloyId3 = Ti.UI.createView({
-        height: Ti.UI.SIZE,
-        layout: "vertical",
-        backgroundColor: "white",
-        id: "__alloyId3"
+    $.__views.divider_header = Alloy.createController("divider", {
+        id: "divider_header",
+        __parentSymbol: $.__views.index
     });
-    $.__views.index.add($.__views.__alloyId3);
-    $.__views.__alloyId4 = Ti.UI.createLabel({
-        text: "Container",
-        id: "__alloyId4"
+    $.__views.divider_header.setParent($.__views.index);
+    $.__views.body = Alloy.createController("body", {
+        id: "body",
+        __parentSymbol: $.__views.index
     });
-    $.__views.__alloyId3.add($.__views.__alloyId4);
+    $.__views.body.setParent($.__views.index);
     exports.destroy = function() {};
     _.extend($, $.__views);
     $.index.open();
