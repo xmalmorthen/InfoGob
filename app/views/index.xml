@@ -1,5 +1,8 @@
 <Alloy>
 	<Window class="container">
-		<Label id="label" onClick="doClick">Hello, World</Label>
+		<Require type="view" src="header" id="header"/>		
+		<View class="body">
+			<Label>Container</Label>			
+		</View>		
 	</Window>
 </Alloy>

@@ -1,0 +1,25 @@
+".header":{
+	height:Ti.UI.SIZE,
+	backgroundColor:'white'	
+},
+".header_image":{
+	image:"/images/own/48x48/cert.png", 
+	left:"3px",
+	top:"3px",
+	width:"32px",
+	height:"32px"	
+},
+".header_titulo": {
+	color: "#000",
+	fontFamily:'Lucida Grande-Bold',
+	fontSize: "12px",	
+	left:"37px",
+	top:"10px"
+},
+".header_subtitulo": {
+	color: "#cacaca",
+	fontFamily:'Default',
+	fontSize: "6px",	
+	left:"37px",
+	top:"18px"
+}
