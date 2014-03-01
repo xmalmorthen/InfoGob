@@ -3,15 +3,15 @@
     <id>com.developc.infogob</id>
     <name>InfoGob</name>
     <version>1.0</version>
-    <publisher>Xmal Morthen</publisher>
+    <publisher>Proyecto2</publisher>
     <url>http://</url>
-    <description>Información de gobierno de Colima</description>
-    <copyright>2014 by Xmal Morhen</copyright>
+    <description>not specified</description>
+    <copyright>2014 by Proyecto2</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
-    <guid>f91e966b-b07b-4869-aeeb-119e25be8e7a</guid>
+    <analytics>false</analytics>
+    <guid>630a82fb-9d5f-439a-9ac8-56b95396fc0b</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
@@ -53,7 +53,7 @@
         <target device="ipad">false</target>
         <target device="android">true</target>
         <target device="blackberry">false</target>
-        <target device="mobileweb">true</target>
+        <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
     <sdk-version>3.2.1.GA</sdk-version>

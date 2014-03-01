@@ -30,7 +30,7 @@ function Controller() {
             fontWeight: "bold"
         },
         left: 53,
-        top: 21,
+        top: 19,
         text: "Titulo del app aqui...",
         id: "__alloyId1"
     });
@@ -39,12 +39,12 @@ function Controller() {
         color: "#A2A2A2",
         font: {
             fontFamily: "Helveltica",
-            fontSize: "8dp",
+            fontSize: "10dp",
             fontStyle: "italic",
             fontWeight: "normal"
         },
         left: 53,
-        top: 40,
+        top: 38,
         text: "Subtitulo, más pequeño...",
         id: "__alloyId2"
     });

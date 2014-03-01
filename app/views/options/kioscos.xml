@@ -1,0 +1,16 @@
+<Alloy>
+    <Window id="kioscos">
+    	<View>
+			<Label>Kioscos</Label>    		
+		</View>	
+		
+		<AlertDialog id="GPSDialog" onClick="GPSDialogOptionClick" title="Activar GPS"
+            message="Para ubicar los Kioscos más cercanos es necesario activar el GPS?" cancel="1">
+            <ButtonNames>
+                <ButtonName>Ayuda</ButtonName>
+                <ButtonName>Cancelar</ButtonName>
+                <ButtonName>Aceptar</ButtonName>                
+            </ButtonNames>
+        </AlertDialog>
+    </Window>	
+</Alloy>

@@ -1,9 +1,3 @@
 <Alloy>
-	<ScrollView class="menue">
-		<View class="opcion">
-			<ImageView class="img_opc_mnu" image="/images/own/48x48/cert.png" />
-			<Label class="lbl_opc_mnu">Opción</Label>
-			<Label class="sblbl_opc_mnu" >Descripción</Label>
-		</View>
-	</ScrollView>
+    <TableView class="menue" id="Menu_Principal" />
 </Alloy>

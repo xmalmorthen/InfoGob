@@ -10,6 +10,7 @@ function Controller() {
         backgroundColor: "white",
         layout: "vertical",
         exitOnClose: true,
+        title: "Gobierno del Estado de Colima",
         id: "index"
     });
     $.__views.index && $.addTopLevelView($.__views.index);

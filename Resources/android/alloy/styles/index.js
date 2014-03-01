@@ -1,1 +1,1 @@
-module.exports = [{"isClass":true,"priority":10000.0008,"key":"container","style":{backgroundColor:"white",layout:"vertical",exitOnClose:true,}}];
+module.exports = [{"isClass":true,"priority":10000.0008,"key":"container","style":{backgroundColor:"white",layout:"vertical",exitOnClose:true,title:"Gobierno del Estado de Colima",}}];

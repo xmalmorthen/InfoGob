@@ -1,8 +1,8 @@
-#appname:InfoGob
-#publisher:Xmal Morthen
-#url:http://
-#image:appicon.png
-#appid:com.developc.infogob
-#desc:Información de gobierno de Colima
-#type:mobile
-#guid:f91e966b-b07b-4869-aeeb-119e25be8e7a
+#appname: InfoGob
+#publisher: Proyecto2
+#url: http://
+#image: appicon.png
+#appid: com.developc.infogob
+#desc: undefined
+#type: mobile
+#guid: 630a82fb-9d5f-439a-9ac8-56b95396fc0b

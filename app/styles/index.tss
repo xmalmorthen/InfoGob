@@ -1,5 +1,6 @@
 ".container": {
 	backgroundColor:"white",
 	layout:'vertical',
-	exitOnClose: true
+	exitOnClose: true,
+	title: 'Gobierno del Estado de Colima'
 }
