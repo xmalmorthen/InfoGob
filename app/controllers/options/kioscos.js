@@ -99,9 +99,16 @@ function GPSDialogOptionClick(e){
 		    alert('Cancelar');
 		    break;		    
 		case 2:
-		    alert('Aceptar');
-		    GPGGoActivate = true;
-		    $.kioscos.fireEvent('open');
+			//open up the settings page
+	        var settingsIntent = Titanium.Android.createIntent({
+	            action : 'android.settings.LOCATION_SOURCE_SETTINGS'
+	        });
+	        
+	        var curActivity = $.kioscos.getActivity();
+	        curActivity.startActivityForResult(settingsIntent, function(e){
+	        	GPGGoActivate = true;
+		    	$.kioscos.fireEvent('open');		        	
+	        });
 		    break;
 	}	
     

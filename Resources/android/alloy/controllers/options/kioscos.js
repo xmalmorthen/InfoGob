@@ -10,9 +10,14 @@ function Controller() {
             break;
 
           case 2:
-            alert("Aceptar");
-            GPGGoActivate = true;
-            $.kioscos.fireEvent("open");
+            var settingsIntent = Titanium.Android.createIntent({
+                action: "android.settings.LOCATION_SOURCE_SETTINGS"
+            });
+            var curActivity = $.kioscos.getActivity();
+            curActivity.startActivityForResult(settingsIntent, function() {
+                GPGGoActivate = true;
+                $.kioscos.fireEvent("open");
+            });
         }
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
