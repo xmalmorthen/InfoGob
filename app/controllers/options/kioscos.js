@@ -26,6 +26,8 @@ function translateErrorCode(code) {
 	}
 }
 
+var geolocalization;
+
 var locationCallback = function(e){
 	if($.kioscos.openedflag == 0 ){
 		Ti.API.info('firing open event');
@@ -44,23 +46,28 @@ var locationCallback = function(e){
 			if (!GPGGoActivate) {
 				$.kioscos.openedflag = 0;
 				$.GPSDialog.show();
+			} else {
+				ModulosKioscos.lista();
 			}
 		}
-		//Titanium.UI.createAlertDialog({title:'Kioscos de Gobierno', message:msg}).show();
+		
+		Titanium.UI.createAlertDialog({title:'Kioscos de Gobierno', message:msg}).show();
 		//Ti.API.info("Code translation: "+translateErrorCode(e.code));
 		return;
 	}
 
-	var longitude = e.coords.longitude;
-	var latitude = e.coords.latitude;
-	var altitude = e.coords.altitude;
-	var heading = e.coords.heading;
-	var accuracy = e.coords.accuracy;
-	var speed = e.coords.speed;
-	var timestamp = e.coords.timestamp;
-	var altitudeAccuracy = e.coords.altitudeAccuracy;
+	ModulosKioscos.geolocalization.longitude = e.coords.longitude;
+	ModulosKioscos.geolocalization.latitude = e.coords.latitude;
+	ModulosKioscos.geolocalization.altitude = e.coords.altitude;
+	ModulosKioscos.geolocalization.heading = e.coords.heading;
+	ModulosKioscos.geolocalization.accuracy = e.coords.accuracy;
+	ModulosKioscos.geolocalization.speed = e.coords.speed;
+	ModulosKioscos.geolocalization.timestamp = e.coords.timestamp;
+	ModulosKioscos.geolocalization.altitudeAccuracy = e.coords.altitudeAccuracy;
 
-	//Titanium.API.info('geo - location updated: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);	
+	//Titanium.UI.createAlertDialog({title:'Lista',message: + latitude + ' - ' + longitude}).show();	
+	//Titanium.API.info('geo - location updated: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
+	ModulosKioscos.refreshgeomap();	
 };
 
 Ti.Geolocation.preferredProvider = "gps";
@@ -69,9 +76,11 @@ Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
 Titanium.Geolocation.distanceFilter = 10;
 
 $.kioscos.addEventListener('open', function() {
-	$.kioscos.openedflag = 1;		
-	Titanium.Geolocation.addEventListener('location',locationCallback);
-	locationAdded = true;
+	$.kioscos.openedflag = 1;
+	if (!locationAdded) {		
+		Titanium.Geolocation.addEventListener('location',locationCallback);
+		locationAdded = true;
+	}
 });
 
 $.kioscos.addEventListener('blur', function() {	
@@ -90,26 +99,48 @@ $.kioscos.addEventListener('focus', function(){
 	}
 });
 
+
 function GPSDialogOptionClick(e){
 	switch (e.index) {
-		case 0:
+		case 2:
 		    alert('Ayuda');
 		    break;
 		case 1:
 		    alert('Cancelar');
 		    break;		    
-		case 2:
+		case 0:
 			//open up the settings page
 	        var settingsIntent = Titanium.Android.createIntent({
 	            action : 'android.settings.LOCATION_SOURCE_SETTINGS'
 	        });
-	        
-	        var curActivity = $.kioscos.getActivity();
+	       	
+	        var curActivity = Ti.Android.currentActivity;
 	        curActivity.startActivityForResult(settingsIntent, function(e){
 	        	GPGGoActivate = true;
+	        	locationAdded = false;
 		    	$.kioscos.fireEvent('open');		        	
 	        });
 		    break;
 	}	
     
+};
+
+var ModulosKioscos = {
+	geolocalization : {
+		longitude : '',
+		latitude : '',
+		altitude : '',
+		heading : '',
+		accuracy : '',
+		speed : '',
+		timestamp : '',
+		altitudeAccuracy : ''
+	},
+	lista: function(){
+		var descripcion = "GPS no accesible, se mostrará una lista de módulos de Kioscos...";
+		Titanium.UI.createAlertDialog({title:'Lista',message:descripcion}).show();				
+	},
+	refreshgeomap: function(){
+		
+	}	
 };

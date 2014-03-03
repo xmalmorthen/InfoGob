@@ -1,3 +1,6 @@
-".menue":{	
-	top:10
+"#kioscos":{	
+	backgroundColor:"white",
+	layout:'vertical',
+	title: 'Kioscos de servicios',
+	exitOnClose:"false"
 }
