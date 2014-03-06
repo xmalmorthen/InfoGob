@@ -1,7 +1,7 @@
 <Alloy>
 	<View class="header">
 		<ImageView class="header_image" />
-		<Label class="header_titulo" >Titulo del app aqui...</Label>						
-		<Label class="header_subtitulo" >Subtitulo, más pequeño...</Label>
+		<Label class="header_titulo" >Info[Gob] Colima</Label>						
+		<Label class="header_subtitulo" >Información de puntos de interéz...</Label>
 	</View>
 </Alloy>

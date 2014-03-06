@@ -4,29 +4,24 @@ var GPGGoActivate = false;
 $.kioscos.openedflag = 0 ;
 $.kioscos.focusedflag = 0;
 
-function translateErrorCode(code) {
-	if (code == null) {
-		return null;
-	}
-	switch (code) {
-		case Ti.Geolocation.ERROR_LOCATION_UNKNOWN:
-			return "Location unknown";
-		case Ti.Geolocation.ERROR_DENIED:
-			return "Access denied";
-		case Ti.Geolocation.ERROR_NETWORK:
-			return "Network error";
-		case Ti.Geolocation.ERROR_HEADING_FAILURE:
-			return "Failure to detect heading";
-		case Ti.Geolocation.ERROR_REGION_MONITORING_DENIED:
-			return "Region monitoring access denied";
-		case Ti.Geolocation.ERROR_REGION_MONITORING_FAILURE:
-			return "Region monitoring access failure";
-		case Ti.Geolocation.ERROR_REGION_MONITORING_DELAYED:
-			return "Region monitoring setup delayed";
-	}
-}
+Ti.Geolocation.preferredProvider = "gps";
 
-var geolocalization;
+Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
+Titanium.Geolocation.distanceFilter = 10;
+
+var open = function(e){
+	$.kioscos.openedflag = 1;
+	Titanium.Geolocation.getCurrentPosition(function(e)
+	{
+		if (!e.success || e.error)
+		{
+			Ti.API.info("getCurrentPosition => error code: " + e.code + " | Code error: " + e.error);
+			ModulosKioscos.show_lista();
+			return;
+		}		
+	});		
+};
+$.kioscos.addEventListener('open', open);
 
 var locationCallback = function(e){
 	if($.kioscos.openedflag == 0 ){
@@ -38,24 +33,21 @@ var locationCallback = function(e){
 		$.kioscos.fireEvent('focus');
 	}
 	if (!e.success || e.error)
-	{		
-		var msg = "Error gps: " + JSON.stringify(e.error) + " error code: " + e.code;
-		
-		if (e.code == 0) {	
-			Titanium.Geolocation.removeEventListener('location',locationCallback);			
+	{	
+		Ti.API.info("locationCallback => error code: " + e.code + " | Code error: " + e.error);							
+		if (e.code == 0) {
 			if (!GPGGoActivate) {
-				$.kioscos.openedflag = 0;
+				$.kioscos.fireEvent('blur');
 				$.GPSDialog.show();
 			} else {
-				ModulosKioscos.lista();
-			}
-		}
-		
-		Titanium.UI.createAlertDialog({title:'Kioscos de Gobierno', message:msg}).show();
-		//Ti.API.info("Code translation: "+translateErrorCode(e.code));
+				ModulosKioscos.show_lista();				
+			}			
+		} else {
+			ModulosKioscos.show_lista();
+		}			
 		return;
-	}
-
+	} 
+		
 	ModulosKioscos.geolocalization.longitude = e.coords.longitude;
 	ModulosKioscos.geolocalization.latitude = e.coords.latitude;
 	ModulosKioscos.geolocalization.altitude = e.coords.altitude;
@@ -65,67 +57,52 @@ var locationCallback = function(e){
 	ModulosKioscos.geolocalization.timestamp = e.coords.timestamp;
 	ModulosKioscos.geolocalization.altitudeAccuracy = e.coords.altitudeAccuracy;
 
-	//Titanium.UI.createAlertDialog({title:'Lista',message: + latitude + ' - ' + longitude}).show();	
-	//Titanium.API.info('geo - location updated: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
-	ModulosKioscos.refreshgeomap();	
+	ModulosKioscos.refreshgeomap();		
 };
+Titanium.Geolocation.addEventListener('location', locationCallback);
+locationAdded = true;
 
-Ti.Geolocation.preferredProvider = "gps";
-
-Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
-Titanium.Geolocation.distanceFilter = 10;
-
-$.kioscos.addEventListener('open', function() {
-	$.kioscos.openedflag = 1;
-	if (!locationAdded) {		
-		Titanium.Geolocation.addEventListener('location',locationCallback);
-		locationAdded = true;
-	}
-});
-
-$.kioscos.addEventListener('blur', function() {	
-	if (locationAdded) {
-		Titanium.Geolocation.removeEventListener('location', locationCallback);
-		locationAdded = false;
-	}
-});
-
-$.kioscos.addEventListener('focus', function(){
+var focus = function(e){
 	$.kioscos.focusedflag = 1;
 	if (!locationAdded && locationCallback) {
-		Ti.API.info("adding location callback on resume");
+		Ti.API.info("adding location callback on resume [FOCUS]");
 		Titanium.Geolocation.addEventListener('location', locationCallback);
 		locationAdded = true;
 	}
-});
+};
+$.kioscos.addEventListener('focus', focus);
+
+var blur = function(e){
+	if (locationAdded) {
+		Ti.API.info("adding location callback on resume [BLUR]");
+		Titanium.Geolocation.removeEventListener('location', locationCallback);
+		locationAdded = false;
+	}
+};
+$.kioscos.addEventListener('blur', blur);
 
 
 function GPSDialogOptionClick(e){
 	switch (e.index) {
-		case 2:
-		    alert('Ayuda');
-		    break;
 		case 1:
-		    alert('Cancelar');
+			ModulosKioscos.show_lista();
 		    break;		    
 		case 0:
+			GPGGoActivate = true;
 			//open up the settings page
 	        var settingsIntent = Titanium.Android.createIntent({
 	            action : 'android.settings.LOCATION_SOURCE_SETTINGS'
-	        });
-	       	
+	        });	       		       	
 	        var curActivity = Ti.Android.currentActivity;
-	        curActivity.startActivityForResult(settingsIntent, function(e){
-	        	GPGGoActivate = true;
-	        	locationAdded = false;
-		    	$.kioscos.fireEvent('open');		        	
-	        });
+	        curActivity.startActivity(settingsIntent);        
 		    break;
 	}	
     
 };
 
+var list = false;
 var ModulosKioscos = {
+	IsGPSActivated : false,
 	geolocalization : {
 		longitude : '',
 		latitude : '',
@@ -136,11 +113,45 @@ var ModulosKioscos = {
 		timestamp : '',
 		altitudeAccuracy : ''
 	},
-	lista: function(){
-		var descripcion = "GPS no accesible, se mostrará una lista de módulos de Kioscos...";
-		Titanium.UI.createAlertDialog({title:'Lista',message:descripcion}).show();				
+	show_lista: function(){
+		ModulosKioscos.IsGPSActivated = false;
+		$.map.visible = false;
+		if (!list) {
+			var descripcion = "GPS no accesible, se mostrará una lista de módulos de Kioscos...";
+			Titanium.UI.createAlertDialog({title:'Lista',message:descripcion}).show();
+			list = true;
+			
+			
+			//**********************************************************************			
+			var kioscos = Alloy.Collections.kioscos;
+			kioscos.fetch();
+			//**********************************************************************
+			
+			$.listakioscos.visible = true;
+		}				
 	},
 	refreshgeomap: function(){
+		ModulosKioscos.IsGPSActivated = true;
+		Ti.API.info("longitude: " + ModulosKioscos.geolocalization.latitude + " | latitude: " + ModulosKioscos.geolocalization.longitude);
 		
+		var region = {
+	        latitude: ModulosKioscos.geolocalization.latitude,
+	        longitude: ModulosKioscos.geolocalization.longitude,
+	        latitudeDelta: 0.01,
+	        longitudeDelta: 0.01
+	    };
+	    /*var anno = Ti.Map.createAnnotation({
+	        animate: true,
+	        latitude: region.latitude,
+	        longitude: region.longitude,
+	        pincolor: Ti.Map.ANNOTATION_RED,
+	        subtitle: 'Usted se encuentra aquí',
+	        title: "Posición actual",
+	    });*/
+	 
+	    var mapview =  $.map;
+	    mapview.region = region;
+	    //mapview.addAnnotation(anno);
+		mapview.visible = true;
 	}	
 };

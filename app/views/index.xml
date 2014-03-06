@@ -3,5 +3,12 @@
 		<Require type="view" src="header" id="header"/>		
 		<Require type="view" src="divider" id="divider_header"/>
 		<Require type="view" src="body" id="body"/>
+		
+		<AlertDialog id="INTERNETDialog" onClick="INERNETDialogOptionClick" title="Conexión a Internet"
+            message="Es necesario contar con plan de datos movil o internet para usar la aplicación, favor de establecer conexión a internet" cancel="0">
+            <ButtonNames>
+                <ButtonName>Aceptar</ButtonName>
+            </ButtonNames>
+        </AlertDialog>		
 	</Window>
 </Alloy>

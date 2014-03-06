@@ -6,28 +6,28 @@
 	image:"/images/own/48x48/cert.png", 
 	left:3,
 	top:3,
-	width:48,
-	height:48	
+	width:64,
+	height:64	
 },
 ".header_titulo": {
 	color: "#000",
 	font: {
         fontFamily:'Helveltica',
-        fontSize: '16dp',
+        fontSize: '20dp',
         fontStyle: 'normal',
         fontWeight: 'bold'
     },
-	left:53,
+	left:64,
 	top:19
 },
 ".header_subtitulo": {
 	color: "#A2A2A2",
 	font: {
         fontFamily:'Helveltica',
-        fontSize: '10dp',
+        fontSize: '15dp',
         fontStyle: 'italic',
         fontWeight: 'normal'
     },
-	left:53,
-	top:38
+	left:64,
+	top:40
 }

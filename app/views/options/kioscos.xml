@@ -1,16 +1,20 @@
 <Alloy>
     <Window id="kioscos">
-    	<View>
-			<Label>Kioscos</Label>    		
+    	<View ns="Ti.Map" id="map" visible="false">			
 		</View>	
+		<View id="listakioscos" visible="false">
+			<tableview datacollection="kioscos" id="table_kioscos" onclick="showId">
+            	<Require src="/options/row_table_kiosco"/>
+            </tableview>			
+		</View>
 		
 		<AlertDialog id="GPSDialog" onClick="GPSDialogOptionClick" title="Activar GPS"
             message="Para ubicar los Kioscos más cercanos es necesario activar el GPS?" cancel="1">
             <ButtonNames>
                 <ButtonName>Aceptar</ButtonName>
                 <ButtonName>Cancelar</ButtonName>
-                <ButtonName>Ayuda</ButtonName>
             </ButtonNames>
         </AlertDialog>
-    </Window>	
+    </Window>
+    	
 </Alloy>

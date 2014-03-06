@@ -3,4 +3,11 @@
 	layout:'vertical',
 	title: 'Kioscos de servicios',
 	exitOnClose:"false"
+},
+"#map":{
+ 	animate:true,
+    mapType: Ti.Map.STANDARD_TYPE,
+    regionFit: true,
+    userLocation: true,
+    visible:false
 }

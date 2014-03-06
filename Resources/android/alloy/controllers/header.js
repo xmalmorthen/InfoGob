@@ -16,8 +16,8 @@ function Controller() {
         image: "/images/own/48x48/cert.png",
         left: 3,
         top: 3,
-        width: 48,
-        height: 48,
+        width: 64,
+        height: 64,
         id: "__alloyId0"
     });
     $.__views.header.add($.__views.__alloyId0);
@@ -25,13 +25,13 @@ function Controller() {
         color: "#000",
         font: {
             fontFamily: "Helveltica",
-            fontSize: "16dp",
+            fontSize: "20dp",
             fontStyle: "normal",
             fontWeight: "bold"
         },
-        left: 53,
+        left: 64,
         top: 19,
-        text: "Titulo del app aqui...",
+        text: "Info[Gob] Colima",
         id: "__alloyId1"
     });
     $.__views.header.add($.__views.__alloyId1);
@@ -39,13 +39,13 @@ function Controller() {
         color: "#A2A2A2",
         font: {
             fontFamily: "Helveltica",
-            fontSize: "10dp",
+            fontSize: "15dp",
             fontStyle: "italic",
             fontWeight: "normal"
         },
-        left: 53,
-        top: 38,
-        text: "Subtitulo, más pequeño...",
+        left: 64,
+        top: 40,
+        text: "Información de puntos de interéz...",
         id: "__alloyId2"
     });
     $.__views.header.add($.__views.__alloyId2);
