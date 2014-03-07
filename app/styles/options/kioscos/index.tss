@@ -10,4 +10,8 @@
     regionFit: true,
     userLocation: true,
     visible:false
+},
+"#table": {
+	top: '50dp',
+	bottom: 0
 }

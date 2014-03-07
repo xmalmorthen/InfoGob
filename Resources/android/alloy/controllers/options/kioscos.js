@@ -30,39 +30,34 @@ function Controller() {
         id: "kioscos"
     });
     $.__views.kioscos && $.addTopLevelView($.__views.kioscos);
-    var __alloyId6 = [];
+    var __alloyId8 = [];
     $.__views.map = Ti.Map.createView({
         animate: true,
         mapType: Ti.Map.STANDARD_TYPE,
         regionFit: true,
         userLocation: true,
         visible: "false",
-        annotations: __alloyId6,
+        annotations: __alloyId8,
         ns: Ti.Map,
         id: "map"
     });
     $.__views.kioscos.add($.__views.map);
     $.__views.listakioscos = Ti.UI.createView({
         id: "listakioscos",
-        visible: "false"
+        visible: "false",
+        backgroundColor: "red"
     });
     $.__views.kioscos.add($.__views.listakioscos);
-    $.__views.table_kioscos = Ti.UI.createtableview({
-        datacollection: "kioscos",
-        id: "table_kioscos",
-        onclick: "showId"
+    $.__views.__alloyId9 = Ti.UI.createLabel({
+        text: "Prueba de carga de tabla",
+        id: "__alloyId9"
     });
-    $.__views.listakioscos.add($.__views.table_kioscos);
-    $.__views.__alloyId7 = Alloy.createController("/options/row_table_kiosco", {
-        id: "__alloyId7",
-        __parentSymbol: $.__views.table_kioscos
-    });
-    $.__views.__alloyId7.setParent($.__views.table_kioscos);
-    var __alloyId9 = [];
-    __alloyId9.push("Aceptar");
-    __alloyId9.push("Cancelar");
+    $.__views.listakioscos.add($.__views.__alloyId9);
+    var __alloyId11 = [];
+    __alloyId11.push("Aceptar");
+    __alloyId11.push("Cancelar");
     $.__views.GPSDialog = Ti.UI.createAlertDialog({
-        buttonNames: __alloyId9,
+        buttonNames: __alloyId11,
         id: "GPSDialog",
         title: "Activar GPS",
         message: "Para ubicar los Kioscos más cercanos es necesario activar el GPS?",
@@ -158,8 +153,6 @@ function Controller() {
                     message: descripcion
                 }).show();
                 list = true;
-                var kioscos = Alloy.Collections.kioscos;
-                kioscos.fetch();
                 $.listakioscos.visible = true;
             }
         },

@@ -1,0 +1,24 @@
+<Alloy>
+	<Window>
+		<View layout="vertical">
+			<View id="botonera_kioscos" layout="horizontal" width=Ti.UI.SIZE height=Ti.UI.SIZE >
+				<View borderColor='#133899' borderWidth=6 borderRadius=5 backgroundColor='orange' width='30%' height=80>
+					<ImageView image="/images/own/48x48/cert.png" />
+					<Label>Mapa</Label>
+				</View>
+				<View borderColor='#133899' borderWidth=6 borderRadius=2 backgroundColor='orange' width='30%' height=80>
+					<ImageView image="/images/own/48x48/cert.png" />
+					<Label>Lista</Label>
+				</View>
+				<View borderColor='#133899' borderWidth=6 borderRadius=2 backgroundColor='orange' width='30%' height=80>
+					<ImageView image="/images/own/48x48/cert.png" />
+					<Label>Ayuda</Label>
+				</View>			
+			</View>
+		
+			<View id="content_kioscos">
+				<Label>Contenido</Label>
+			</View>
+		</View>		
+	</Window>
+</Alloy>

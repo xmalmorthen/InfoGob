@@ -1,6 +1,0 @@
-<Alloy>
-	<TableViewRow>
-		<Label id="descripcion" text="{descripcion}"/>
-		<Label id="domicilio" text="{domicilio}"/>
-	</TableViewRow>
-</Alloy>
