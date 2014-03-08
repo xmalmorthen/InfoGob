@@ -1,24 +1,41 @@
 <Alloy>
-	<Window>
-		<View layout="vertical">
-			<View id="botonera_kioscos" layout="horizontal" width=Ti.UI.SIZE height=Ti.UI.SIZE >
-				<View borderColor='#133899' borderWidth=6 borderRadius=5 backgroundColor='orange' width='30%' height=80>
-					<ImageView image="/images/own/48x48/cert.png" />
-					<Label>Mapa</Label>
+	<Window class='content'>
+		<View>
+			<View id="botonera_kioscos">
+				<View id="btn_mapa" class="btn_botonera" onClick="open_view_mapa">
+					<ImageView image="/images/own/48x48/cert.png" class="img_btn"/>
+					<Label class="lbl_btn">Mapa</Label>
 				</View>
-				<View borderColor='#133899' borderWidth=6 borderRadius=2 backgroundColor='orange' width='30%' height=80>
-					<ImageView image="/images/own/48x48/cert.png" />
-					<Label>Lista</Label>
+				<View class="margin"/>
+				<View class="btn_botonera" onClick="open_view_lista">
+					<ImageView image="/images/own/48x48/cert.png" class="img_btn"/>
+					<Label class="lbl_btn">Lista</Label>
 				</View>
-				<View borderColor='#133899' borderWidth=6 borderRadius=2 backgroundColor='orange' width='30%' height=80>
-					<ImageView image="/images/own/48x48/cert.png" />
-					<Label>Ayuda</Label>
-				</View>			
 			</View>
 		
 			<View id="content_kioscos">
-				<Label>Contenido</Label>
+				<View ns="Ti.Map" id="vista_mapa" />
+				<View id="vista_lista"> 
+					<Label>Vista Lista</Label>	
+				</View>
 			</View>
-		</View>		
+		</View>	
+		
+		<AlertDialog id="INTERNETDialog" onClick="INERNETDialogOptionClick" title="Conexión a Internet"
+            message="Es necesario contar con plan de datos movil o internet para poder ubicar los Kioscos en el mapa..." cancel="0">
+            <ButtonNames>
+                <ButtonName>Aceptar</ButtonName>
+            </ButtonNames>
+        </AlertDialog>		
+
+		
+		<AlertDialog id="GPSDialog" onClick="GPSDialogOptionClick" title="Activar GPS"
+            message="Para ubicar los Kioscos más cercanos es necesario activar el GPS?" cancel="1">
+            <ButtonNames>
+                <ButtonName>Aceptar</ButtonName>
+                <ButtonName>Cancelar</ButtonName>
+            </ButtonNames>
+        </AlertDialog>
+        	
 	</Window>
 </Alloy>
