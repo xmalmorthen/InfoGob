@@ -16,26 +16,16 @@
 			<View id="content_kioscos">
 				<View ns="Ti.Map" id="vista_mapa" />
 				<View id="vista_lista"> 
-					<Label>Vista Lista</Label>	
+					<TableView id="lista_kioscos" onClick="click_opc" top=80 />		
 				</View>
 			</View>
+		</View>
+		<View class="toastbanner">
+			<ImageView id="toastINTERNET" image="/images/own/48x48/cert.png" class="toast" message="No conectado a internet..." configure='false' onClick="toastNotification" visible=false />
+			<ImageView id="toastGPS" class="toast" message="Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS..." configure='true' onClick="toastNotification" visible=false />
 		</View>	
-		
-		<AlertDialog id="INTERNETDialog" onClick="INERNETDialogOptionClick" title="Conexión a Internet"
-            message="Es necesario contar con plan de datos movil o internet para poder ubicar los Kioscos en el mapa..." cancel="0">
-            <ButtonNames>
-                <ButtonName>Aceptar</ButtonName>
-            </ButtonNames>
-        </AlertDialog>		
-
-		
-		<AlertDialog id="GPSDialog" onClick="GPSDialogOptionClick" title="Activar GPS"
-            message="Para ubicar los Kioscos más cercanos es necesario activar el GPS?" cancel="1">
-            <ButtonNames>
-                <ButtonName>Aceptar</ButtonName>
-                <ButtonName>Cancelar</ButtonName>
-            </ButtonNames>
-        </AlertDialog>
-        	
+		<View class="botonera_inferior_derecha">
+			<ImageView id="centrarposicion" class="toast" image="/images/own/48x48/target.png" message="Presione para centrar su posición en el mapa..." onClick="centrarposicion" onLongpress="centrarposicioninfo" visible=false />
+		</View>			
 	</Window>
 </Alloy>

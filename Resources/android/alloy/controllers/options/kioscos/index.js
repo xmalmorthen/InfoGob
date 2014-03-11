@@ -1,8 +1,4 @@
 function Controller() {
-    function INERNETDialogOptionClick(e) {
-        switch (e.index) {
-          case 0:        }
-    }
     function cambia_vista(opc) {
         switch (opc) {
           case 1:
@@ -17,22 +13,9 @@ function Controller() {
             $.vista_mapa.zIndex = 1;
             $.vista_lista.zIndex = 2;
             $.index.focusedViewMap = 0;
-        }
-    }
-    function GPSDialogOptionClick(e) {
-        switch (e.index) {
-          case 1:
             ModulosKioscos.show_lista();
-            break;
-
-          case 0:
-            GPGGoActivate = true;
-            var settingsIntent = Titanium.Android.createIntent({
-                action: "android.settings.LOCATION_SOURCE_SETTINGS"
-            });
-            var curActivity = Ti.Android.currentActivity;
-            curActivity.startActivity(settingsIntent);
         }
+        actualizacontroles();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "options/kioscos/index";
@@ -138,6 +121,9 @@ function Controller() {
     });
     $.__views.__alloyId7.add($.__views.__alloyId9);
     $.__views.content_kioscos = Ti.UI.createView({
+        width: "auto",
+        height: "auto",
+        zIndex: 1,
         id: "content_kioscos"
     });
     $.__views.__alloyId3.add($.__views.content_kioscos);
@@ -159,59 +145,118 @@ function Controller() {
         id: "vista_lista"
     });
     $.__views.content_kioscos.add($.__views.vista_lista);
-    $.__views.__alloyId11 = Ti.UI.createLabel({
-        text: "Vista Lista",
+    $.__views.lista_kioscos = Ti.UI.createTableView({
+        id: "lista_kioscos",
+        top: "80"
+    });
+    $.__views.vista_lista.add($.__views.lista_kioscos);
+    click_opc ? $.__views.lista_kioscos.addEventListener("click", click_opc) : __defers["$.__views.lista_kioscos!click!click_opc"] = true;
+    $.__views.__alloyId11 = Ti.UI.createView({
+        top: 5,
+        right: 5,
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        layout: "horizontal",
         id: "__alloyId11"
     });
-    $.__views.vista_lista.add($.__views.__alloyId11);
-    var __alloyId13 = [];
-    __alloyId13.push("Aceptar");
-    $.__views.INTERNETDialog = Ti.UI.createAlertDialog({
-        buttonNames: __alloyId13,
-        id: "INTERNETDialog",
-        title: "Conexión a Internet",
-        message: "Es necesario contar con plan de datos movil o internet para poder ubicar los Kioscos en el mapa...",
-        cancel: "0"
+    $.__views.index.add($.__views.__alloyId11);
+    $.__views.toastINTERNET = Ti.UI.createImageView({
+        width: 42,
+        height: 42,
+        id: "toastINTERNET",
+        image: "/images/own/48x48/cert.png",
+        message: "No conectado a internet...",
+        configure: "false",
+        visible: "false"
     });
-    INERNETDialogOptionClick ? $.__views.INTERNETDialog.addEventListener("click", INERNETDialogOptionClick) : __defers["$.__views.INTERNETDialog!click!INERNETDialogOptionClick"] = true;
-    var __alloyId16 = [];
-    __alloyId16.push("Aceptar");
-    __alloyId16.push("Cancelar");
-    $.__views.GPSDialog = Ti.UI.createAlertDialog({
-        buttonNames: __alloyId16,
-        id: "GPSDialog",
-        title: "Activar GPS",
-        message: "Para ubicar los Kioscos más cercanos es necesario activar el GPS?",
-        cancel: "1"
+    $.__views.__alloyId11.add($.__views.toastINTERNET);
+    toastNotification ? $.__views.toastINTERNET.addEventListener("click", toastNotification) : __defers["$.__views.toastINTERNET!click!toastNotification"] = true;
+    $.__views.toastGPS = Ti.UI.createImageView({
+        width: 42,
+        height: 42,
+        id: "toastGPS",
+        message: "Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS...",
+        configure: "true",
+        visible: "false"
     });
-    GPSDialogOptionClick ? $.__views.GPSDialog.addEventListener("click", GPSDialogOptionClick) : __defers["$.__views.GPSDialog!click!GPSDialogOptionClick"] = true;
+    $.__views.__alloyId11.add($.__views.toastGPS);
+    toastNotification ? $.__views.toastGPS.addEventListener("click", toastNotification) : __defers["$.__views.toastGPS!click!toastNotification"] = true;
+    $.__views.__alloyId12 = Ti.UI.createView({
+        bottom: 5,
+        right: 5,
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        layout: "horizontal",
+        id: "__alloyId12"
+    });
+    $.__views.index.add($.__views.__alloyId12);
+    $.__views.centrarposicion = Ti.UI.createImageView({
+        width: 42,
+        height: 42,
+        id: "centrarposicion",
+        image: "/images/own/48x48/target.png",
+        message: "Presione para centrar su posición en el mapa...",
+        visible: "false"
+    });
+    $.__views.__alloyId12.add($.__views.centrarposicion);
+    centrarposicion ? $.__views.centrarposicion.addEventListener("click", centrarposicion) : __defers["$.__views.centrarposicion!click!centrarposicion"] = true;
+    centrarposicioninfo ? $.__views.centrarposicion.addEventListener("longpress", centrarposicioninfo) : __defers["$.__views.centrarposicion!longpress!centrarposicioninfo"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
     $.index.Internet = 0;
+    $.index.GPS = 0;
     $.index.openedflag = 0;
     $.index.focusedflag = 0;
     $.index.focusedViewMap = 1;
-    var InternetTimeOut = setInterval(function() {
+    $.index.ventanaactiva = 1;
+    var locationAdded = false;
+    var EnableDisableBtnMap = function(estado) {
+        $.btn_mapa.enabled = estado;
+        $.btn_mapa.opacity = estado ? 1 : .3;
+        estado ? $.btn_mapa.addEventListener("click", open_view_mapa) : $.btn_mapa.removeEventListener("click", open_view_mapa);
+    };
+    var VerificaInternet = function() {
         if (Titanium.Network.networkType === Titanium.Network.NETWORK_NONE) {
             $.index.Internet = 0;
-            $.btn_mapa.enabled = false;
-            $.btn_mapa.opacity = .5;
-            $.btn_mapa.removeEventListener("click", open_view_mapa);
-            if ($.index.focusedViewMap) {
-                $.INTERNETDialog.show();
-                cambia_vista(2);
-            }
+            EnableDisableBtnMap(false);
+            $.index.focusedViewMap && cambia_vista(2);
         } else {
             $.index.Internet = 1;
-            $.btn_mapa.enabled = true;
-            $.btn_mapa.opacity = 1;
-            $.btn_mapa.addEventListener("click", open_view_mapa);
+            EnableDisableBtnMap(true);
+        }
+        $.toastINTERNET.visible = !$.index.Internet;
+    };
+    var ToastGPS = function() {
+        switch ($.index.GPS) {
+          case 0:
+            $.toastGPS.image = "/images/own/48x48/target.png";
+            $.toastGPS.message = "Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS...";
+            $.toastGPS.configure = "true";
+            break;
+
+          case 2:
+            $.toastGPS.image = "/images/own/48x48/cert.png";
+            $.toastGPS.message = "Buscando señal GPS...";
+            $.toastGPS.configure = "false";
+        }
+        $.toastGPS.visible = 1 != $.index.GPS ? true : false;
+        $.centrarposicion.visible = 1 == $.index.GPS ? true : false;
+    };
+    var iteradorGPS = 0;
+    var StatusServicesTimeOut = setInterval(function() {
+        if (true == $.index.focusedViewMap) {
+            VerificaInternet();
+            ToastGPS();
+            iteradorGPS += 1;
+            if (5 == iteradorGPS) {
+                ObtenerPosicionGPS();
+                iteradorGPS = 0;
+            }
         }
     }, 1e3);
     $.index.addEventListener("close", function() {
-        clearInterval(InternetTimeOut);
+        clearInterval(StatusServicesTimeOut);
     });
-    var locationAdded = false, GPGGoActivate = false;
     Ti.Geolocation.preferredProvider = "gps";
     Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
     Titanium.Geolocation.distanceFilter = 10;
@@ -221,35 +266,44 @@ function Controller() {
     var open_view_lista = function() {
         cambia_vista(2);
     };
-    var open = function() {
-        $.index.openedflag = 1;
+    actualizacontroles = function() {
+        $.centrarposicion.visible = $.index.focusedViewMap ? true : false;
+    };
+    GPSConfigure = function() {
+        var settingsIntent = Titanium.Android.createIntent({
+            action: "android.settings.LOCATION_SOURCE_SETTINGS"
+        });
+        var curActivity = Ti.Android.currentActivity;
+        curActivity.startActivity(settingsIntent);
+    };
+    var ObtenerPosicionGPS = function() {
         Titanium.Geolocation.getCurrentPosition(function(e) {
-            if (!e.success || e.error) {
-                if ($.index.Internet) {
-                    Ti.API.info("getCurrentPosition => error code: " + e.code + " | Code error: " + e.error);
-                    ModulosKioscos.show_lista();
-                }
+            Ti.API.info("getCurrentPosition : " + e.code + " - " + e.error);
+            if (e.success && !e.error) {
+                ModulosKioscos.geolocalization.longitude = e.coords.longitude;
+                ModulosKioscos.geolocalization.latitude = e.coords.latitude;
+                ModulosKioscos.geolocalization.altitude = e.coords.altitude;
+                ModulosKioscos.geolocalization.heading = e.coords.heading;
+                ModulosKioscos.geolocalization.accuracy = e.coords.accuracy;
+                ModulosKioscos.geolocalization.speed = e.coords.speed;
+                ModulosKioscos.geolocalization.timestamp = e.coords.timestamp;
+                ModulosKioscos.geolocalization.altitudeAccuracy = e.coords.altitudeAccuracy;
+                ModulosKioscos.refreshgeomap();
                 return;
             }
+            1 == $.index.GPS && ($.index.GPS = 2);
         });
     };
+    var open = function() {
+        $.index.openedflag = 1;
+        ObtenerPosicionGPS();
+    };
     var locationCallback = function(e) {
-        if (0 == $.index.openedflag) {
-            Ti.API.info("firing open event");
-            $.index.fireEvent("open");
-        }
-        if (0 == $.index.focusedflag) {
-            Ti.API.info("firing focus event");
-            $.index.fireEvent("focus");
-        }
+        0 == $.index.openedflag && $.index.fireEvent("open");
+        0 == $.index.focusedflag && $.index.fireEvent("focus");
+        Ti.API.info("locationCallback : " + e.code + " - " + e.error);
         if (!e.success || e.error) {
-            Ti.API.info("locationCallback => error code: " + e.code + " | Code error: " + e.error);
-            if (0 == e.code) {
-                if ($.index.Internet) if (GPGGoActivate) ModulosKioscos.show_lista(); else {
-                    $.index.fireEvent("blur");
-                    $.GPSDialog.show();
-                }
-            } else ModulosKioscos.show_lista();
+            0 == e.code && ($.index.GPS = 0);
             return;
         }
         ModulosKioscos.geolocalization.longitude = e.coords.longitude;
@@ -260,6 +314,7 @@ function Controller() {
         ModulosKioscos.geolocalization.speed = e.coords.speed;
         ModulosKioscos.geolocalization.timestamp = e.coords.timestamp;
         ModulosKioscos.geolocalization.altitudeAccuracy = e.coords.altitudeAccuracy;
+        $.index.GPS = 1;
         ModulosKioscos.refreshgeomap();
     };
     var focus = function() {
@@ -277,9 +332,7 @@ function Controller() {
             locationAdded = false;
         }
     };
-    var list = false;
     var ModulosKioscos = {
-        IsGPSActivated: false,
         geolocalization: {
             longitude: "",
             latitude: "",
@@ -290,30 +343,61 @@ function Controller() {
             timestamp: "",
             altitudeAccuracy: ""
         },
-        show_lista: function() {
-            ModulosKioscos.IsGPSActivated = false;
-            if (!list) {
-                if (!ModulosKioscos.IsGPSActivated) {
-                    var descripcion = "GPS no accesible, se mostrará una lista de módulos de Kioscos...";
-                    Titanium.UI.createAlertDialog({
-                        title: "Lista",
-                        message: descripcion
-                    }).show();
-                }
-                if (!$.index.Internet) {
-                    var descripcion = "GPS no accesible, se mostrará una lista de módulos de Kioscos...";
-                    Titanium.UI.createAlertDialog({
-                        title: "Lista",
-                        message: descripcion
-                    }).show();
-                }
-                list = true;
-                cambia_vista(2);
+        getlocaldata: function() {
+            var db = Ti.Database.install(Alloy.Globals.databasepath + Alloy.Globals.databases.kioscos, "kioscos"), listakioscos = db.execute("SELECT id,descripcion,domicilio,lat,lng FROM tbl_kioscos"), Data = [];
+            while (listakioscos.isValidRow()) {
+                var row = Ti.UI.createTableViewRow({
+                    backgroundSelectedColor: "#cacaca",
+                    selectedColor: "#cccccc",
+                    height: Ti.UI.SIZE,
+                    layout: "vertical",
+                    title: listakioscos.fieldByName("descripcion"),
+                    id_kiosco: listakioscos.fieldByName("id"),
+                    descripcion: listakioscos.fieldByName("descripcion"),
+                    domicilio: listakioscos.fieldByName("domicilio"),
+                    lat: listakioscos.fieldByName("lat"),
+                    lng: listakioscos.fieldByName("lng")
+                });
+                var Title = Ti.UI.createLabel({
+                    color: "#576996",
+                    font: {
+                        fontFamily: "Arial",
+                        fontSize: Alloy.Globals.defaultFontSize + 21,
+                        fontWeight: "bold"
+                    },
+                    left: 2,
+                    top: 2,
+                    width: Ti.UI.SIZE,
+                    height: Ti.UI.SIZE,
+                    text: listakioscos.fieldByName("descripcion")
+                });
+                row.add(Title);
+                var SubTitle = Ti.UI.createLabel({
+                    color: "#222",
+                    font: {
+                        fontFamily: "Arial",
+                        fontSize: Alloy.Globals.defaultFontSize + 9,
+                        fontWeight: "normal"
+                    },
+                    left: 2,
+                    top: 2,
+                    width: Ti.UI.SIZE,
+                    height: Ti.UI.SIZE,
+                    text: listakioscos.fieldByName("domicilio")
+                });
+                row.add(SubTitle);
+                Data.push(row);
+                listakioscos.next();
             }
+            listakioscos.close();
+            db.close();
+            $.lista_kioscos.data = Data;
         },
-        refreshgeomap: function() {
-            ModulosKioscos.IsGPSActivated = true;
-            Ti.API.info("longitude: " + ModulosKioscos.geolocalization.latitude + " | latitude: " + ModulosKioscos.geolocalization.longitude);
+        show_lista: function() {
+            ModulosKioscos.getlocaldata();
+        },
+        initmap: false,
+        initializemap: function() {
             var region = {
                 latitude: ModulosKioscos.geolocalization.latitude,
                 longitude: ModulosKioscos.geolocalization.longitude,
@@ -323,18 +407,55 @@ function Controller() {
             var mapview = $.vista_mapa;
             mapview.region = region;
             mapview.visible = true;
+        },
+        refreshgeomap: function() {
+            if (false == ModulosKioscos.initmap) {
+                ModulosKioscos.initializemap();
+                ModulosKioscos.initmap = true;
+            }
         }
     };
-    $.index.addEventListener("open", open);
     Titanium.Geolocation.addEventListener("location", locationCallback);
     locationAdded = true;
+    $.index.addEventListener("open", open);
     $.index.addEventListener("focus", focus);
     $.index.addEventListener("blur", blur);
+    var toastNotification = function() {
+        var msg = this.message, opc = [ "Aceptar" ];
+        "true" == this.configure && opc.push("Configurar");
+        var dialog = Ti.UI.createAlertDialog({
+            cancel: 0,
+            buttonNames: opc,
+            message: msg,
+            title: "Servicios"
+        });
+        dialog.addEventListener("click", function(e) {
+            e.index !== e.source.cancel && GPSConfigure();
+        });
+        dialog.show();
+    };
+    var centrarposicion = function() {
+        ModulosKioscos.initializemap();
+    }, centrarposicioninfo = function() {
+        var dialog = Ti.UI.createAlertDialog({
+            cancel: 0,
+            buttonNames: [ "Aceptar" ],
+            message: "Presione para centrar su posición en el mapa",
+            title: "Posicionamiento"
+        });
+        dialog.show();
+    };
+    var click_opc = function(e) {
+        e.index;
+    };
     $.index.open();
     __defers["$.__views.btn_mapa!click!open_view_mapa"] && $.__views.btn_mapa.addEventListener("click", open_view_mapa);
     __defers["$.__views.__alloyId7!click!open_view_lista"] && $.__views.__alloyId7.addEventListener("click", open_view_lista);
-    __defers["$.__views.INTERNETDialog!click!INERNETDialogOptionClick"] && $.__views.INTERNETDialog.addEventListener("click", INERNETDialogOptionClick);
-    __defers["$.__views.GPSDialog!click!GPSDialogOptionClick"] && $.__views.GPSDialog.addEventListener("click", GPSDialogOptionClick);
+    __defers["$.__views.lista_kioscos!click!click_opc"] && $.__views.lista_kioscos.addEventListener("click", click_opc);
+    __defers["$.__views.toastINTERNET!click!toastNotification"] && $.__views.toastINTERNET.addEventListener("click", toastNotification);
+    __defers["$.__views.toastGPS!click!toastNotification"] && $.__views.toastGPS.addEventListener("click", toastNotification);
+    __defers["$.__views.centrarposicion!click!centrarposicion"] && $.__views.centrarposicion.addEventListener("click", centrarposicion);
+    __defers["$.__views.centrarposicion!longpress!centrarposicioninfo"] && $.__views.centrarposicion.addEventListener("longpress", centrarposicioninfo);
     _.extend($, exports);
 }
 

@@ -16,7 +16,7 @@ function Controller() {
     lng_press_opc ? $.__views.Menu_Principal.addEventListener("longpress", lng_press_opc) : __defers["$.__views.Menu_Principal!longpress!lng_press_opc"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var defaultFontSize = 10, Data = [], Image_Size = 70, Opciones = [ {
+    var Data = [], Image_Size = 70, Opciones = [ {
         title: "Kioscos de Gobierno",
         subtitle: "Ubica en el mapa los Kioscos más cercanos a tu ubicación...",
         description: "Mediante el posicionamiento GPS, permite ubicar los distintos Kioscos de Gobierno, en caso de no tener GPS activo se mostrará una lista con las ubicaciones...",
@@ -64,12 +64,12 @@ function Controller() {
             color: "#576996",
             font: {
                 fontFamily: "Arial",
-                fontSize: defaultFontSize + 14,
+                fontSize: Alloy.Globals.defaultFontSize + 14,
                 fontWeight: "bold"
             },
             text: Opciones[i].title,
             left: Image_Size + 15,
-            top: Image_Size - (defaultFontSize + 14) - (defaultFontSize + 1) - 10,
+            top: Image_Size - (Alloy.Globals.defaultFontSize + 14) - (Alloy.Globals.defaultFontSize + 1) - 10,
             width: Ti.UI.SIZE,
             height: Ti.UI.SIZE
         });
@@ -78,12 +78,12 @@ function Controller() {
             color: "#222",
             font: {
                 fontFamily: "Arial",
-                fontSize: defaultFontSize + 1,
+                fontSize: Alloy.Globals.defaultFontSize + 1,
                 fontWeight: "normal"
             },
             text: Opciones[i].subtitle,
             left: Image_Size + 15,
-            top: Image_Size - (defaultFontSize + 1) - 10 + 4,
+            top: Image_Size - (Alloy.Globals.defaultFontSize + 1) - 10 + 4,
             width: Ti.UI.SIZE
         });
         row.add(SubTitle);

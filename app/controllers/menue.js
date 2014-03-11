@@ -1,5 +1,4 @@
-var defaultFontSize = Ti.Platform.name === 'android' ? 10 : 8, //Tamaño de fuente
-	Data = [], //Contenedor de opciones en control
+var	Data = [], //Contenedor de opciones en control
 	Image_Size = 70, //Tamaño de la imagen de la opción	
 	Opciones = [ 
 				 {
@@ -60,12 +59,12 @@ for (var i=0; i<Opciones.length ; i++){
 	    color:'#576996',
 	    font:{
 	    	fontFamily:'Arial', 
-	    	fontSize:defaultFontSize+14, 
+	    	fontSize:Alloy.Globals.defaultFontSize+14, 
 	    	fontWeight:'bold'
     	},
 	    text: Opciones[i].title,
 	    left:Image_Size + 15, 
-	    top: Image_Size - (defaultFontSize + 14) - (defaultFontSize + 1) - 10,
+	    top: Image_Size - (Alloy.Globals.defaultFontSize + 14) - (Alloy.Globals.defaultFontSize + 1) - 10,
 	    width:Ti.UI.SIZE, 
 	    height: Ti.UI.SIZE
 	});
@@ -75,12 +74,12 @@ for (var i=0; i<Opciones.length ; i++){
 	    color:'#222',
 	    font:{
 			fontFamily:'Arial', 
-			fontSize:defaultFontSize + 1, 
+			fontSize:Alloy.Globals.defaultFontSize + 1, 
 			fontWeight:'normal'
 	 	},
 	    text:Opciones[i].subtitle,
 	    left:Image_Size + 15, 
-	    top: Image_Size - (defaultFontSize + 1) - 10 + 4,
+	    top: Image_Size - (Alloy.Globals.defaultFontSize + 1) - 10 + 4,
 	    width:Ti.UI.SIZE
   	});
   	row.add(SubTitle);

@@ -9,4 +9,23 @@
 // object. For example:
 //
 // Alloy.Globals.someGlobalFunction = function(){};
-Alloy.Collections.fighters = Alloy.createCollection('fighters');  
+
+//Obtiene el tamaño de fuente por default
+function defaultFontSize(){
+	var defaultFontSize = 10;
+	if (Ti.Platform.name === 'android'){
+		defaultFontSize = 10;
+	} else {
+		defaultFontSize = 8;		
+	} 
+	return defaultFontSize;
+};
+Alloy.Globals.defaultFontSize = defaultFontSize();
+
+//Ruta a base de datos
+Alloy.Globals.databasepath = '/databases/';
+
+//Base de datos
+Alloy.Globals.databases = {
+	kioscos: 'kioscos.sqlite'
+};

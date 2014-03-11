@@ -40,7 +40,7 @@
 	 height:80,
 	 opacity:0 
 },
-".content_kioscos":{
+"#content_kioscos":{
 	 width:'auto',
 	 height:'auto',
 	 zIndex:1
@@ -55,4 +55,22 @@
 "#vista_lista":{
 	backgroundColor:'white',	
 	zIndex:1	
+},
+".toastbanner":{
+	top:5,
+	right:5,
+	width:Ti.UI.SIZE,
+	height:Ti.UI.SIZE,
+	layout:"horizontal"
+},
+".toast":{
+	width:42,
+	height:42
+},
+".botonera_inferior_derecha":{
+	bottom:5,
+	right:5,
+	width:Ti.UI.SIZE,
+	height:Ti.UI.SIZE,
+	layout:"horizontal"
 }
