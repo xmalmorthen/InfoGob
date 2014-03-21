@@ -1,4 +1,5 @@
 ".divider":{
+	top:1,
 	height: "1dp",
 	width: "70%",
 	left:"0dp",

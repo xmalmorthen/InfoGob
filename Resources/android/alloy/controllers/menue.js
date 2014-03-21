@@ -16,31 +16,31 @@ function Controller() {
     lng_press_opc ? $.__views.Menu_Principal.addEventListener("longpress", lng_press_opc) : __defers["$.__views.Menu_Principal!longpress!lng_press_opc"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var Data = [], Image_Size = 70, Opciones = [ {
+    var Data = [], Image_Size = 55, imgpath = "images/own/48x48/", Opciones = [ {
         title: "Kioscos de Gobierno",
         subtitle: "Ubica en el mapa los Kioscos más cercanos a tu ubicación...",
         description: "Mediante el posicionamiento GPS, permite ubicar los distintos Kioscos de Gobierno, en caso de no tener GPS activo se mostrará una lista con las ubicaciones...",
-        image: "appicon.png"
+        image: imgpath + "doc_lines.png"
     }, {
         title: "Módulos CURP",
         subtitle: "Ubica en el mapa los diferentes módulos de atención curp más cercanos a tu ubicación...",
         description: "Descrioción aqui...",
-        image: "appicon.png"
+        image: imgpath + "cert.png"
     }, {
         title: "Zona Internet",
         subtitle: "Ubica en el mapa los espacios con internet gratuito mas cercanos a tu ubicación...",
         description: "Descrioción aqui...",
-        image: "appicon.png"
+        image: imgpath + "rss.png"
     }, {
         title: "Directorio Integral",
         subtitle: "Realiza busquedas en el Directorio Integral de Gobierno del Estado de Colima...",
         description: "Descrioción aqui...",
-        image: "appicon.png"
+        image: imgpath + "notepad.png"
     }, {
         title: "RETyS",
         subtitle: "Consulta el Registro Estatal de Trámites y Servicios...",
         description: "Descrioción aqui...",
-        image: "appicon.png"
+        image: imgpath + "layers_2.png"
     } ];
     for (var i = 0; Opciones.length > i; i++) {
         var row = Ti.UI.createTableViewRow({
@@ -60,16 +60,16 @@ function Controller() {
             bottom: 10
         });
         row.add(image);
-        var Title = Ti.UI.createLabel({
+        var tamFuenteTitulo = 12, tamFuenteSubTitulo = 5, Title = Ti.UI.createLabel({
             color: "#576996",
             font: {
                 fontFamily: "Arial",
-                fontSize: Alloy.Globals.defaultFontSize + 14,
+                fontSize: Alloy.Globals.defaultFontSize + tamFuenteTitulo,
                 fontWeight: "bold"
             },
             text: Opciones[i].title,
-            left: Image_Size + 15,
-            top: Image_Size - (Alloy.Globals.defaultFontSize + 14) - (Alloy.Globals.defaultFontSize + 1) - 10,
+            left: Image_Size + 20,
+            top: Image_Size - (Alloy.Globals.defaultFontSize + tamFuenteTitulo) - (Alloy.Globals.defaultFontSize + tamFuenteSubTitulo) - 5,
             width: Ti.UI.SIZE,
             height: Ti.UI.SIZE
         });
@@ -78,12 +78,12 @@ function Controller() {
             color: "#222",
             font: {
                 fontFamily: "Arial",
-                fontSize: Alloy.Globals.defaultFontSize + 1,
+                fontSize: Alloy.Globals.defaultFontSize + tamFuenteSubTitulo,
                 fontWeight: "normal"
             },
             text: Opciones[i].subtitle,
-            left: Image_Size + 15,
-            top: Image_Size - (Alloy.Globals.defaultFontSize + 1) - 10 + 4,
+            left: Image_Size + 20,
+            top: Image_Size - (Alloy.Globals.defaultFontSize + tamFuenteSubTitulo) - 5,
             width: Ti.UI.SIZE
         });
         row.add(SubTitle);

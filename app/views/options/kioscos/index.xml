@@ -3,29 +3,53 @@
 		<View>
 			<View id="botonera_kioscos">
 				<View id="btn_mapa" class="btn_botonera" onClick="open_view_mapa">
-					<ImageView image="/images/own/48x48/cert.png" class="img_btn"/>
+					<ImageView image="/images/own/48x48/map_marker.png" class="img_btn"/>
 					<Label class="lbl_btn">Mapa</Label>
 				</View>
 				<View class="margin"/>
 				<View class="btn_botonera" onClick="open_view_lista">
-					<ImageView image="/images/own/48x48/cert.png" class="img_btn"/>
+					<ImageView image="/images/own/48x48/list_ingredients.png" class="img_btn"/>
 					<Label class="lbl_btn">Lista</Label>
 				</View>
 			</View>
 		
 			<View id="content_kioscos">
-				<View ns="Ti.Map" id="vista_mapa" />
-				<View id="vista_lista"> 
-					<TableView id="lista_kioscos" onClick="click_opc" top=80 />		
+				<View ns="Ti.Map" id="vista_mapa" onClick="click_map" />
+				<View id="vista_lista">
+					<TableView id="lista_kioscos" onClick="click_opc"/>		
 				</View>
 			</View>
+			
+			<View id="vistatramites" class="subview">
+				<View id="subviewchildren" class="subviewchildren">
+					<View width="100%" height=Ti.UI.SIZE> 
+						<Label class="header_titulo">Lista de trámites...</Label>
+						<ImageView top=7 right=10 image="/images/own/32x32/delete.png" onClick="Closesubviewtramites" />	
+					</View>					
+					<View class="divider"/>
+					<TableView id="lista_tramiteskioscos" onClick="click_tramitekiosco"/>
+				</View>				
+			</View>
+			
+			<View id="vistaficharetys" class="subview">
+				<View id="subviewficharetyschildren" class="subviewchildren">
+					<View width="100%" height=Ti.UI.SIZE> 
+						<Label class="header_titulo">Ficha RETyS</Label>
+						<ImageView top=7 right=10 image="/images/own/32x32/delete.png" onClick="Closesubviewficha" />	
+					</View>					
+					<View class="divider"/>
+					<View layout="vertical" left=5 right=5 top=5 bottom=5 width=Ti.UI.SIZE height=Ti.UI.SIZE>
+						<TableView id="tblvwficha"/>
+					</View>
+				</View>				
+			</View>	
 		</View>
 		<View class="toastbanner">
-			<ImageView id="toastINTERNET" image="/images/own/48x48/cert.png" class="toast" message="No conectado a internet..." configure='false' onClick="toastNotification" visible=false />
-			<ImageView id="toastGPS" class="toast" message="Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS..." configure='true' onClick="toastNotification" visible=false />
+			<ImageView id="toastINTERNET" image="/images/own/48x48/no_internet.png" message="No conectado a internet..." configure='false' onClick="toastNotification" visible=false />
+			<ImageView id="toastGPS" left=10 class="toast" message="Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS..." configure='true' code=null onClick="toastNotification" visible=false />
 		</View>	
 		<View class="botonera_inferior_derecha">
 			<ImageView id="centrarposicion" class="toast" image="/images/own/48x48/target.png" message="Presione para centrar su posición en el mapa..." onClick="centrarposicion" onLongpress="centrarposicioninfo" visible=false />
-		</View>			
+		</View>
 	</Window>
 </Alloy>

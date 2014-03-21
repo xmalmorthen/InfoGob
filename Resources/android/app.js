@@ -1,12 +1,6 @@
-function defaultFontSize() {
-    var defaultFontSize = 10;
-    defaultFontSize = 10;
-    return defaultFontSize;
-}
-
 var Alloy = require("alloy"), _ = Alloy._, Backbone = Alloy.Backbone;
 
-Alloy.Globals.defaultFontSize = defaultFontSize();
+Alloy.Globals.defaultFontSize = 10;
 
 Alloy.Globals.databasepath = "/databases/";
 

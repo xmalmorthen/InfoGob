@@ -7,10 +7,10 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.divider = Ti.UI.createView({
+        top: "1dp",
         height: "1dp",
         width: "70%",
         left: "0dp",
-        top: "1dp",
         backgroundColor: "#000",
         id: "divider"
     });

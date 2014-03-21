@@ -13,11 +13,11 @@ function Controller() {
     });
     $.__views.header && $.addTopLevelView($.__views.header);
     $.__views.__alloyId0 = Ti.UI.createImageView({
-        image: "/images/own/48x48/cert.png",
+        image: "/images/own/48x48/lightbulb.png",
         left: 3,
         top: 3,
-        width: 64,
-        height: 64,
+        width: 74,
+        height: 74,
         id: "__alloyId0"
     });
     $.__views.header.add($.__views.__alloyId0);
@@ -25,12 +25,12 @@ function Controller() {
         color: "#000",
         font: {
             fontFamily: "Helveltica",
-            fontSize: "20dp",
+            fontSize: "25dp",
             fontStyle: "normal",
             fontWeight: "bold"
         },
-        left: 64,
-        top: 19,
+        left: 77,
+        top: 30,
         text: "Info[Gob] Colima",
         id: "__alloyId1"
     });
@@ -39,12 +39,12 @@ function Controller() {
         color: "#A2A2A2",
         font: {
             fontFamily: "Helveltica",
-            fontSize: "15dp",
+            fontSize: "18dp",
             fontStyle: "italic",
             fontWeight: "normal"
         },
-        left: 64,
-        top: 40,
+        left: 77,
+        top: 57,
         text: "Información de puntos de interéz...",
         id: "__alloyId2"
     });
