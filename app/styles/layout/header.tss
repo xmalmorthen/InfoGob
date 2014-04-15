@@ -1,14 +1,15 @@
 "#header_image":{
 	image				: "/images/own/48x48/lightbulb.png", 
-	width 				: Alloy.Globals.Imagen.grande, 
-	height 				: Alloy.Globals.Imagen.grande,
-	left				: 1,
+	width 				: Alloy.Globals.Imagen.enorme, 
+	height 				: Alloy.Globals.Imagen.enorme,
+	left				: 1
 },
 "#vw_header_labels":{
 	layout				: 'vertical',
 	height				: Ti.UI.SIZE,
 	width				: Ti.UI.SIZE,
-	left				: Alloy.Globals.Imagen.grande,
+	left				: Alloy.Globals.Imagen.enorme,
+	bottom				: 1
 },
 "#header_titulo": {
 	color				: Alloy.Globals.Fuente.colorTitulo,
@@ -19,7 +20,7 @@
         fontWeight		: 'bold'
     },
     left				: 2,
-	text				: Alloy.Globals.resources.header.titulo,
+	text				: Alloy.Globals.resources.header.titulo
 },
 "#header_subtitulo": {
 	color				: Alloy.Globals.Fuente.colorSubtitulo,
@@ -30,5 +31,5 @@
         fontWeight		: 'normal'
     },
     left				: 2,
-	text				: Alloy.Globals.resources.header.subtitulo,	
+	text				: Alloy.Globals.resources.header.subtitulo	
 }

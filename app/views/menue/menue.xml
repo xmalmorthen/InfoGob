@@ -1,4 +1,4 @@
 <Alloy>
 	<ActivityIndicator id="activityIndicator" class="activityIndicator" />
-	<View id="panel_opciones" layout="horizontal" />
+	<View id="panel_opciones" borderColor="red" borderWidth="1" />	
 </Alloy>

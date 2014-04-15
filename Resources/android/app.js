@@ -6,7 +6,7 @@ Alloy.Globals.Height = Titanium.Platform.displayCaps.platformHeight;
 
 Alloy.Globals.Theme = {
     backgroundColor: "#cacaca",
-    dividerColor: "#cococo",
+    dividerColor: "#000",
     activityindicator: {
         style: Titanium.UI.ActivityIndicatorStyle.BIG
     }
@@ -26,13 +26,14 @@ Alloy.Globals.Fuente = {
     fontFamily: "Helveltica",
     colorTitulo: "#000",
     colorSubtitulo: "#A2A2A2",
+    colorTexto: "#000",
     colorActivityIndicator: "red",
     tamanioFuenteTitulo: TamanioTextoBase + 10 + "dp",
     tamanioFuenteSubTitulo: TamanioTextoBase + "dp",
     tamanioFuenteLista: TamanioTextoBase + "dp",
     tamanioFuenteSubLista: TamanioTextoBase - 3 + "dp",
     tamanioFuenteTexto: TamanioTextoBase - 3 + "dp",
-    tamanioActivityIndicator: TamanioTextoBase + 10 + "dp"
+    tamanioActivityIndicator: TamanioTextoBase + "dp"
 };
 
 Alloy.Globals.defaultFontSize = 10;

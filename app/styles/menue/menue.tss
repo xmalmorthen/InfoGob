@@ -1,5 +1,8 @@
-".menue":{	
-	top					: 1
+"#panel_opciones":{
+	layout				:"horizontal",	
+	top					: 3,
+	left				: 120,
+	right				: 120
 },
 ".activityIndicator":{	
 	color				: 'black',

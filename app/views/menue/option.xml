@@ -1,14 +1,19 @@
 <Alloy>
-	<ScrollView id="scroll_vw">
-		<View id="vw_header">
-			<ImageView id="option_img" />
-			<Label id="option_title" />
+	<View id="main_view" class="fit_size">
+		<View id="vw_header" class="fit_size">
+			<ImageView id="option_img" class="fit_size" />
+			<View id="vw_labels_header" class="fit_size">
+				<Label id="option_title" class="fit_size" />
+				<Label id="option_subtitle" class="fit_size" />	
+			</View>			
 		</View>
-		<Label id="option_subtitle"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </Label>
-		<View id="option_actions">
-			<ImageView id="action_description" onClick="action_description" />
+		<View id="option_actions" class="fit_size">
 			<ImageView id="action_require" onClick="action_require" />
-			<ImageView id="action_open" onClick="action_open" />			
+			<ImageView id="action_open" onClick="action_open" />
 		</View>
-	</ScrollView>	   
+		<View class="divider"/>	
+		<ScrollView id="scroll_vw">		
+			<Label id="option_description" />		
+		</ScrollView>		
+	</View>	   
 </Alloy>

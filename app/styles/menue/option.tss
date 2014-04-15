@@ -1,35 +1,98 @@
-"#scroll_vw":{
-	contentWidth					: 'auto',
-	contentHeight					: 'auto',
-	showVerticalScrollIndicator		: true,
-	showHorizontalScrollIndicator	: false,
-	height							: '200dp',
-	width							: '30%',
+"#main_view":{
 	layout							: 'vertical',
-	borderColor						: '#COCOCO',
+	left							: 10,
+	right							: 10,
+	top								: 10,
+	bottom							: 10,
+	height							: '200dp',
+	width							: '45%',
+	borderColor						: 'red',
 	borderWidth						: '3dp',
-	borderRadius					: '8dp'
+	borderRadius					: 10	
 },
 "#vw_header":{
-	width							: 'auto',
-	height							: 'auto',
-	layout							: 'horizontal',
-	borderColor						: 'green',
-	borderWidth						: 1
+	width							: Ti.UI.SIZE,
+	height							: Ti.UI.SIZE,
+	top								: 5,
+	left							: 5,
 },
 "#option_img":{
-	width							: 'auto',
-	height							: 'auto'
+	width 							: Alloy.Globals.Imagen.mediana, 
+	height 							: Alloy.Globals.Imagen.mediana,
+	left							: 0
 },
-"#option_title":{
+"#vw_labels_header":{
+	layout							: 'vertical',
+	bottom							: 1,
+	left							: Alloy.Globals.Imagen.mediana
+},
+"#option_title":{	
+	color							: Alloy.Globals.Fuente.colorTitulo,
+	font: {
+        fontFamily					: Alloy.Globals.Fuente.fontFamily,
+        fontSize					: Alloy.Globals.Fuente.tamanioFuenteTitulo,
+        fontStyle					: 'normal',
+        fontWeight					: 'bold'
+    },
+    left 							: 1    
+},
+"#option_subtitle":{
+	color							: Alloy.Globals.Fuente.colorTexto,
+	font: {
+        fontFamily					: Alloy.Globals.Fuente.fontFamily,
+        fontSize					: Alloy.Globals.Fuente.tamanioFuenteTexto,
+        fontStyle					: 'normal',
+   },
+   left 							: 1
+},
+"#scroll_vw":{
+	top								: 1,
+	height							: '84dp',
 	width							: 'auto',
-	height							: 'auto'
+	showVerticalScrollIndicator		: true,
+	showHorizontalScrollIndicator	: false 
 },
 "#option_description":{
-	width							: 'auto',
-	height							: 'auto'
+	color							: Alloy.Globals.Fuente.colorTexto,
+	font: {
+        fontFamily					: Alloy.Globals.Fuente.fontFamily,
+        fontSize					: Alloy.Globals.Fuente.tamanioFuenteTexto,
+        fontStyle					: 'normal',
+    },
+    textAlign						: Ti.UI.TEXT_ALIGNMENT_LEFT,
+    top								: 5,
+    left							: 15,
+    right							: 15,
+    width							: 'auto',
+    height							: 'auto'
+},
+".fit_size":{
+	width							: Ti.UI.SIZE,
+	height							: Ti.UI.SIZE
 },
 "#option_actions":{
-	borderColor						: 'green',
-	borderWidth						: 1
+	top								: 3,
+	right							: 2,
+	layout							: 'horizontal'	
+},
+"#action_require":{
+	width 							: Alloy.Globals.Imagen.pequenia, 
+	height 							: Alloy.Globals.Imagen.pequenia,
+	left							: 2,
+	right							: 2,
+	image							: '/images/own/48x48/doc_lines.png'
+},
+"#action_open":{
+	width 							: Alloy.Globals.Imagen.pequenia, 
+	height 							: Alloy.Globals.Imagen.pequenia,
+	left							: 2,
+	right							: 2,
+	image							: '/images/own/48x48/doc_lines.png'
+},
+".divider":{
+	top								: "2dp",
+	height							: "1dp",
+	width							: "70%",
+	right							: "0dp",	
+	backgroundColor					: Alloy.Globals.Theme.dividerColor
 }

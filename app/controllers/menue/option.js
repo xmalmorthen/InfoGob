@@ -3,7 +3,8 @@ var args = arguments[0] || {};
 $.option_img.image = args.image;
 $.option_title.text = args.title || '';
 $.option_subtitle.text = args.subtitle || '';
- 
+$.option_description.text = args.description || '';
+  
 var 
 action_description = function(){	
 	var
@@ -14,7 +15,7 @@ action_description = function(){
 	option = Alloy.createController('menue/dialog', {
 				image 			: 'images/own/48x48/doc_lines.png',
                 title   		: 'Kioscos de Gobierno',
-                message			: 'aqui va el mensaje',
+                message			: decription,
                 close			: close_fnc
     }).getView();
     
