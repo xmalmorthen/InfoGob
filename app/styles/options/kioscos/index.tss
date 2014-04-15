@@ -81,7 +81,8 @@
 },
 "#lista_kioscos":{
 	top:80,
-	left:5 
+	left:5,
+	right: 5 
 },
 ".subview": {
   	width:'100%',
@@ -113,11 +114,11 @@
         fontStyle: 'normal',
         fontWeight: 'bold'
     },
-	left:5,
-	top:5
+	left:55,
+	top:17
 },
 "#lista_tramiteskioscos":{
-	left:5
+	left:10
 },
 ".descripcion_estructura":{
 	color: "#000",
@@ -136,4 +137,30 @@
         fontStyle: 'normal'
     },
 	left:5
+},
+"#activityIndicator":{
+	color: 'black',
+	font: {fontFamily:'Helvetica Neue', fontSize:26, fontWeight:'bold'},
+	message: 'Cargando...',
+	style:Titanium.UI.ActivityIndicatorStyle.BIG,
+	bottom:5,
+	right:5,
+	height:Ti.UI.SIZE,
+	width:Ti.UI.SIZE,
+	zIndex:9999	
+},
+"#vw_title_listakioscos":{
+	top:20, 
+	left:150,
+	width:Ti.UI.SIZE,
+	height:Ti.UI.SIZE
+},
+"#title_listakioscos":{
+	color: "#000",
+	font: {
+        fontFamily:'Helveltica',
+        fontSize: '44dp',
+        fontStyle: 'normal',
+        fontWeight: 'bold'
+    }  
 }

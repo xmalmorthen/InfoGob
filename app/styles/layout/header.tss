@@ -1,33 +1,34 @@
-".header":{
-	height:Ti.UI.SIZE,
-	backgroundColor:'white'	
+"#header_image":{
+	image				: "/images/own/48x48/lightbulb.png", 
+	width 				: Alloy.Globals.Imagen.grande, 
+	height 				: Alloy.Globals.Imagen.grande,
+	left				: 1,
 },
-".header_image":{
-	image:"/images/own/48x48/lightbulb.png", 
-	left:3,
-	top:3,
-	width:74,
-	height:74	
+"#vw_header_labels":{
+	layout				: 'vertical',
+	height				: Ti.UI.SIZE,
+	width				: Ti.UI.SIZE,
+	left				: Alloy.Globals.Imagen.grande,
 },
-".header_titulo": {
-	color: "#000",
+"#header_titulo": {
+	color				: Alloy.Globals.Fuente.colorTitulo,
 	font: {
-        fontFamily:'Helveltica',
-        fontSize: '25dp',
-        fontStyle: 'normal',
-        fontWeight: 'bold'
+        fontFamily		: Alloy.Globals.Fuente.fontFamily,
+        fontSize		: Alloy.Globals.Fuente.tamanioFuenteTitulo,
+        fontStyle		: 'normal',
+        fontWeight		: 'bold'
     },
-	left:77,
-	top:30
+    left				: 2,
+	text				: Alloy.Globals.resources.header.titulo,
 },
-".header_subtitulo": {
-	color: "#A2A2A2",
+"#header_subtitulo": {
+	color				: Alloy.Globals.Fuente.colorSubtitulo,
 	font: {
-        fontFamily:'Helveltica',
-        fontSize: '18dp',
-        fontStyle: 'italic',
-        fontWeight: 'normal'
+        fontFamily		: Alloy.Globals.Fuente.fontFamily,
+        fontSize		: Alloy.Globals.Fuente.tamanioFuenteSubTitulo,
+        fontStyle		: 'italic',
+        fontWeight		: 'normal'
     },
-	left:77,
-	top:57
+    left				: 2,
+	text				: Alloy.Globals.resources.header.subtitulo,	
 }

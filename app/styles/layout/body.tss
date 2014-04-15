@@ -1,6 +1,5 @@
 ".body":{
-	height:'100%', 
-	layout:'vertical', 
-	backgroundColor:'white'
+	height				:'100%', 
+	backgroundColor		: Alloy.Globals.Theme.backgroundColor
 }
 

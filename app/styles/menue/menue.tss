@@ -1,0 +1,17 @@
+".menue":{	
+	top					: 1
+},
+".activityIndicator":{	
+	color				: 'black',
+	font: {
+		fontFamily		: Alloy.Globals.Fuente.fontFamily, 
+		fontSize		: Alloy.Globals.Fuente.tamanioActivityIndicator, 
+		fontWeight		: 'bold'},
+	message				: Alloy.Globals.resources.ActivityIndicator,
+	style				: Alloy.Globals.Theme.activityindicator.style,
+	bottom				: '5dp',
+	right				: '5dp',
+	height				: Ti.UI.SIZE,
+	width				: Ti.UI.SIZE,
+	zIndex				: 9999
+}

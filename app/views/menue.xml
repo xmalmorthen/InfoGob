@@ -1,3 +1,0 @@
-<Alloy>
-    <TableView class="menue" id="Menu_Principal" onClick="click_opc" onLongpress="lng_press_opc" />
-</Alloy>

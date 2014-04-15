@@ -7,8 +7,29 @@ function Controller() {
     var $ = this;
     var exports = {};
     var __defers = {};
+    $.__views.activityIndicator = Ti.UI.createActivityIndicator({
+        color: "black",
+        font: {
+            fontFamily: Alloy.Globals.Fuente.fontFamily,
+            fontSize: Alloy.Globals.Fuente.tamanioActivityIndicator,
+            fontWeight: "bold"
+        },
+        message: Alloy.Globals.resources.ActivityIndicator,
+        style: Alloy.Globals.Theme.activityindicator.style,
+        bottom: "5dp",
+        right: "5dp",
+        height: Ti.UI.SIZE,
+        width: Ti.UI.SIZE,
+        zIndex: 9999,
+        apiName: "Ti.UI.ActivityIndicator",
+        id: "activityIndicator",
+        classes: [ "activityIndicator" ]
+    });
+    $.__views.activityIndicator && $.addTopLevelView($.__views.activityIndicator);
     $.__views.Menu_Principal = Ti.UI.createTableView({
-        top: 10,
+        top: 1,
+        apiName: "Ti.UI.TableView",
+        classes: [ "menue" ],
         id: "Menu_Principal"
     });
     $.__views.Menu_Principal && $.addTopLevelView($.__views.Menu_Principal);
@@ -91,6 +112,10 @@ function Controller() {
     }
     $.Menu_Principal.data = Data;
     var click_opc = function(e) {
+        $.activityIndicator.show();
+        setTimeout(function() {
+            $.activityIndicator.hide();
+        }, 4e3);
         var index = e.index;
         switch (index) {
           case 0:

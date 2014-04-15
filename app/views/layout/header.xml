@@ -1,7 +1,9 @@
 <Alloy>
-	<View class="header">
-		<ImageView class="header_image" />
-		<Label class="header_titulo" >Info[Gob] Colima</Label>						
-		<Label class="header_subtitulo" >Información de puntos de interéz...</Label>
-	</View>
+	<View height=Ti.UI.SIZE width='auto' top=3 bottom=3>
+		<ImageView id="header_image" />
+		<View id="vw_header_labels">
+			<Label id="header_titulo" />
+			<Label id="header_subtitulo" />
+	    </View>
+    </View>		
 </Alloy>

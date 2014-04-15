@@ -1,8 +1,7 @@
 ".divider":{
-	top:1,
-	height: "1dp",
-	width: "70%",
-	left:"0dp",
-	top:"1dp",
-	backgroundColor:"#000"
+	top				: "1dp",
+	height			: "1dp",
+	width			: "70%",
+	left			: "0dp",	
+	backgroundColor	: Alloy.Globals.Theme.dividerColor
 }

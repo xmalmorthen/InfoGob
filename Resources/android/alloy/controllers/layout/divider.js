@@ -11,7 +11,9 @@ function Controller() {
         height: "1dp",
         width: "70%",
         left: "0dp",
-        backgroundColor: "#000",
+        backgroundColor: Alloy.Globals.Theme.dividerColor,
+        apiName: "Ti.UI.View",
+        classes: [ "divider" ],
         id: "divider"
     });
     $.__views.divider && $.addTopLevelView($.__views.divider);

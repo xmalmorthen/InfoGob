@@ -79,6 +79,9 @@ var VerificaGPS = function(){
 };
 
 function cambia_vista(opc){
+	if (ventanaactiva == opc) return; 
+	
+	$.activityIndicator.show();	
 	switch (opc){
 		case 1:
 			$.vista_lista.zIndex = 1;
@@ -225,6 +228,7 @@ MuestraKioscosMapa = function(){ //funcion que georeferencia los kioscos en el m
 		};
 		listakioscos.close();
 	};
+    $.activityIndicator.hide();
 },
 MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
 	var 
@@ -238,13 +242,13 @@ MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
 		//Fila del tableview
 		var row = Ti.UI.createTableViewRow({
 		    backgroundSelectedColor:'#cacaca',
-		    selectedColor: "#cccccc",			    
+		    selectedColor: "#cccccc",
+		    layout:'vertical',
 		    height:Ti.UI.SIZE,
 		    width:Ti.UI.SIZE,
-		    layout: 'vertical',	
-		    top: 5,
-		    bottom:5,
-		    hasDetail: true,
+		    top: 1,
+		    bottom:1,
+		    rightImage: '/images/own/32x32/align_just.png',	
 		    title: 			listakioscos.fieldByName('descripcion'),
 		    id_kiosco:		listakioscos.fieldByName('id'),
 		    descripcion: 	listakioscos.fieldByName('descripcion'),
@@ -254,14 +258,14 @@ MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
 	  	});	
 	  	//Etiqueta de título
 		var Title = Ti.UI.createLabel({
-		    color:'#576996',
+		    color:'black',
 		    font:{
 		    	fontFamily:'Arial', 
-		    	fontSize:Alloy.Globals.defaultFontSize + 21, 
+		    	fontSize:Alloy.Globals.defaultFontSize + 25, 
 		    	fontWeight:'bold'
 	    	},
-	    	left:2, 
-		    top: 2,
+	    	left:5, 
+		    top: 1,
 		    width:Ti.UI.SIZE,
 		    height: Ti.UI.SIZE,
 		    text: 			listakioscos.fieldByName('descripcion')
@@ -272,24 +276,29 @@ MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
 		    color:'#222',
 		    font:{
 				fontFamily:'Arial', 
-				fontSize:Alloy.Globals.defaultFontSize + 9, 
+				fontSize:Alloy.Globals.defaultFontSize + 10, 
 				fontWeight:'normal'
 		 	},
-		 	left:2, 
-		    top: 2,
+		 	left:5, 
 		    width:Ti.UI.SIZE,
 		    height: Ti.UI.SIZE,
 		    text:			listakioscos.fieldByName('domicilio')			    
 	  	});
 	  	row.add(SubTitle);
+	  	
+	  	if (veces < listakioscos.rowCount) {	  	
+	  		row.add(Ti.UI.createView({top:1, bottom:5,height: "1dp",width: "95%",backgroundColor:"#cacaca"}));
+	  	}
 				
 		Data.push(row); 
 		
 		veces++;
-		if (veces == 5)
+			
 	  	listakioscos.next();
 	}
 	$.lista_kioscos.data = Data;
+	
+	$.activityIndicator.hide();
 };
 
 //Click - botones de servicios - GPS/INTERNET
@@ -333,6 +342,7 @@ centrarposicioninfo = function(){
 //onclick - TableView
 var 
 click_opc = function (e){
+	$.activityIndicator.show();
 	var 
 		id = e.rowData.id_kiosco;
 		muestralistatramites(id);
@@ -351,6 +361,7 @@ var timer = setInterval( function() {
 
 var click_map = function(evt){	
 	if (evt.clicksource != 'pin') {
+		$.activityIndicator.show();
 		var	id_kiosco = evt.annotation.id;
 	  	muestralistatramites(id_kiosco);
   	}
@@ -363,6 +374,7 @@ GeneraListaTramites = function(id_kiosco){
 		Data = [],	
 		listatramiteskioscos = ObtenTramitesenKioscosBDLocal(id_kiosco); //Obtener lista de tramites
 	
+	var veces = 0;
 	while (listatramiteskioscos.isValidRow())
 	{	
 		//Fila del tableview
@@ -372,7 +384,9 @@ GeneraListaTramites = function(id_kiosco){
 		    height:Ti.UI.SIZE,
 		    width:Ti.UI.SIZE,
 		    layout: 'vertical',
-		    hasChild: true,
+		    rightImage : '/images/own/16x16/image_text.png',
+		    top: 1,
+		    bottom: 1, 
 		    title: 			listatramiteskioscos.fieldByName('descripcion'),		    
 		    id_tramite:		listatramiteskioscos.fieldByName('id'),
 		    id_ficha_retys:	listatramiteskioscos.fieldByName('id_ficha_retys'),
@@ -383,7 +397,7 @@ GeneraListaTramites = function(id_kiosco){
 		    color:'Black',
 		    font:{
 		    	fontFamily:'Arial', 
-		    	fontSize:Alloy.Globals.defaultFontSize + 14
+		    	fontSize:Alloy.Globals.defaultFontSize + 12
 		    },
 	    	left:2, 
 		    top: 2,
@@ -392,15 +406,25 @@ GeneraListaTramites = function(id_kiosco){
 		    text: 			listatramiteskioscos.fieldByName('descripcion')
 		});
 	  	row.add(Title);
+	  	
+	  	if (veces < listatramiteskioscos.rowCount) {		  	
+	  		row.add(Ti.UI.createView({top:1, bottom:5,height: "1dp",width: "95%",backgroundColor:"#cacaca"}));
+	  	}
 								
-		Data.push(row); 		
+		Data.push(row); 
+		
+		veces++;		
+	  	
 	  	listatramiteskioscos.next();
 	}
 	$.lista_tramiteskioscos.data = Data;
+	
+	$.activityIndicator.hide();
 },
 click_tramitekiosco = function(e){
 	if (verificasihayinternet()) {
-		var id = e.rowData.id_ficha_retys;		
+		var id = e.rowData.id_ficha_retys;
+		$.activityIndicator.show();		
 		DespliegaFichaRETyS(id);
 	} else {
 		Ti.UI.createAlertDialog({
@@ -430,45 +454,266 @@ Closesubviewficha = function(){
 	$.vistaficharetys.visible = false;
 };
 
-var DespliegaFichaRETyS = function(id_ficha_retys){	
-	var inputData = [
-		{header:'Fecha de validación',title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'},
-		{header:'Requisitos',title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'},
-		{header:'Costos',title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'},
-		{header:'Pasos a seguir para realizar el trámite',title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'},
-		{header:'Tiempo de respuesta',title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}		
-	];
+var DespliegaFichaRETyS = function(id_ficha_retys){
+	ConsultaFichaRETyS(id_ficha_retys, function (data) {
+				
+		function CrearLabelTitulo(label){
+			var TitleLabel = Ti.UI.createLabel({
+				color:'black',
+				font: {
+			        fontFamily:'Helveltica',
+			        fontSize: '18dp',
+			        fontStyle: 'normal',
+			        fontWeight: 'bold'
+			    },
+			    width:"27%",
+				height:Ti.UI.SIZE,
+				left: 1,
+			    text:label
+			});
+			return TitleLabel;			
+		};
+		
+		function CrearLabelData(obj){
+			var rowdata  = Ti.UI.createView({
+			    layout:"vertical",
+				width:Ti.UI.SIZE,
+				height:Ti.UI.SIZE
+			}),
+				dato = false;
+				
+			if (typeof obj === 'object') {
 			
-	var data = [];	
-	// use a loop to add some rows
-	for (var i=0; i < inputData.length; i++) {
+				for(var item in obj) {
+					if (obj.length > 0){
+						var DataLabel = Ti.UI.createLabel({
+							color:'black',
+							font: {
+						        fontFamily:'Helveltica',
+						        fontSize: '18dp',
+						        fontStyle: 'normal',		        
+						    },
+						    left:5,
+							width:"69%",
+							height:Ti.UI.SIZE,
+						    text:obj[item]
+						});
+						rowdata.add(DataLabel);
+						dato = true;
+					}
+				}
+			} else {
+				if (obj.length > 0){
+					var DataLabel = Ti.UI.createLabel({
+						color:'black',
+						font: {
+					        fontFamily:'Helveltica',
+					        fontSize: '18dp',
+					        fontStyle: 'normal',		        
+					    },
+					    left:5,
+						width:"69%",
+						height:Ti.UI.SIZE,
+					    text:obj
+					});
+					rowdata.add(DataLabel);
+					dato = true;
+				}
+			}
+			
+			if (!dato){
+				var DataLabel = Ti.UI.createLabel({
+					color:'black',
+					font: {
+				        fontFamily:'Helveltica',
+				        fontSize: '18dp',
+				        fontStyle: 'normal',		        
+				    },
+				    left:5,
+					width:"69%",
+					height:Ti.UI.SIZE,
+				    text:'---'
+				});
+				rowdata.add(DataLabel);
+			}
+			
+			return rowdata;			
+		}
 		
+		function CreaBloque(titulo,data){
+			//vista principal
+			var vista  = Ti.UI.createView({
+			    layout:"horizontal",
+				width:Ti.UI.SIZE,
+				height:Ti.UI.SIZE,			
+			});	
+			
+			vista.add( CrearLabelTitulo(titulo));		
+			vista.add( CrearLabelData  (data));
+			
+			return vista;
+		}
+		
+		for (var d = $.scrllvw.children.length-1; d >= 0; d--) {
+		    $.scrllvw.remove($.scrllvw.children[d]);
+		}
+				
+		//vista principal
+		var data_ficha_retys = Ti.UI.createView({		    
+		    layout:"vertical",
+			left:5,
+			right:5,
+			top:5,
+			bottom:5,
+			width:Ti.UI.SIZE,
+			height:Ti.UI.SIZE
+		});
+					
+		data_ficha_retys.add( CreaBloque('Nombre',data.nombre) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Descripción',data.descripcion) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Tipo',data.tipo) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Fecha de validación',data.fecha_validacion) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('¿A quién va dirigido?',data.a_quien_va_dirigido) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Requisitos',data.requisitos) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+						
+		data_ficha_retys.add( CreaBloque('Documentos',data.documentos) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+
+		data_ficha_retys.add( CreaBloque('Observaciones',data.observaciones) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));		
+		
+		data_ficha_retys.add( CreaBloque('Costos',data.costos) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Nota de Costos',data.costos_nota) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Formas de pago',data.forma_pago) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Pasos a seguir para realizar el trámite',data.pasos) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Tiempo de respuesta',data.tiempo_respuesta) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Formatos autorizados',data.formatos_autorizados) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Medios de impugnación',data.medios_impugnacion) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		data_ficha_retys.add( CreaBloque('Afirmativa Ficta',data.Afirmativa_Ficta) );
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		
+		var rowdata  = Ti.UI.createView({
+		    layout:"vertical",
+			width:Ti.UI.SIZE,
+			height:Ti.UI.SIZE
+		});		
+		rowdata.add( CrearLabelData( "Ubicación: " + data.responsable.ubicacion ) );
+		rowdata.add( CrearLabelData( "Dependencia: " + data.responsable.dependencia ) );
+		rowdata.add( CrearLabelData( "Responsable: " + data.responsable.responsable ) );
+		rowdata.add( CrearLabelData( "Correo: " + data.responsable.correo ) );
+		rowdata.add( CrearLabelData( "Teléfonos: " + data.responsable.telefonos ) );
+		rowdata.add( CrearLabelData( "Extension: " + data.responsable.extension ) );
+		rowdata.add( CrearLabelData( "Horario de oficina: " + data.responsable.horario_oficina ) );
 		var vista  = Ti.UI.createView({
-		    backgroundColor:'#999',
-		    height:25
+		    layout:"horizontal",
+			width:Ti.UI.SIZE,
+			height:Ti.UI.SIZE,			
 		});
-		var headerLabel = Ti.UI.createLabel({
-		    font:{fontFamily:'Helvetica Neue',fontSize:19,fontWeight:'bold'},
-		    text:inputData[i].header,
-		    color:'#222',
-		    textAlign:'left',
-		    top:0,
-		    left:5,
-		    width:Ti.UI.SIZE,
-		    height:25
-		});
-		vista.add(headerLabel);
-		 
-		data[i] = Ti.UI.createTableViewSection({
-		    headerView:vista
-		});
-		data[i].add(Ti.UI.createTableViewRow({title:inputData[i].title}));
-	}
-	$.tblvwficha.data=data;		
+		vista.add( CrearLabelTitulo('Responsable'));		
+		vista.add( rowdata);
+		data_ficha_retys.add(vista);
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+				
+		data_ficha_retys.add( CreaBloque('Normatividad',data.normatividad) );
 		
+		$.scrllvw.add(data_ficha_retys);
+				
+		$.vistaficharetys.zIndex = 11;
+		$.vistaficharetys.visible = true;
 		
-	$.vistaficharetys.zIndex = 11;
-	$.vistaficharetys.visible = true;
+		$.activityIndicator.hide();	
+	});
+};
+
+var ConsultaFichaRETyS = function(id_ficha_retys,callback){
+	var
+	nodata = Ti.UI.createAlertDialog({
+				    cancel: 0,
+				    buttonNames: ['Aceptar'],
+				    message: 'No se encontró información en RETyS para éste trámite...',
+				    title: 'Ficha RETyS'
+			 }),
+	errorresponse = Ti.UI.createAlertDialog({
+				    cancel: 0,
+				    buttonNames: ['Aceptar'],
+				    message: 'Ocurrió un problema al intentar obtener la ficha RETyS, favor de intentarlo más tarde...',
+				    title: 'Ficha RETyS'
+			 }),			 
+	sendit = Ti.Network.createHTTPClient({
+	 	timeout : 15000,
+	 	onerror : function(e) {	
+	  		Ti.API.debug(e.error);
+	  		errorresponse.show();
+	  		$.activityIndicator.hide();		  		
+	 	},
+	 	onload : function() {
+	 		var json = null;
+	 		try {
+	 			var responsemime = this.responseData.mimeType;	 			
+	 			if (responsemime != 'text/html') {	 			
+					json = JSON.parse(this.responseText);
+				} else {
+					errorresponse.show();
+					return;					
+				}
+			}
+			catch (e) {
+				Ti.API.debug(e.message);
+		  		errorresponse.show();
+			}
+						
+			if (json.length == 0) {
+				nodata.show();
+		 	} else {
+		 		if (json.exito == 1) {
+	 				callback (json);
+	 			} else {
+	 				nodata.show();
+	 			}
+	 		}
+			$.activityIndicator.hide();			
+		}
+	});	
+	
+	if (id_ficha_retys) {
+		var
+			format = "json",
+			url = "http://10.10.20.132/REST_retys/index.php/servicio/consulta_tramite/format/" + format + "/" + id_ficha_retys;
+		
+		sendit.open('GET',url);
+		sendit.cache = false;
+		sendit.setRequestHeader('Content-Type', 'application/json; charset=utf-8');			
+		sendit.send();		
+	} else {
+		nodata.show();
+		$.activityIndicator.hide();
+	}	
+	
 };
 
 cambia_vista(1);

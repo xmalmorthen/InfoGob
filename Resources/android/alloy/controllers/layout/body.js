@@ -8,13 +8,16 @@ function Controller() {
     var exports = {};
     $.__views.body = Ti.UI.createView({
         height: "100%",
-        layout: "vertical",
-        backgroundColor: "white",
+        backgroundColor: Alloy.Globals.Theme.backgroundColor,
+        apiName: "Ti.UI.View",
+        classes: [ "body" ],
         id: "body"
     });
     $.__views.body && $.addTopLevelView($.__views.body);
-    $.__views.menue = Alloy.createController("/menue", {
+    $.__views.menue = Alloy.createController("/menue/menue", {
+        apiName: "Alloy.Require",
         id: "menue",
+        classes: [],
         __parentSymbol: $.__views.body
     });
     $.__views.menue.setParent($.__views.body);

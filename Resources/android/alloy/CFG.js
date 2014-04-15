@@ -1,1 +1,1 @@
-module.exports={"dependencies":{}};
+module.exports={"autoStyle":true,"dependencies":{}};

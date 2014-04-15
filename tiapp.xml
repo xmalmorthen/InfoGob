@@ -3,10 +3,10 @@
     <id>com.developc.infogob</id>
     <name>InfoGob</name>
     <version>1.0</version>
-    <publisher>Proyecto2</publisher>
+    <publisher>Xmal Morthen</publisher>
     <url>http://</url>
-    <description>not specified</description>
-    <copyright>2014 by Proyecto2</copyright>
+    <description>Información de Gobierno</description>
+    <copyright>2014 by Xmal Morthen</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
@@ -47,7 +47,9 @@
         </splash>
         <theme>default</theme>
     </mobileweb>
-    <modules/>
+    <modules>
+        <module platform="android">ti.map</module>
+    </modules>
     <deployment-targets>
         <target device="iphone">false</target>
         <target device="ipad">false</target>
@@ -56,7 +58,7 @@
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
-    <sdk-version>3.2.1.GA</sdk-version>
+    <sdk-version>3.2.2.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>

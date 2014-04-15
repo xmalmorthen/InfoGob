@@ -7,25 +7,26 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.index = Ti.UI.createWindow({
-        backgroundColor: "white",
+        backgroundColor: Alloy.Globals.Theme.backgroundColor,
         layout: "vertical",
         exitOnClose: true,
-        title: "Gobierno del Estado de Colima",
+        title: Alloy.Globals.resources.appTitle,
+        apiName: "Ti.UI.Window",
+        classes: [ "container" ],
         id: "index"
     });
     $.__views.index && $.addTopLevelView($.__views.index);
     $.__views.header = Alloy.createController("/layout/header", {
+        apiName: "Alloy.Require",
         id: "header",
+        classes: [],
         __parentSymbol: $.__views.index
     });
     $.__views.header.setParent($.__views.index);
-    $.__views.divider_header = Alloy.createController("/layout/divider", {
-        id: "divider_header",
-        __parentSymbol: $.__views.index
-    });
-    $.__views.divider_header.setParent($.__views.index);
     $.__views.body = Alloy.createController("/layout/body", {
+        apiName: "Alloy.Require",
         id: "body",
+        classes: [],
         __parentSymbol: $.__views.index
     });
     $.__views.body.setParent($.__views.index);

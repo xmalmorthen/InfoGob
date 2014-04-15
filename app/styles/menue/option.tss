@@ -1,0 +1,35 @@
+"#scroll_vw":{
+	contentWidth					: 'auto',
+	contentHeight					: 'auto',
+	showVerticalScrollIndicator		: true,
+	showHorizontalScrollIndicator	: false,
+	height							: '200dp',
+	width							: '30%',
+	layout							: 'vertical',
+	borderColor						: '#COCOCO',
+	borderWidth						: '3dp',
+	borderRadius					: '8dp'
+},
+"#vw_header":{
+	width							: 'auto',
+	height							: 'auto',
+	layout							: 'horizontal',
+	borderColor						: 'green',
+	borderWidth						: 1
+},
+"#option_img":{
+	width							: 'auto',
+	height							: 'auto'
+},
+"#option_title":{
+	width							: 'auto',
+	height							: 'auto'
+},
+"#option_description":{
+	width							: 'auto',
+	height							: 'auto'
+},
+"#option_actions":{
+	borderColor						: 'green',
+	borderWidth						: 1
+}

@@ -1,6 +1,6 @@
 ".container": {
-	backgroundColor:"white",
+	backgroundColor: Alloy.Globals.Theme.backgroundColor,
 	layout:'vertical',
 	exitOnClose: true,
-	title: 'Gobierno del Estado de Colima'
+	title: Alloy.Globals.resources.appTitle	
 }

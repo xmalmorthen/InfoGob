@@ -1,7 +1,6 @@
 <Alloy>
 	<Window class="container">
 		<Require type="view" src="/layout/header" id="header"/>		
-		<Require type="view" src="/layout/divider" id="divider_header"/>
-		<Require type="view" src="/layout/body" id="body"/>			
+		<Require type="view" src="/layout/body" id="body"/>
 	</Window>
 </Alloy>

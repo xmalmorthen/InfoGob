@@ -1,1 +1,1 @@
-module.exports = [{"isClass":true,"priority":10000.0003,"key":"menue","style":{top:10,}}];
+module.exports = [{"isClass":true,"priority":10000.0003,"key":"menue","style":{top:1,}},{"isClass":true,"priority":10000.0004,"key":"activityIndicator","style":{color:"black",font:{fontFamily:Alloy.Globals.Fuente.fontFamily,fontSize:Alloy.Globals.Fuente.tamanioActivityIndicator,fontWeight:"bold",},message:Alloy.Globals.resources.ActivityIndicator,style:Alloy.Globals.Theme.activityindicator.style,bottom:"5dp",right:"5dp",height:Ti.UI.SIZE,width:Ti.UI.SIZE,zIndex:9999,}}];
