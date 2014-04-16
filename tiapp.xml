@@ -38,7 +38,31 @@
             </dict>
         </plist>
     </ios>
-    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest>
+            <application>
+                <activity android:alwaysRetainTaskState="true"
+                    android:configChanges="keyboardHidden|orientation"
+                    android:label="InfoGob"
+                    android:name=".InfoGobActivity" android:theme="@style/Theme.Titanium">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN"/>
+                        <category android:name="android.intent.category.LAUNCHER"/>
+                    </intent-filter>
+                </activity>
+            </application>
+            <uses-sdk android:minSdkVersion="11" />
+            <uses-sdk android:targetSdkVersion="11"/>
+            <supports-screens
+	            android:smallScreens="false"
+	            android:normalScreens="true"
+	            android:largeScreens="true"
+	            android:anyDensity="false"
+        	/>
+        </manifest>
+        <tool-api-level>11</tool-api-level>
+        <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
+    </android>
     <mobileweb>
         <precache/>
         <splash>

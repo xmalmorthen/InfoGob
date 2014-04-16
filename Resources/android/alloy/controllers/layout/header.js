@@ -17,7 +17,7 @@ function Controller() {
     });
     $.__views.header && $.addTopLevelView($.__views.header);
     $.__views.header_image = Ti.UI.createImageView({
-        image: "/images/own/48x48/lightbulb.png",
+        image: "/images/own/128x128/tag_info.png",
         width: Alloy.Globals.Imagen.superenorme,
         height: Alloy.Globals.Imagen.superenorme,
         left: 1,
@@ -45,7 +45,7 @@ function Controller() {
             fontStyle: "normal",
             fontWeight: "bold"
         },
-        left: 2,
+        left: 5,
         text: Alloy.Globals.resources.header.titulo,
         apiName: "Ti.UI.Label",
         id: "header_titulo",
@@ -60,7 +60,7 @@ function Controller() {
             fontStyle: "italic",
             fontWeight: "normal"
         },
-        left: 2,
+        left: 5,
         text: Alloy.Globals.resources.header.subtitulo,
         apiName: "Ti.UI.Label",
         id: "header_subtitulo",

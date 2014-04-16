@@ -9,7 +9,7 @@ function Controller() {
     var __defers = {};
     $.__views.main_view = Ti.UI.createView({
         width: "90%",
-        height: "200dp",
+        height: "270dp",
         layout: "vertical",
         top: 5,
         bottom: 5,
@@ -32,8 +32,8 @@ function Controller() {
     });
     $.__views.main_view.add($.__views.vw_header);
     $.__views.option_img = Ti.UI.createImageView({
-        width: Alloy.Globals.Imagen.mediana,
-        height: Alloy.Globals.Imagen.mediana,
+        width: Alloy.Globals.Imagen.grande,
+        height: Alloy.Globals.Imagen.grande,
         left: 0,
         apiName: "Ti.UI.ImageView",
         id: "option_img",
@@ -45,7 +45,8 @@ function Controller() {
         height: Ti.UI.SIZE,
         layout: "vertical",
         bottom: 1,
-        left: Alloy.Globals.Imagen.mediana,
+        left: Alloy.Globals.Imagen.grande,
+        right: 3,
         apiName: "Ti.UI.View",
         id: "vw_labels_header",
         classes: [ "fit_size" ]
@@ -61,7 +62,7 @@ function Controller() {
             fontStyle: "normal",
             fontWeight: "bold"
         },
-        left: 1,
+        left: 2,
         apiName: "Ti.UI.Label",
         id: "option_title",
         classes: [ "fit_size" ]
@@ -76,7 +77,7 @@ function Controller() {
             fontSize: Alloy.Globals.Fuente.tamanioFuenteTexto,
             fontStyle: "normal"
         },
-        left: 1,
+        left: 2,
         apiName: "Ti.UI.Label",
         id: "option_subtitle",
         classes: [ "fit_size" ]
@@ -85,7 +86,7 @@ function Controller() {
     $.__views.option_actions = Ti.UI.createView({
         width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
-        top: 3,
+        bottom: 1,
         right: 2,
         layout: "horizontal",
         apiName: "Ti.UI.View",
@@ -98,7 +99,7 @@ function Controller() {
         height: Alloy.Globals.Imagen.pequenia,
         left: 2,
         right: 2,
-        image: "/images/own/48x48/doc_lines.png",
+        image: "/images/own/128x128/bullet_info.png",
         apiName: "Ti.UI.ImageView",
         id: "action_require",
         classes: []
@@ -106,18 +107,18 @@ function Controller() {
     $.__views.option_actions.add($.__views.action_require);
     action_require ? $.__views.action_require.addEventListener("click", action_require) : __defers["$.__views.action_require!click!action_require"] = true;
     $.__views.action_open = Ti.UI.createImageView({
-        width: Alloy.Globals.Imagen.pequenia,
-        height: Alloy.Globals.Imagen.pequenia,
+        width: Alloy.Globals.Imagen.grande,
+        height: Alloy.Globals.Imagen.grande,
         left: 2,
         right: 2,
-        image: "/images/own/48x48/doc_lines.png",
+        image: "/images/own/128x128/bullet_accept.png",
         apiName: "Ti.UI.ImageView",
         id: "action_open",
         classes: []
     });
     $.__views.option_actions.add($.__views.action_open);
     action_open ? $.__views.action_open.addEventListener("click", action_open) : __defers["$.__views.action_open!click!action_open"] = true;
-    $.__views.__alloyId0 = Ti.UI.createView({
+    $.__views.__alloyId1 = Ti.UI.createView({
         top: "2dp",
         height: "1dp",
         width: "70%",
@@ -125,9 +126,9 @@ function Controller() {
         backgroundColor: Alloy.Globals.Theme.dividerColor,
         apiName: "Ti.UI.View",
         classes: [ "divider" ],
-        id: "__alloyId0"
+        id: "__alloyId1"
     });
-    $.__views.main_view.add($.__views.__alloyId0);
+    $.__views.main_view.add($.__views.__alloyId1);
     $.__views.scroll_vw = Ti.UI.createScrollView({
         top: 1,
         height: "84dp",

@@ -1,7 +1,8 @@
 "#principal_content_options":{
 	height							: 'auto',
 	width							: 'auto',
-	showVerticalScrollIndicator		: true
+	showVerticalScrollIndicator		: true,
+	bottom							: 5
 },
 "#panel_opciones":{
 	layout				:"vertical",	

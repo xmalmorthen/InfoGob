@@ -4,8 +4,6 @@ $.option_img.image = args.image;
 $.option_title.text = args.title || '';
 $.option_subtitle.text = args.subtitle || '';
 $.option_description.text = args.description || '';
-
-
   
 var 
 action_description = function(){	

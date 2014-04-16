@@ -2,27 +2,26 @@
 	layout							: 'vertical',
 	top								: 5,
 	bottom							: 5,
-	height							: '200dp',
+	height							: '270dp',
 	width							: '90%',
 	borderColor						: Alloy.Globals.Menue.bordercolor,
 	borderWidth						: Alloy.Globals.Menue.borderwidth,
 	borderRadius					: Alloy.Globals.Menue.borderradius	
 },
 "#vw_header":{
-	width							: Ti.UI.SIZE,
-	height							: Ti.UI.SIZE,
 	top								: 5,
 	left							: 5,
 },
 "#option_img":{
-	width 							: Alloy.Globals.Imagen.mediana, 
-	height 							: Alloy.Globals.Imagen.mediana,
+	width 							: Alloy.Globals.Imagen.grande, 
+	height 							: Alloy.Globals.Imagen.grande,
 	left							: 0
 },
 "#vw_labels_header":{
 	layout							: 'vertical',
 	bottom							: 1,
-	left							: Alloy.Globals.Imagen.mediana
+	left							: Alloy.Globals.Imagen.grande,
+	right							: 3
 },
 "#option_title":{	
 	color							: Alloy.Globals.Fuente.colorTitulo,
@@ -32,7 +31,7 @@
         fontStyle					: 'normal',
         fontWeight					: 'bold'
     },
-    left 							: 1    
+    left 							: 2    
 },
 "#option_subtitle":{
 	color							: Alloy.Globals.Fuente.colorTexto,
@@ -41,7 +40,12 @@
         fontSize					: Alloy.Globals.Fuente.tamanioFuenteTexto,
         fontStyle					: 'normal',
    },
-   left 							: 1
+   left 							: 2
+},
+"#option_actions":{
+	bottom							: 1,
+	right							: 2,
+	layout							: 'horizontal'	
 },
 "#scroll_vw":{
 	top								: 1,
@@ -68,24 +72,19 @@
 	width							: Ti.UI.SIZE,
 	height							: Ti.UI.SIZE
 },
-"#option_actions":{
-	top								: 3,
-	right							: 2,
-	layout							: 'horizontal'	
-},
 "#action_require":{
 	width 							: Alloy.Globals.Imagen.pequenia, 
 	height 							: Alloy.Globals.Imagen.pequenia,
 	left							: 2,
 	right							: 2,
-	image							: '/images/own/48x48/doc_lines.png'
+	image							: '/images/own/128x128/bullet_info.png'
 },
 "#action_open":{
-	width 							: Alloy.Globals.Imagen.pequenia, 
-	height 							: Alloy.Globals.Imagen.pequenia,
+	width 							: Alloy.Globals.Imagen.grande, 
+	height 							: Alloy.Globals.Imagen.grande,
 	left							: 2,
 	right							: 2,
-	image							: '/images/own/48x48/doc_lines.png'
+	image							: '/images/own/128x128/bullet_accept.png'
 },
 ".divider":{
 	top								: "2dp",

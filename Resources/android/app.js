@@ -6,6 +6,7 @@ Alloy.Globals.Height = Titanium.Platform.displayCaps.platformHeight;
 
 Alloy.Globals.Theme = {
     backgroundColor: "#cacaca",
+    backgroundImage: "/images/own/background/logo_gob.png",
     dividerColor: "#363636",
     activityindicator: {
         style: Titanium.UI.ActivityIndicatorStyle.BIG
@@ -21,6 +22,7 @@ Alloy.Globals.Menue = {
 var TamanioImagenBase = 60, TamanioTextoBase = 15;
 
 Alloy.Globals.Imagen = {
+    background: "250dp",
     superenorme: TamanioImagenBase + TamanioImagenBase + "dp",
     enorme: TamanioImagenBase + TamanioImagenBase / 2 + "dp",
     grande: TamanioImagenBase + TamanioImagenBase / 3 + "dp",
@@ -31,15 +33,15 @@ Alloy.Globals.Imagen = {
 
 Alloy.Globals.Fuente = {
     fontFamily: "Helveltica",
-    colorTitulo: "#000",
-    colorSubtitulo: "#A2A2A2",
+    colorTitulo: "#BD1B1B",
+    colorSubtitulo: "#363636",
     colorTexto: "#000",
     colorActivityIndicator: "red",
-    tamanioFuenteTitulo: TamanioTextoBase + 10 + "dp",
-    tamanioFuenteSubTitulo: TamanioTextoBase + "dp",
-    tamanioFuenteLista: TamanioTextoBase + "dp",
-    tamanioFuenteSubLista: TamanioTextoBase - 3 + "dp",
-    tamanioFuenteTexto: TamanioTextoBase - 3 + "dp",
+    tamanioFuenteTitulo: TamanioTextoBase + 13 + "dp",
+    tamanioFuenteSubTitulo: TamanioTextoBase + 3 + "dp",
+    tamanioFuenteLista: TamanioTextoBase + 3 + "dp",
+    tamanioFuenteSubLista: TamanioTextoBase - 1 + "dp",
+    tamanioFuenteTexto: TamanioTextoBase - 1 + "dp",
     tamanioActivityIndicator: TamanioTextoBase + "dp"
 };
 

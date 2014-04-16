@@ -1,5 +1,8 @@
 <Alloy>
-	<View class="body">
-		<Require type="view" src="/menue/menue" id="menue" />
+	<View>
+		<ImageView id="background_image" />
+		<View class="body">
+			<Require type="view" src="/menue/menue" id="menue" />
+		</View>		
 	</View>
 </Alloy>

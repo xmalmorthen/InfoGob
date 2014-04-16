@@ -1,5 +1,5 @@
 "#header_image":{
-	image				: "/images/own/48x48/lightbulb.png", 
+	image				: "/images/own/128x128/tag_info.png", 
 	width 				: Alloy.Globals.Imagen.superenorme, 
 	height 				: Alloy.Globals.Imagen.superenorme,
 	left				: 1
@@ -19,7 +19,7 @@
         fontStyle		: 'normal',
         fontWeight		: 'bold'
     },
-    left				: 2,
+    left				: 5,
 	text				: Alloy.Globals.resources.header.titulo
 },
 "#header_subtitulo": {
@@ -30,6 +30,6 @@
         fontStyle		: 'italic',
         fontWeight		: 'normal'
     },
-    left				: 2,
+    left				: 5,
 	text				: Alloy.Globals.resources.header.subtitulo	
 }

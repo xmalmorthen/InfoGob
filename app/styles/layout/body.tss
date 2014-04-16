@@ -1,6 +1,12 @@
 ".body":{
 	height				:'100%', 
-	backgroundColor		: Alloy.Globals.Theme.backgroundColor,
 	top					: 10
+},
+"#background_image":{
+	image				: Alloy.Globals.Theme.backgroundImage,
+	height				: Alloy.Globals.Imagen.background,
+	width				: Alloy.Globals.Imagen.background,
+	right				: 2,
+	bottom				: 2,
+	opacity				: 0.5
 }
-

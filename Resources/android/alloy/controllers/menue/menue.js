@@ -29,6 +29,7 @@ function Controller() {
         height: "auto",
         width: "auto",
         showVerticalScrollIndicator: true,
+        bottom: 5,
         apiName: "Ti.UI.ScrollView",
         id: "principal_content_options",
         classes: []
@@ -47,51 +48,63 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var option = Alloy.createController("/menue/option", {
-        image: "/images/own/48x48/doc_lines.png",
+        image: "/images/own/128x128/photo_zoom.png",
         title: "Kioscos de Gobierno",
-        subtitle: "Ubica en el mapa los Kioscos más cercanos a tu ubicación...",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        require: "Lista de requerimientos"
+        subtitle: "Muestra en el mapa los Kioscos más cercanos a tu ubicación...",
+        description: "Mediante el posicionamiento GPS, permite ubicar en el mapa los distintos Kioscos de Gobierno y su proximidad con respecto a su ubicación, en caso de no tener GPS activo, sólo se mostrarán las ubicaciónes de los Kioscos, así mismo tendrá la opción de revisar una lista con los Kioscos que gobierno tiene a sus servicio...",
+        require: {
+            gps: true,
+            internet: true
+        },
+        callcontroller: ""
     }).getView();
     $.panel_opciones.add(option);
     option = Alloy.createController("/menue/option", {
-        image: "/images/own/48x48/doc_lines.png",
-        title: "Lugares con Internét",
-        subtitle: "Ubica en el mapa los puntos con internét más cercanos a tu ubicación...",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        require: "Lista de requerimientos"
+        image: "/images/own/128x128/note_tagged.png",
+        title: "Módulos CURP",
+        subtitle: "Muestra en el mapa lo Módulos CURP más cercanos a tu ubicación...",
+        description: "Mediante el posicionamiento GPS, permite ubicar en el mapa los distintos Módulos CURP de Gobierno y su proximidad con respecto a su ubicación, en caso de no tener GPS activo, sólo se mostrarán las ubicaciónes de los Módulos CURP, así mismo tendrá la opción de revisar una lista con los Módulos CURP que gobierno tiene a sus servicio...",
+        require: {
+            gps: true,
+            internet: true
+        },
+        callcontroller: ""
     }).getView();
     $.panel_opciones.add(option);
     option = Alloy.createController("/menue/option", {
-        image: "/images/own/48x48/doc_lines.png",
-        title: "Lugares con Internét",
-        subtitle: "Ubica en el mapa los puntos con internét más cercanos a tu ubicación...",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        require: "Lista de requerimientos"
+        image: "/images/own/128x128/rss.png",
+        title: "Zona Internet Gratuita",
+        subtitle: "Muestra en el mapa los Espacios con Internet gratuito más cercanos a tu ubicación...",
+        description: "Mediante el posicionamiento GPS, permite ubicar en el mapa los distintos espacios con Internet y su proximidad con respecto a su ubicación, en caso de no tener GPS activo, sólo se mostrarán las ubicaciónes de los espacios con Internét, así mismo tendrá la opción de revisar una lista con los espacios con Internet que gobierno tiene a sus servicio...",
+        require: {
+            gps: true,
+            internet: true
+        },
+        callcontroller: ""
     }).getView();
     $.panel_opciones.add(option);
     option = Alloy.createController("/menue/option", {
-        image: "/images/own/48x48/doc_lines.png",
-        title: "Lugares con Internét",
-        subtitle: "Ubica en el mapa los puntos con internét más cercanos a tu ubicación...",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        require: "Lista de requerimientos"
+        image: "/images/own/128x128/user_starred.png",
+        title: "Directorio Integral",
+        subtitle: "Consulta al Directorio Integral de Gobierno del Estado de Colima...",
+        description: "Haga las busquedas en el directorio para consultar los datos de ubicación y contacto de algún funcionario de Gobierno del Estado de Colima...",
+        require: {
+            gps: false,
+            internet: true
+        },
+        callcontroller: ""
     }).getView();
     $.panel_opciones.add(option);
     option = Alloy.createController("/menue/option", {
-        image: "/images/own/48x48/doc_lines.png",
-        title: "Lugares con Internét",
-        subtitle: "Ubica en el mapa los puntos con internét más cercanos a tu ubicación...",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        require: "Lista de requerimientos"
-    }).getView();
-    $.panel_opciones.add(option);
-    option = Alloy.createController("/menue/option", {
-        image: "/images/own/48x48/doc_lines.png",
-        title: "Lugares con Internét",
-        subtitle: "Ubica en el mapa los puntos con internét más cercanos a tu ubicación...",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        require: "Lista de requerimientos"
+        image: "/images/own/128x128/note_starred.png",
+        title: "RETyS",
+        subtitle: "Registro Estatal de Trámites y Servicios...",
+        description: "Consulte la información completa sobre algun trámite en específico, lugares donde poder realizarlos, requisitos, horarios de atención, entre otras...",
+        require: {
+            gps: false,
+            internet: true
+        },
+        callcontroller: ""
     }).getView();
     $.panel_opciones.add(option);
     _.extend($, exports);

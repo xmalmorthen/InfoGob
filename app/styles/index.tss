@@ -1,6 +1,6 @@
 ".container": {
-	backgroundColor: Alloy.Globals.Theme.backgroundColor,
-	layout:'vertical',
-	exitOnClose: true,
-	title: Alloy.Globals.resources.appTitle	
+	backgroundColor		: Alloy.Globals.Theme.backgroundColor,
+	layout				: 'vertical',
+	exitOnClose			: true,
+	title				: Alloy.Globals.resources.appTitle
 }
