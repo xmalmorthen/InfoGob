@@ -9,6 +9,7 @@ function Controller() {
     $.__views.body = Ti.UI.createView({
         height: "100%",
         backgroundColor: Alloy.Globals.Theme.backgroundColor,
+        top: 10,
         apiName: "Ti.UI.View",
         classes: [ "body" ],
         id: "body"

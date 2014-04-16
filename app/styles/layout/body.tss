@@ -1,5 +1,6 @@
 ".body":{
 	height				:'100%', 
-	backgroundColor		: Alloy.Globals.Theme.backgroundColor
+	backgroundColor		: Alloy.Globals.Theme.backgroundColor,
+	top					: 10
 }
 

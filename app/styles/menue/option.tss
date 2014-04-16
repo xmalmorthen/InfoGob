@@ -1,14 +1,12 @@
 "#main_view":{
 	layout							: 'vertical',
-	left							: 10,
-	right							: 10,
-	top								: 10,
-	bottom							: 10,
+	top								: 5,
+	bottom							: 5,
 	height							: '200dp',
-	width							: '45%',
-	borderColor						: 'red',
-	borderWidth						: '3dp',
-	borderRadius					: 10	
+	width							: '90%',
+	borderColor						: Alloy.Globals.Menue.bordercolor,
+	borderWidth						: Alloy.Globals.Menue.borderwidth,
+	borderRadius					: Alloy.Globals.Menue.borderradius	
 },
 "#vw_header":{
 	width							: Ti.UI.SIZE,

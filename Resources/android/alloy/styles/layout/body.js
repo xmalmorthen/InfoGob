@@ -1,1 +1,1 @@
-module.exports = [{"isClass":true,"priority":10000.0003,"key":"body","style":{height:"100%",backgroundColor:Alloy.Globals.Theme.backgroundColor,}}];
+module.exports = [{"isClass":true,"priority":10000.0003,"key":"body","style":{height:"100%",backgroundColor:Alloy.Globals.Theme.backgroundColor,top:10,}}];

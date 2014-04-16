@@ -1,4 +1,6 @@
 <Alloy>
 	<ActivityIndicator id="activityIndicator" class="activityIndicator" />
-	<View id="panel_opciones" borderColor="red" borderWidth="1" />	
+	<ScrollView id="principal_content_options">		
+		<View id="panel_opciones" />
+	</ScrollView>	
 </Alloy>

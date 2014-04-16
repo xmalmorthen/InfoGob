@@ -1,8 +1,13 @@
+"#principal_content_options":{
+	height							: 'auto',
+	width							: 'auto',
+	showVerticalScrollIndicator		: true
+},
 "#panel_opciones":{
-	layout				:"horizontal",	
+	layout				:"vertical",	
 	top					: 3,
-	left				: 120,
-	right				: 120
+	left				: 3,
+	right				: 3
 },
 ".activityIndicator":{	
 	color				: 'black',

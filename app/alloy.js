@@ -6,12 +6,19 @@ Alloy.Globals.Height = Titanium.Platform.displayCaps.platformHeight; //Dimensió
 //Theme
 Alloy.Globals.Theme = {
 	backgroundColor 	: '#cacaca',
-	dividerColor		: '#000',
+	dividerColor		: '#363636',
 	activityindicator	: {
 		style			: Titanium.UI.ActivityIndicatorStyle.BIG		
 	}		
 };
 //******************************************************************************************************
+
+Alloy.Globals.Menue ={
+	bordercolor			: '#6F6E6E',
+	borderwidth			: '3',
+	borderradius		: '10'
+};
+
 
 var 
 	TamanioImagenBase = 60,
@@ -19,6 +26,7 @@ var
 
 //Tamaño de imagenes
 Alloy.Globals.Imagen = {
+	superenorme :  (TamanioImagenBase + TamanioImagenBase) + 'dp',
 	enorme 		:  (TamanioImagenBase + (TamanioImagenBase / 2)) + 'dp',	
 	grande 		:  (TamanioImagenBase + (TamanioImagenBase / 3)) + 'dp',
 	mediana 	:  (TamanioImagenBase) + 'dp',

@@ -4,6 +4,8 @@ $.option_img.image = args.image;
 $.option_title.text = args.title || '';
 $.option_subtitle.text = args.subtitle || '';
 $.option_description.text = args.description || '';
+
+
   
 var 
 action_description = function(){	
@@ -21,8 +23,8 @@ action_description = function(){
     
 },
 action_require = function(){
-	alert('action_require');
+	alert(args.subtitle || '');
 }, 
 action_open = function(){
-	alert('action_open');
+	alert(args.subtitle || '');
 };

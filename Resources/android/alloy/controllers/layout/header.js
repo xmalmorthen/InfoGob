@@ -18,8 +18,8 @@ function Controller() {
     $.__views.header && $.addTopLevelView($.__views.header);
     $.__views.header_image = Ti.UI.createImageView({
         image: "/images/own/48x48/lightbulb.png",
-        width: Alloy.Globals.Imagen.enorme,
-        height: Alloy.Globals.Imagen.enorme,
+        width: Alloy.Globals.Imagen.superenorme,
+        height: Alloy.Globals.Imagen.superenorme,
         left: 1,
         apiName: "Ti.UI.ImageView",
         id: "header_image",
@@ -30,7 +30,7 @@ function Controller() {
         layout: "vertical",
         height: Ti.UI.SIZE,
         width: Ti.UI.SIZE,
-        left: Alloy.Globals.Imagen.enorme,
+        left: Alloy.Globals.Imagen.superenorme,
         bottom: 1,
         apiName: "Ti.UI.View",
         id: "vw_header_labels",

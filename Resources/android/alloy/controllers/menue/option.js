@@ -8,16 +8,14 @@ function Controller() {
     var exports = {};
     var __defers = {};
     $.__views.main_view = Ti.UI.createView({
-        width: "45%",
+        width: "90%",
         height: "200dp",
         layout: "vertical",
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 10,
-        borderColor: "red",
-        borderWidth: "3dp",
-        borderRadius: 10,
+        top: 5,
+        bottom: 5,
+        borderColor: Alloy.Globals.Menue.bordercolor,
+        borderWidth: Alloy.Globals.Menue.borderwidth,
+        borderRadius: Alloy.Globals.Menue.borderradius,
         apiName: "Ti.UI.View",
         id: "main_view",
         classes: [ "fit_size" ]
@@ -167,9 +165,9 @@ function Controller() {
     $.option_subtitle.text = args.subtitle || "";
     $.option_description.text = args.description || "";
     var action_require = function() {
-        alert("action_require");
+        alert(args.subtitle || "");
     }, action_open = function() {
-        alert("action_open");
+        alert(args.subtitle || "");
     };
     __defers["$.__views.action_require!click!action_require"] && $.__views.action_require.addEventListener("click", action_require);
     __defers["$.__views.action_open!click!action_open"] && $.__views.action_open.addEventListener("click", action_open);
