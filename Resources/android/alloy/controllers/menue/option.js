@@ -118,7 +118,7 @@ function Controller() {
     });
     $.__views.option_actions.add($.__views.action_open);
     action_open ? $.__views.action_open.addEventListener("click", action_open) : __defers["$.__views.action_open!click!action_open"] = true;
-    $.__views.__alloyId1 = Ti.UI.createView({
+    $.__views.__alloyId2 = Ti.UI.createView({
         top: "2dp",
         height: "1dp",
         width: "70%",
@@ -126,9 +126,9 @@ function Controller() {
         backgroundColor: Alloy.Globals.Theme.dividerColor,
         apiName: "Ti.UI.View",
         classes: [ "divider" ],
-        id: "__alloyId1"
+        id: "__alloyId2"
     });
-    $.__views.main_view.add($.__views.__alloyId1);
+    $.__views.main_view.add($.__views.__alloyId2);
     $.__views.scroll_vw = Ti.UI.createScrollView({
         top: 1,
         height: "84dp",
@@ -166,7 +166,15 @@ function Controller() {
     $.option_subtitle.text = args.subtitle || "";
     $.option_description.text = args.description || "";
     var action_require = function() {
-        alert(args.subtitle || "");
+        var close_fnc = function() {
+            dlg.vw_dialog.visible = false;
+            dlg = null;
+        }, dlg = Alloy.createController("/menue/dialog", {
+            image: "images/own/48x48/doc_lines.png",
+            title: "Kioscos de Gobierno",
+            message: "Prueba de dialogo",
+            close: close_fnc
+        }).getView();
     }, action_open = function() {
         alert(args.subtitle || "");
     };

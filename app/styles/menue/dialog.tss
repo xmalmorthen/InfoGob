@@ -1,0 +1,56 @@
+".subview": {
+  	width				: '100%',
+  	height				: '100%',
+  	visible				: true
+},
+".subviewchildren": {
+	borderColor			:'#888',
+	borderWidth			:2,
+	borderRadius		:8,
+	backgroundColor		:'#F7F7F7',
+  	width				:'80%',
+  	height				: Ti.UI.SIZE,
+  	layout				:'vertical'
+},
+"#vw_header":{
+	width				: "100%",
+	height				: Ti.UI.SIZE
+},
+"#ing_header":{
+	width				: 48,
+	height				: 48,
+	top					: 7,
+	left				: 5
+},
+"#img_close":{
+	 width				: 32,
+	 height				: 32,
+	 top				: 7,
+	 right				: 10,
+	 image				: "/images/own/32x32/delete.png" 
+},
+".header_titulo": {
+	color				: "#000",
+	font: {
+        fontFamily		:'Helveltica',
+        fontSize		: '30dp',
+        fontStyle		: 'normal',
+        fontWeight		: 'bold'
+    },
+	left				:55,
+	top					:17
+},
+".divider":{
+	top					: 5,
+	height				: "1dp",
+	width				: "70%",
+	left				: "0dp",
+	top					: "1dp",
+	backgroundColor		: "#000"
+},
+"#scrllvw":{
+	showVerticalScrollIndicator 	: "true",
+	showHorizontalScrollIndicator	: "true",
+	height							: "99%",
+	width 							: "99%" 
+}

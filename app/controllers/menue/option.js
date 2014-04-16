@@ -6,22 +6,18 @@ $.option_subtitle.text = args.subtitle || '';
 $.option_description.text = args.description || '';
   
 var 
-action_description = function(){	
+action_require = function(){
 	var
 	close_fnc = function(){
-		option.vw_dialog.visible = false;
-		option = null;
+		dlg.vw_dialog.visible = false;
+		dlg = null;
 	},
-	option = Alloy.createController('menue/dialog', {
+	dlg = Alloy.createController('/menue/dialog', {
 				image 			: 'images/own/48x48/doc_lines.png',
                 title   		: 'Kioscos de Gobierno',
-                message			: decription,
+                message			: 'Prueba de dialogo',
                 close			: close_fnc
-    }).getView();
-    
-},
-action_require = function(){
-	alert(args.subtitle || '');
+    }).getView();    
 }, 
 action_open = function(){
 	alert(args.subtitle || '');

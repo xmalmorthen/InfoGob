@@ -1,0 +1,166 @@
+".content":{	
+	backgroundColor:"white",
+	exitOnClose:"false"
+},
+"#botonera_kioscos":{
+	layout:"horizontal",
+	width:Ti.UI.SIZE,
+	height:Ti.UI.SIZE,
+	left:5,
+	top:5,
+	zIndex:2,
+	opacity: 0.7
+},
+".btn_botonera":{
+	borderColor:'black',
+	borderWidth:1,
+	borderRadius:10,
+	backgroundColor:'#929090',
+	width:Ti.UI.SIZE,
+	height:Ti.UI.SIZE
+},
+".img_btn":{
+	width:50,
+	height:50,
+	top:5,
+	bottom:5,
+	left:5,
+	right:5
+},
+".lbl_btn":{
+	bottom:2,
+	color:'white',
+    font:{
+    	fontFamily:'Arial', 
+    	fontSize:18, 
+    	fontWeight:'bold'
+	}
+},
+".margin":{
+	 width:5,
+	 height:80,
+	 opacity:0 
+},
+"#content_kioscos":{
+	 width:'auto',
+	 height:'auto',
+	 zIndex:1
+},
+"#vista_mapa":{
+ 	animate:true,
+    mapType: Ti.Map.STANDARD_TYPE,
+    regionFit: true,
+    userLocation: true,
+	zIndex:2
+},
+"#vista_lista":{
+	backgroundColor:'white',	
+	zIndex:1	
+},
+".toastbanner":{
+	top:5,
+	right:5,
+	width:Ti.UI.SIZE,
+	height:Ti.UI.SIZE,
+	layout:"horizontal"
+},
+".toast":{
+	width:38,
+	height:38
+},
+"#toastINTERNET":{
+	width:30,
+	height:34
+},
+".botonera_inferior_derecha":{
+	bottom:5,
+	right:5,
+	width:Ti.UI.SIZE,
+	height:Ti.UI.SIZE,
+	layout:"horizontal"
+},
+"#lista_kioscos":{
+	top:80,
+	left:5,
+	right: 5 
+},
+".subview": {
+  	width:'100%',
+  	height:'100%',
+  	visible:false
+},
+".subviewchildren": {
+	borderColor:'#888',
+	borderWidth:2,
+	borderRadius:8,
+	backgroundColor:'#F7F7F7',
+  	width:'80%',
+  	height:'80%',
+  	layout:'vertical'
+},
+".divider":{
+	top:1,
+	height: "1dp",
+	width: "70%",
+	left:"0dp",
+	top:"1dp",
+	backgroundColor:"#000"
+},
+".header_titulo": {
+	color: "#000",
+	font: {
+        fontFamily:'Helveltica',
+        fontSize: '30dp',
+        fontStyle: 'normal',
+        fontWeight: 'bold'
+    },
+	left:55,
+	top:17
+},
+"#lista_tramiteskioscos":{
+	left:10
+},
+".descripcion_estructura":{
+	color: "#000",
+	font: {
+        fontFamily:'Helveltica',
+        fontSize: '16dp',
+        fontStyle: 'normal',
+        fontWeight: 'bold'
+    }
+},
+".dato_estructura":{
+	color: "#585858",
+	font: {
+        fontFamily:'Helveltica',
+        fontSize: '16dp',
+        fontStyle: 'normal'
+    },
+	left:5
+},
+"#activityIndicator":{
+	color: 'black',
+	font: {fontFamily:'Helvetica Neue', fontSize:26, fontWeight:'bold'},
+	message: 'Cargando...',
+	style:Titanium.UI.ActivityIndicatorStyle.BIG,
+	bottom:5,
+	right:5,
+	height:Ti.UI.SIZE,
+	width:Ti.UI.SIZE,
+	zIndex:9999	
+},
+"#vw_title_listakioscos":{
+	top:20, 
+	left:150,
+	width:Ti.UI.SIZE,
+	height:Ti.UI.SIZE
+},
+"#title_listakioscos":{
+	color: "#000",
+	font: {
+        fontFamily:'Helveltica',
+        fontSize: '44dp',
+        fontStyle: 'normal',
+        fontWeight: 'bold'
+    }  
+}
