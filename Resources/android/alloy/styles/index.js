@@ -1,1 +1,0 @@
-module.exports = [{"isClass":true,"priority":10000.0002,"key":"container","style":{backgroundColor:Alloy.Globals.Theme.backgroundColor,layout:"vertical",exitOnClose:true,title:Alloy.Globals.resources.appTitle,}}];
