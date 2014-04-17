@@ -84,33 +84,52 @@ function Controller() {
     });
     $.__views.vw_labels_header.add($.__views.option_subtitle);
     $.__views.option_actions = Ti.UI.createView({
-        width: Ti.UI.SIZE,
+        width: "auto",
         height: Ti.UI.SIZE,
         bottom: 1,
-        right: 2,
-        layout: "horizontal",
+        left: 3,
         apiName: "Ti.UI.View",
         id: "option_actions",
-        classes: [ "fit_size" ]
-    });
-    $.__views.main_view.add($.__views.option_actions);
-    $.__views.action_require = Ti.UI.createImageView({
-        width: Alloy.Globals.Imagen.pequenia,
-        height: Alloy.Globals.Imagen.pequenia,
-        left: 2,
-        right: 2,
-        image: "/images/own/128x128/bullet_info.png",
-        apiName: "Ti.UI.ImageView",
-        id: "action_require",
         classes: []
     });
-    $.__views.option_actions.add($.__views.action_require);
-    action_require ? $.__views.action_require.addEventListener("click", action_require) : __defers["$.__views.action_require!click!action_require"] = true;
+    $.__views.main_view.add($.__views.option_actions);
+    $.__views.vw_require = Ti.UI.createView({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        layout: "horizontal",
+        left: 5,
+        bottom: 1,
+        apiName: "Ti.UI.View",
+        id: "vw_require",
+        classes: [ "fit_size" ]
+    });
+    $.__views.option_actions.add($.__views.vw_require);
+    $.__views.img_internet = Ti.UI.createImageView({
+        width: Alloy.Globals.Imagen.mediana,
+        height: Alloy.Globals.Imagen.mediana,
+        right: 5,
+        image: "/images/own/128x128/bullet_accept.png",
+        apiName: "Ti.UI.ImageView",
+        id: "img_internet",
+        classes: [ "img_style" ]
+    });
+    $.__views.vw_require.add($.__views.img_internet);
+    internet_info ? $.__views.img_internet.addEventListener("click", internet_info) : __defers["$.__views.img_internet!click!internet_info"] = true;
+    $.__views.img_gps = Ti.UI.createImageView({
+        width: Alloy.Globals.Imagen.mediana,
+        height: Alloy.Globals.Imagen.mediana,
+        right: 5,
+        image: "/images/own/128x128/bullet_accept.png",
+        apiName: "Ti.UI.ImageView",
+        id: "img_gps",
+        classes: [ "img_style" ]
+    });
+    $.__views.vw_require.add($.__views.img_gps);
+    gps_info ? $.__views.img_gps.addEventListener("click", gps_info) : __defers["$.__views.img_gps!click!gps_info"] = true;
     $.__views.action_open = Ti.UI.createImageView({
         width: Alloy.Globals.Imagen.grande,
         height: Alloy.Globals.Imagen.grande,
-        left: 2,
-        right: 2,
+        right: 5,
         image: "/images/own/128x128/bullet_accept.png",
         apiName: "Ti.UI.ImageView",
         id: "action_open",
@@ -165,20 +184,27 @@ function Controller() {
     $.option_title.text = args.title || "";
     $.option_subtitle.text = args.subtitle || "";
     $.option_description.text = args.description || "";
-    var action_require = function() {
-        var close_fnc = function() {
-            dlg.vw_dialog.visible = false;
-            dlg = null;
-        }, dlg = Alloy.createController("/menue/dialog", {
-            image: "images/own/48x48/doc_lines.png",
-            title: "Kioscos de Gobierno",
-            message: "Prueba de dialogo",
-            close: close_fnc
-        }).getView();
+    $.img_gps.visible = args.require.gps;
+    $.img_internet.visible = args.require.internet;
+    var option = args.callcontroller, internet_info = function() {
+        Ti.UI.createAlertDialog({
+            cancel: 0,
+            buttonNames: [ "Aceptar" ],
+            message: "Es necesario contar con Internét o Plan de Datos...",
+            title: "Conexión a Internet"
+        }).show();
+    }, gps_info = function() {
+        Ti.UI.createAlertDialog({
+            cancel: 0,
+            buttonNames: [ "Aceptar" ],
+            message: "Se recomienda tener el GPS habilitado...",
+            title: "Posicionamiento GPS"
+        }).show();
     }, action_open = function() {
-        alert(args.subtitle || "");
+        Alloy.createController(option).getView().open();
     };
-    __defers["$.__views.action_require!click!action_require"] && $.__views.action_require.addEventListener("click", action_require);
+    __defers["$.__views.img_internet!click!internet_info"] && $.__views.img_internet.addEventListener("click", internet_info);
+    __defers["$.__views.img_gps!click!gps_info"] && $.__views.img_gps.addEventListener("click", gps_info);
     __defers["$.__views.action_open!click!action_open"] && $.__views.action_open.addEventListener("click", action_open);
     _.extend($, exports);
 }

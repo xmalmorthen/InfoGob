@@ -43,9 +43,26 @@
    left 							: 2
 },
 "#option_actions":{
+	width							: 'auto',
+	height							: Ti.UI.SIZE,
 	bottom							: 1,
-	right							: 2,
-	layout							: 'horizontal'	
+	left							: 3,	
+},
+"#vw_require":{
+	layout							: 'horizontal',
+	left							: 5,
+	bottom							: 1
+},
+".img_style":{
+	width 							: Alloy.Globals.Imagen.mediana, 
+	height 							: Alloy.Globals.Imagen.mediana,	
+	right							: 5
+},
+"#img_gps":{	
+	image							: '/images/own/128x128/bullet_accept.png'
+},
+"#img_internet":{	
+	image							: '/images/own/128x128/bullet_accept.png'
 },
 "#scroll_vw":{
 	top								: 1,
@@ -72,18 +89,10 @@
 	width							: Ti.UI.SIZE,
 	height							: Ti.UI.SIZE
 },
-"#action_require":{
-	width 							: Alloy.Globals.Imagen.pequenia, 
-	height 							: Alloy.Globals.Imagen.pequenia,
-	left							: 2,
-	right							: 2,
-	image							: '/images/own/128x128/bullet_info.png'
-},
 "#action_open":{
 	width 							: Alloy.Globals.Imagen.grande, 
 	height 							: Alloy.Globals.Imagen.grande,
-	left							: 2,
-	right							: 2,
+	right							: 5,
 	image							: '/images/own/128x128/bullet_accept.png'
 },
 ".divider":{

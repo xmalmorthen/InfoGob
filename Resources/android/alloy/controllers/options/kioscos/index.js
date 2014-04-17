@@ -53,12 +53,12 @@ function Controller() {
         classes: []
     });
     $.__views.index.add($.__views.activityIndicator);
-    $.__views.__alloyId0 = Ti.UI.createView({
+    $.__views.__alloyId3 = Ti.UI.createView({
         apiName: "Ti.UI.View",
-        id: "__alloyId0",
+        id: "__alloyId3",
         classes: []
     });
-    $.__views.index.add($.__views.__alloyId0);
+    $.__views.index.add($.__views.__alloyId3);
     $.__views.botonera_kioscos = Ti.UI.createView({
         layout: "horizontal",
         width: Ti.UI.SIZE,
@@ -71,7 +71,7 @@ function Controller() {
         id: "botonera_kioscos",
         classes: []
     });
-    $.__views.__alloyId0.add($.__views.botonera_kioscos);
+    $.__views.__alloyId3.add($.__views.botonera_kioscos);
     $.__views.btn_mapa = Ti.UI.createView({
         borderColor: "black",
         borderWidth: 1,
@@ -85,7 +85,7 @@ function Controller() {
     });
     $.__views.botonera_kioscos.add($.__views.btn_mapa);
     open_view_mapa ? $.__views.btn_mapa.addEventListener("click", open_view_mapa) : __defers["$.__views.btn_mapa!click!open_view_mapa"] = true;
-    $.__views.__alloyId1 = Ti.UI.createImageView({
+    $.__views.__alloyId4 = Ti.UI.createImageView({
         width: 50,
         height: 50,
         top: 5,
@@ -95,10 +95,10 @@ function Controller() {
         apiName: "Ti.UI.ImageView",
         image: "/images/own/48x48/map_marker.png",
         classes: [ "img_btn" ],
-        id: "__alloyId1"
+        id: "__alloyId4"
     });
-    $.__views.btn_mapa.add($.__views.__alloyId1);
-    $.__views.__alloyId2 = Ti.UI.createLabel({
+    $.__views.btn_mapa.add($.__views.__alloyId4);
+    $.__views.__alloyId5 = Ti.UI.createLabel({
         bottom: 2,
         color: "white",
         font: {
@@ -109,19 +109,19 @@ function Controller() {
         text: "Mapa",
         apiName: "Ti.UI.Label",
         classes: [ "lbl_btn" ],
-        id: "__alloyId2"
+        id: "__alloyId5"
     });
-    $.__views.btn_mapa.add($.__views.__alloyId2);
-    $.__views.__alloyId3 = Ti.UI.createView({
+    $.__views.btn_mapa.add($.__views.__alloyId5);
+    $.__views.__alloyId6 = Ti.UI.createView({
         width: 5,
         height: 80,
         opacity: 0,
         apiName: "Ti.UI.View",
         classes: [ "margin" ],
-        id: "__alloyId3"
+        id: "__alloyId6"
     });
-    $.__views.botonera_kioscos.add($.__views.__alloyId3);
-    $.__views.__alloyId4 = Ti.UI.createView({
+    $.__views.botonera_kioscos.add($.__views.__alloyId6);
+    $.__views.__alloyId7 = Ti.UI.createView({
         borderColor: "black",
         borderWidth: 1,
         borderRadius: 10,
@@ -130,11 +130,11 @@ function Controller() {
         height: Ti.UI.SIZE,
         apiName: "Ti.UI.View",
         classes: [ "btn_botonera" ],
-        id: "__alloyId4"
+        id: "__alloyId7"
     });
-    $.__views.botonera_kioscos.add($.__views.__alloyId4);
-    open_view_lista ? $.__views.__alloyId4.addEventListener("click", open_view_lista) : __defers["$.__views.__alloyId4!click!open_view_lista"] = true;
-    $.__views.__alloyId5 = Ti.UI.createImageView({
+    $.__views.botonera_kioscos.add($.__views.__alloyId7);
+    open_view_lista ? $.__views.__alloyId7.addEventListener("click", open_view_lista) : __defers["$.__views.__alloyId7!click!open_view_lista"] = true;
+    $.__views.__alloyId8 = Ti.UI.createImageView({
         width: 50,
         height: 50,
         top: 5,
@@ -144,10 +144,10 @@ function Controller() {
         apiName: "Ti.UI.ImageView",
         image: "/images/own/48x48/list_ingredients.png",
         classes: [ "img_btn" ],
-        id: "__alloyId5"
+        id: "__alloyId8"
     });
-    $.__views.__alloyId4.add($.__views.__alloyId5);
-    $.__views.__alloyId6 = Ti.UI.createLabel({
+    $.__views.__alloyId7.add($.__views.__alloyId8);
+    $.__views.__alloyId9 = Ti.UI.createLabel({
         bottom: 2,
         color: "white",
         font: {
@@ -158,9 +158,9 @@ function Controller() {
         text: "Lista",
         apiName: "Ti.UI.Label",
         classes: [ "lbl_btn" ],
-        id: "__alloyId6"
+        id: "__alloyId9"
     });
-    $.__views.__alloyId4.add($.__views.__alloyId6);
+    $.__views.__alloyId7.add($.__views.__alloyId9);
     $.__views.content_kioscos = Ti.UI.createView({
         width: "auto",
         height: "auto",
@@ -169,15 +169,15 @@ function Controller() {
         id: "content_kioscos",
         classes: []
     });
-    $.__views.__alloyId0.add($.__views.content_kioscos);
-    var __alloyId7 = [];
+    $.__views.__alloyId3.add($.__views.content_kioscos);
+    var __alloyId10 = [];
     $.__views.vista_mapa = Ti.Map.createView({
         animate: true,
         mapType: Ti.Map.STANDARD_TYPE,
         regionFit: true,
         userLocation: true,
         zIndex: 2,
-        annotations: __alloyId7,
+        annotations: __alloyId10,
         apiName: "Ti.Map.View",
         ns: Ti.Map,
         id: "vista_mapa",
@@ -235,7 +235,7 @@ function Controller() {
         id: "vistatramites",
         classes: [ "subview" ]
     });
-    $.__views.__alloyId0.add($.__views.vistatramites);
+    $.__views.__alloyId3.add($.__views.vistatramites);
     $.__views.subviewchildren = Ti.UI.createView({
         borderColor: "#888",
         borderWidth: 2,
@@ -249,26 +249,26 @@ function Controller() {
         classes: [ "subviewchildren" ]
     });
     $.__views.vistatramites.add($.__views.subviewchildren);
-    $.__views.__alloyId8 = Ti.UI.createView({
+    $.__views.__alloyId11 = Ti.UI.createView({
         apiName: "Ti.UI.View",
         width: "100%",
         height: Ti.UI.SIZE,
-        id: "__alloyId8",
+        id: "__alloyId11",
         classes: []
     });
-    $.__views.subviewchildren.add($.__views.__alloyId8);
-    $.__views.__alloyId9 = Ti.UI.createImageView({
+    $.__views.subviewchildren.add($.__views.__alloyId11);
+    $.__views.__alloyId12 = Ti.UI.createImageView({
         apiName: "Ti.UI.ImageView",
         width: "48",
         height: "48",
         top: "7",
         left: "5",
         image: "/images/own/48x48/list_ingredients.png",
-        id: "__alloyId9",
+        id: "__alloyId12",
         classes: []
     });
-    $.__views.__alloyId8.add($.__views.__alloyId9);
-    $.__views.__alloyId10 = Ti.UI.createLabel({
+    $.__views.__alloyId11.add($.__views.__alloyId12);
+    $.__views.__alloyId13 = Ti.UI.createLabel({
         color: "#000",
         font: {
             fontFamily: "Helveltica",
@@ -281,22 +281,22 @@ function Controller() {
         text: "Lista de trámites...",
         apiName: "Ti.UI.Label",
         classes: [ "header_titulo" ],
-        id: "__alloyId10"
+        id: "__alloyId13"
     });
-    $.__views.__alloyId8.add($.__views.__alloyId10);
-    $.__views.__alloyId11 = Ti.UI.createImageView({
+    $.__views.__alloyId11.add($.__views.__alloyId13);
+    $.__views.__alloyId14 = Ti.UI.createImageView({
         apiName: "Ti.UI.ImageView",
         width: "32",
         height: "32",
         top: "7",
         right: "10",
         image: "/images/own/32x32/delete.png",
-        id: "__alloyId11",
+        id: "__alloyId14",
         classes: []
     });
-    $.__views.__alloyId8.add($.__views.__alloyId11);
-    Closesubviewtramites ? $.__views.__alloyId11.addEventListener("click", Closesubviewtramites) : __defers["$.__views.__alloyId11!click!Closesubviewtramites"] = true;
-    $.__views.__alloyId12 = Ti.UI.createView({
+    $.__views.__alloyId11.add($.__views.__alloyId14);
+    Closesubviewtramites ? $.__views.__alloyId14.addEventListener("click", Closesubviewtramites) : __defers["$.__views.__alloyId14!click!Closesubviewtramites"] = true;
+    $.__views.__alloyId15 = Ti.UI.createView({
         top: "5",
         height: "1dp",
         width: "70%",
@@ -304,9 +304,9 @@ function Controller() {
         backgroundColor: "#000",
         apiName: "Ti.UI.View",
         classes: [ "divider" ],
-        id: "__alloyId12"
+        id: "__alloyId15"
     });
-    $.__views.subviewchildren.add($.__views.__alloyId12);
+    $.__views.subviewchildren.add($.__views.__alloyId15);
     $.__views.lista_tramiteskioscos = Ti.UI.createTableView({
         left: 10,
         apiName: "Ti.UI.TableView",
@@ -323,7 +323,7 @@ function Controller() {
         id: "vistaficharetys",
         classes: [ "subview" ]
     });
-    $.__views.__alloyId0.add($.__views.vistaficharetys);
+    $.__views.__alloyId3.add($.__views.vistaficharetys);
     $.__views.subviewficharetyschildren = Ti.UI.createView({
         borderColor: "#888",
         borderWidth: 2,
@@ -337,26 +337,26 @@ function Controller() {
         classes: [ "subviewchildren" ]
     });
     $.__views.vistaficharetys.add($.__views.subviewficharetyschildren);
-    $.__views.__alloyId13 = Ti.UI.createView({
+    $.__views.__alloyId16 = Ti.UI.createView({
         apiName: "Ti.UI.View",
         width: "100%",
         height: Ti.UI.SIZE,
-        id: "__alloyId13",
+        id: "__alloyId16",
         classes: []
     });
-    $.__views.subviewficharetyschildren.add($.__views.__alloyId13);
-    $.__views.__alloyId14 = Ti.UI.createImageView({
+    $.__views.subviewficharetyschildren.add($.__views.__alloyId16);
+    $.__views.__alloyId17 = Ti.UI.createImageView({
         apiName: "Ti.UI.ImageView",
         width: "48",
         height: "48",
         top: "7",
         left: "5",
         image: "/images/own/48x48/doc_lines.png",
-        id: "__alloyId14",
+        id: "__alloyId17",
         classes: []
     });
-    $.__views.__alloyId13.add($.__views.__alloyId14);
-    $.__views.__alloyId15 = Ti.UI.createLabel({
+    $.__views.__alloyId16.add($.__views.__alloyId17);
+    $.__views.__alloyId18 = Ti.UI.createLabel({
         color: "#000",
         font: {
             fontFamily: "Helveltica",
@@ -369,22 +369,22 @@ function Controller() {
         text: "Ficha RETyS",
         apiName: "Ti.UI.Label",
         classes: [ "header_titulo" ],
-        id: "__alloyId15"
+        id: "__alloyId18"
     });
-    $.__views.__alloyId13.add($.__views.__alloyId15);
-    $.__views.__alloyId16 = Ti.UI.createImageView({
+    $.__views.__alloyId16.add($.__views.__alloyId18);
+    $.__views.__alloyId19 = Ti.UI.createImageView({
         apiName: "Ti.UI.ImageView",
         width: "32",
         height: "32",
         top: "7",
         right: "10",
         image: "/images/own/32x32/delete.png",
-        id: "__alloyId16",
+        id: "__alloyId19",
         classes: []
     });
-    $.__views.__alloyId13.add($.__views.__alloyId16);
-    Closesubviewficha ? $.__views.__alloyId16.addEventListener("click", Closesubviewficha) : __defers["$.__views.__alloyId16!click!Closesubviewficha"] = true;
-    $.__views.__alloyId17 = Ti.UI.createView({
+    $.__views.__alloyId16.add($.__views.__alloyId19);
+    Closesubviewficha ? $.__views.__alloyId19.addEventListener("click", Closesubviewficha) : __defers["$.__views.__alloyId19!click!Closesubviewficha"] = true;
+    $.__views.__alloyId20 = Ti.UI.createView({
         top: "5",
         height: "1dp",
         width: "70%",
@@ -392,9 +392,9 @@ function Controller() {
         backgroundColor: "#000",
         apiName: "Ti.UI.View",
         classes: [ "divider" ],
-        id: "__alloyId17"
+        id: "__alloyId20"
     });
-    $.__views.subviewficharetyschildren.add($.__views.__alloyId17);
+    $.__views.subviewficharetyschildren.add($.__views.__alloyId20);
     $.__views.scrllvw = Ti.UI.createScrollView({
         apiName: "Ti.UI.ScrollView",
         id: "scrllvw",
@@ -405,7 +405,7 @@ function Controller() {
         classes: []
     });
     $.__views.subviewficharetyschildren.add($.__views.scrllvw);
-    $.__views.__alloyId18 = Ti.UI.createView({
+    $.__views.__alloyId21 = Ti.UI.createView({
         top: 5,
         right: 5,
         width: Ti.UI.SIZE,
@@ -413,9 +413,9 @@ function Controller() {
         layout: "horizontal",
         apiName: "Ti.UI.View",
         classes: [ "toastbanner" ],
-        id: "__alloyId18"
+        id: "__alloyId21"
     });
-    $.__views.index.add($.__views.__alloyId18);
+    $.__views.index.add($.__views.__alloyId21);
     $.__views.toastINTERNET = Ti.UI.createImageView({
         width: 30,
         height: 34,
@@ -427,7 +427,7 @@ function Controller() {
         visible: "false",
         classes: []
     });
-    $.__views.__alloyId18.add($.__views.toastINTERNET);
+    $.__views.__alloyId21.add($.__views.toastINTERNET);
     toastNotification ? $.__views.toastINTERNET.addEventListener("click", toastNotification) : __defers["$.__views.toastINTERNET!click!toastNotification"] = true;
     $.__views.toastGPS = Ti.UI.createImageView({
         width: 38,
@@ -441,9 +441,9 @@ function Controller() {
         code: "null",
         visible: "false"
     });
-    $.__views.__alloyId18.add($.__views.toastGPS);
+    $.__views.__alloyId21.add($.__views.toastGPS);
     toastNotification ? $.__views.toastGPS.addEventListener("click", toastNotification) : __defers["$.__views.toastGPS!click!toastNotification"] = true;
-    $.__views.__alloyId19 = Ti.UI.createView({
+    $.__views.__alloyId22 = Ti.UI.createView({
         bottom: 5,
         right: 5,
         width: Ti.UI.SIZE,
@@ -451,9 +451,9 @@ function Controller() {
         layout: "horizontal",
         apiName: "Ti.UI.View",
         classes: [ "botonera_inferior_derecha" ],
-        id: "__alloyId19"
+        id: "__alloyId22"
     });
-    $.__views.index.add($.__views.__alloyId19);
+    $.__views.index.add($.__views.__alloyId22);
     $.__views.centrarposicion = Ti.UI.createImageView({
         width: 38,
         height: 38,
@@ -464,7 +464,7 @@ function Controller() {
         message: "Presione para centrar su posición en el mapa...",
         visible: "false"
     });
-    $.__views.__alloyId19.add($.__views.centrarposicion);
+    $.__views.__alloyId22.add($.__views.centrarposicion);
     centrarposicion ? $.__views.centrarposicion.addEventListener("click", centrarposicion) : __defers["$.__views.centrarposicion!click!centrarposicion"] = true;
     centrarposicioninfo ? $.__views.centrarposicion.addEventListener("longpress", centrarposicioninfo) : __defers["$.__views.centrarposicion!longpress!centrarposicioninfo"] = true;
     exports.destroy = function() {};
@@ -1111,12 +1111,12 @@ function Controller() {
     cambia_vista(1);
     $.index.open();
     __defers["$.__views.btn_mapa!click!open_view_mapa"] && $.__views.btn_mapa.addEventListener("click", open_view_mapa);
-    __defers["$.__views.__alloyId4!click!open_view_lista"] && $.__views.__alloyId4.addEventListener("click", open_view_lista);
+    __defers["$.__views.__alloyId7!click!open_view_lista"] && $.__views.__alloyId7.addEventListener("click", open_view_lista);
     __defers["$.__views.vista_mapa!click!click_map"] && $.__views.vista_mapa.addEventListener("click", click_map);
     __defers["$.__views.lista_kioscos!click!click_opc"] && $.__views.lista_kioscos.addEventListener("click", click_opc);
-    __defers["$.__views.__alloyId11!click!Closesubviewtramites"] && $.__views.__alloyId11.addEventListener("click", Closesubviewtramites);
+    __defers["$.__views.__alloyId14!click!Closesubviewtramites"] && $.__views.__alloyId14.addEventListener("click", Closesubviewtramites);
     __defers["$.__views.lista_tramiteskioscos!click!click_tramitekiosco"] && $.__views.lista_tramiteskioscos.addEventListener("click", click_tramitekiosco);
-    __defers["$.__views.__alloyId16!click!Closesubviewficha"] && $.__views.__alloyId16.addEventListener("click", Closesubviewficha);
+    __defers["$.__views.__alloyId19!click!Closesubviewficha"] && $.__views.__alloyId19.addEventListener("click", Closesubviewficha);
     __defers["$.__views.toastINTERNET!click!toastNotification"] && $.__views.toastINTERNET.addEventListener("click", toastNotification);
     __defers["$.__views.toastGPS!click!toastNotification"] && $.__views.toastGPS.addEventListener("click", toastNotification);
     __defers["$.__views.centrarposicion!click!centrarposicion"] && $.__views.centrarposicion.addEventListener("click", centrarposicion);

@@ -8,6 +8,8 @@ function Controller() {
     var exports = {};
     var __defers = {};
     $.__views.vw_dialog = Ti.UI.createView({
+        top: 0,
+        left: 0,
         width: "100%",
         height: "100%",
         visible: true,
