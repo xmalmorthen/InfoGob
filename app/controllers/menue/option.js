@@ -10,6 +10,7 @@ $.img_internet.visible = args.require.internet;
 
 var 
 option = args.callcontroller,
+activityIndicator = args.activityIdtr,
 internet_info = function(){
 	Ti.UI.createAlertDialog({
 	    cancel: 0,
@@ -27,5 +28,9 @@ gps_info = function(){
 	}).show();
 }, 
 action_open = function(){
-	Alloy.createController(option).getView().open();
+	activityIndicator.show();
+    setTimeout(function() {
+        activityIndicator.hide();
+    }, 2000);
+	Alloy.createController(option).getView().open();	
 };

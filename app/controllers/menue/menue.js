@@ -7,7 +7,8 @@ var option = Alloy.createController('/menue/option', {
     					gps			: true,
     					internet 	: true    					
     				 },
-    callcontroller	: "/options/kioscos"
+    activityIdtr	: $.activityIndicator,
+    callcontroller	: "options/kioscos"
 }).getView();
 
 $.panel_opciones.add(option);
@@ -21,7 +22,8 @@ option = Alloy.createController('/menue/option', {
     					gps			: true,
     					internet 	: true    					
     				  },
-    callcontroller	: "/options/kioscos"
+  	activityIdtr	: $.activityIndicator,
+    callcontroller	: "options/kioscos"
 }).getView();
 
 $.panel_opciones.add(option);
@@ -35,7 +37,8 @@ option = Alloy.createController('/menue/option', {
     					gps			: true,
     					internet 	: true    					
     				  },
-    callcontroller	: "/options/kioscos"
+  	activityIdtr	: $.activityIndicator,
+    callcontroller	: "options/kioscos"
 }).getView();
 
 $.panel_opciones.add(option);
@@ -49,7 +52,8 @@ option = Alloy.createController('/menue/option', {
     					gps			: false,
     					internet 	: true    					
     				  },
-    callcontroller	: "/options/kioscos"
+    activityIdtr	: $.activityIndicator,				  
+    callcontroller	: "options/kioscos"
 }).getView();
 
 $.panel_opciones.add(option);
@@ -63,7 +67,8 @@ option = Alloy.createController('/menue/option', {
     					gps			: false,
     					internet 	: true    					
     				  },
-    callcontroller	: "/options/kioscos"
+    activityIdtr	: $.activityIndicator,				  
+    callcontroller	: "options/kioscos"
 }).getView();
 
 $.panel_opciones.add(option);

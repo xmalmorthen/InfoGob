@@ -1,3 +1,4 @@
+/* 
 Ti.include("/etc/internet.js");
 Ti.include("/etc/gps.js");
 
@@ -717,5 +718,6 @@ var ConsultaFichaRETyS = function(id_ficha_retys,callback){
 };
 
 cambia_vista(1);
+*/
 
 $.index.open();

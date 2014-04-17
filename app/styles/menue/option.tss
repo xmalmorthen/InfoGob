@@ -54,15 +54,15 @@
 	bottom							: 1
 },
 ".img_style":{
-	width 							: Alloy.Globals.Imagen.mediana, 
-	height 							: Alloy.Globals.Imagen.mediana,	
+	width 							: Alloy.Globals.Imagen.pequenia, 
+	height 							: Alloy.Globals.Imagen.pequenia,	
 	right							: 5
 },
 "#img_gps":{	
-	image							: '/images/own/128x128/bullet_accept.png'
+	image							: '/images/own/128x128/gps.png'
 },
 "#img_internet":{	
-	image							: '/images/own/128x128/bullet_accept.png'
+	image							: '/images/own/128x128/rss_icon.png'
 },
 "#scroll_vw":{
 	top								: 1,

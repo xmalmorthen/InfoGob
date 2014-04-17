@@ -18,7 +18,7 @@
 		fontWeight		: 'bold'},
 	message				: Alloy.Globals.resources.ActivityIndicator,
 	style				: Alloy.Globals.Theme.activityindicator.style,
-	bottom				: '5dp',
+	bottom				: '10dp',
 	right				: '5dp',
 	height				: Ti.UI.SIZE,
 	width				: Ti.UI.SIZE,
