@@ -8,6 +8,7 @@ Alloy.Globals.Theme = {
 	backgroundColor 	: '#cacaca',
 	backgroundImage		: '/images/own/background/logo_gob.png',
 	dividerColor		: '#363636',
+	searchbarcolor		: '#cacaca',
 	activityindicator	: {
 		style			: Titanium.UI.ActivityIndicatorStyle.BIG		
 	}		
@@ -70,6 +71,11 @@ Alloy.Globals.resources = {
 		titulo						: 'Info[Gob] Colima',
 		subtitulo					: 'Información de puntos de interéz...'
 	},
-	ActivityIndicator			: 'Procesando, favor de esperar...'
+	ActivityIndicator			: 'Procesando, favor de esperar...',
+	options						: {
+		kioscos					: {
+			list_title				: 'Lista de Kioscos de servicios'
+		}
+	}
 };
 //******************************************************************************************************

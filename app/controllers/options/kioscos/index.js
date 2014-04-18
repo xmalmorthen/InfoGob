@@ -1,6 +1,27 @@
-/* 
 Ti.include("/etc/internet.js");
 Ti.include("/etc/gps.js");
+
+var search = Titanium.UI.createSearchBar({
+	barColor		: Alloy.Globals.Theme.searchbarcolor,
+	showCancel		: true,
+	width			: '70%',
+	bottom			: 10,
+	hintText		: 'Buscar'
+});
+
+search.addEventListener('change', function(e){
+	e.value; // search string as user types
+});
+search.addEventListener('return', function(e){
+	search.blur();
+});
+search.addEventListener('cancel', function(e){
+	search.blur();
+});
+
+//$.lista_kioscos.search = search;
+$.lista_kioscos.searchHidden = true;
+
 
 var
 	openedflag = 0, //bandera utilizada para saber si la ventana se encuentra abierta;
@@ -28,42 +49,18 @@ var VerificaGPS = function(){
 			switch (GPS.error.codigo){
 				case null:
 				case 0:
-					$.toastGPS.image="/images/own/48x48/no_gps.png";
+					$.toastGPS.image="/images/own/128x128/no_gps.png";
 					$.toastGPS.message= "GPS desactivado o no se encuentra señal GPS válida...";
 					$.toastGPS.configure='true';
 				break;
 				case Ti.Geolocation.ERROR_LOCATION_UNKNOWN:
-					$.toastGPS.image="/images/own/48x48/gps_noaccess.png";
-					$.toastGPS.message= err;
-					$.toastGPS.configure='false';
-				break;
 				case Ti.Geolocation.ERROR_DENIED:
-					$.toastGPS.image="/images/own/48x48/gps_noaccess.png";
-					$.toastGPS.message= err;
-					$.toastGPS.configure='false';
-				break;
 				case Ti.Geolocation.ERROR_NETWORK:
-					$.toastGPS.image="/images/own/48x48/gps_noaccess.png";
-					$.toastGPS.message= err;
-					$.toastGPS.configure='false';
-				break;
 				case Ti.Geolocation.ERROR_HEADING_FAILURE:
-					$.toastGPS.image="/images/own/48x48/gps_noaccess.png";
-					$.toastGPS.message= err;
-					$.toastGPS.configure='false';
-				break;
 				case Ti.Geolocation.ERROR_REGION_MONITORING_DENIED:
-					$.toastGPS.image="/images/own/48x48/gps_noaccess.png";
-					$.toastGPS.message= err;
-					$.toastGPS.configure='false';
-				break;
 				case Ti.Geolocation.ERROR_REGION_MONITORING_FAILURE:
-					$.toastGPS.image="/images/own/48x48/gps_noaccess.png";
-					$.toastGPS.message= err;
-					$.toastGPS.configure='false';
-				break;
 				case Ti.Geolocation.ERROR_REGION_MONITORING_DELAYED:
-					$.toastGPS.image="/images/own/48x48/gps_noaccess.png";
+					$.toastGPS.image="/images/own/128x128/err_gps.png";
 					$.toastGPS.message= err;
 					$.toastGPS.configure='false';
 				break;	
@@ -71,8 +68,10 @@ var VerificaGPS = function(){
 			GPS.active = false;
 		}	
 		$.toastGPS.visible = GPS.active == false ? true : false;		
-		$.centrarposicion.visible = GPS.active == true ? true : false;
+		$.centrarposicion.visible = GPS.active == true ? true : false;		
 		$.toastGPS.code = $.centrarposicion.visible == false ? GPS.error.error : null;
+		$.vista_mapa.userLocation = GPS.active == true ? true : false;
+		
 		MuestraKioscosMapa();
 	} else {
 		$.centrarposicion.visible = false; //Si la ventana activa no es la de mapa, ocultamos el boton de centrado de GPS		
@@ -80,17 +79,20 @@ var VerificaGPS = function(){
 };
 
 function cambia_vista(opc){
+	
 	if (ventanaactiva == opc) return; 
 	
 	$.activityIndicator.show();	
 	switch (opc){
 		case 1:
+			$.mapConfigs.visible = true;
 			$.vista_lista.zIndex = 1;
 			$.vista_mapa.zIndex = 2;
 			ventanaactiva = 1;
-			MuestraKioscosMapa();			
+			MuestraKioscosMapa();
 		break;
 		case 2:
+			$.mapConfigs.visible = false;
 			$.vista_mapa.zIndex = 1;
 			$.vista_lista.zIndex = 2;
 			ventanaactiva = 2;
@@ -242,60 +244,62 @@ MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
 	{	
 		//Fila del tableview
 		var row = Ti.UI.createTableViewRow({
-		    backgroundSelectedColor:'#cacaca',
-		    selectedColor: "#cccccc",
-		    layout:'vertical',
-		    height:Ti.UI.SIZE,
-		    width:Ti.UI.SIZE,
-		    top: 1,
-		    bottom:1,
-		    rightImage: '/images/own/32x32/align_just.png',	
-		    title: 			listakioscos.fieldByName('descripcion'),
-		    id_kiosco:		listakioscos.fieldByName('id'),
-		    descripcion: 	listakioscos.fieldByName('descripcion'),
-		    domicilio:		listakioscos.fieldByName('domicilio'),
-		    lat:			listakioscos.fieldByName('lat'),
-		    lng:			listakioscos.fieldByName('lng')
+			layout							:'vertical',
+		    selectedBackgroundColor			: "#cccccc",
+		    height							: Ti.UI.SIZE,
+		    width							: Ti.UI.SIZE,
+		    top								: 1,
+		    bottom							: 1,
+		    rightImage						: '/images/own/32x32/align_just.png',	
+		    title							: listakioscos.fieldByName('descripcion'),
+		    id_kiosco						: listakioscos.fieldByName('id'),
+		    descripcion						: listakioscos.fieldByName('descripcion'),
+		    domicilio						: listakioscos.fieldByName('domicilio'),
+		    lat								: listakioscos.fieldByName('lat'),
+		    lng								: listakioscos.fieldByName('lng')
 	  	});	
+	  	
 	  	//Etiqueta de título
 		var Title = Ti.UI.createLabel({
-		    color:'black',
+		    color							: Alloy.Globals.Fuente.colorTexto,
 		    font:{
-		    	fontFamily:'Arial', 
-		    	fontSize:Alloy.Globals.defaultFontSize + 25, 
-		    	fontWeight:'bold'
+		    	fontFamily					: Alloy.Globals.Fuente.fontFamily,
+        		fontSize					: Alloy.Globals.Fuente.tamanioFuenteTitulo,
+        		fontWeight					: 'bold'				
 	    	},
-	    	left:5, 
-		    top: 1,
-		    width:Ti.UI.SIZE,
-		    height: Ti.UI.SIZE,
-		    text: 			listakioscos.fieldByName('descripcion')
+	    	left							: 5, 
+		    top								: 1,
+		    width							: Ti.UI.SIZE,
+		    height							: Ti.UI.SIZE,
+		    text							: listakioscos.fieldByName('descripcion')
 		});
 	  	row.add(Title);
+	  	
 	  	//Etiqueta de subtítulo
 	  	var SubTitle = Ti.UI.createLabel({
-		    color:'#222',
+		    color							: Alloy.Globals.Fuente.colorSubtitulo,
 		    font:{
-				fontFamily:'Arial', 
-				fontSize:Alloy.Globals.defaultFontSize + 10, 
-				fontWeight:'normal'
+				fontFamily					: Alloy.Globals.Fuente.fontFamily,
+        		fontSize					: Alloy.Globals.Fuente.tamanioFuenteSubTitulo,
+        		fontWeight					: 'normal'
 		 	},
-		 	left:5, 
-		    width:Ti.UI.SIZE,
-		    height: Ti.UI.SIZE,
-		    text:			listakioscos.fieldByName('domicilio')			    
+		 	left							: 5, 
+		 	bottom							: 10,
+		    width							: Ti.UI.SIZE,
+		    height							: Ti.UI.SIZE,
+		    text							: listakioscos.fieldByName('domicilio')			    
 	  	});
 	  	row.add(SubTitle);
 	  	
-	  	if (veces < listakioscos.rowCount) {	  	
-	  		row.add(Ti.UI.createView({top:1, bottom:5,height: "1dp",width: "95%",backgroundColor:"#cacaca"}));
-	  	}
-				
 		Data.push(row); 
 		
 		veces++;
+		
+		if (veces == 15) {
 			
 	  	listakioscos.next();
+	  	
+	  	}
 	}
 	$.lista_kioscos.data = Data;
 	
@@ -718,6 +722,6 @@ var ConsultaFichaRETyS = function(id_ficha_retys,callback){
 };
 
 cambia_vista(1);
-*/
 
 $.index.open();
+

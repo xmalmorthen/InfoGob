@@ -2,28 +2,42 @@
 	<Window class='content'>
 		<ActivityIndicator id="activityIndicator" message="Cargando..."/>
 		<View>
+			<!-- Botonera superior 
+					- Boton de mapa
+					- Boton de lista
+				 ********************************************************************************** -->			
 			<View id="botonera_kioscos">
 				<View id="btn_mapa" class="btn_botonera" onClick="open_view_mapa">
-					<ImageView image="/images/own/48x48/map_marker.png" class="img_btn"/>
+					<ImageView image="/images/own/128x128/earth.png" class="img_btn"/>
 					<Label class="lbl_btn">Mapa</Label>
 				</View>
 				<View class="margin"/>
 				<View class="btn_botonera" onClick="open_view_lista">
-					<ImageView image="/images/own/48x48/list_ingredients.png" class="img_btn"/>
+					<ImageView image="/images/own/128x128/note_starred.png" class="img_btn"/>
 					<Label class="lbl_btn">Lista</Label>
 				</View>
 			</View>
-		
+			<!-- ********************************************************************************** -->
+			
+			<!-- Area de contenido
+				 ********************************************************************************** -->
 			<View id="content_kioscos">
+				<!-- MAPA -->
 				<View ns="Ti.Map" id="vista_mapa" onClick="click_map" />
+				<!-- LISTA -->
 				<View id="vista_lista">
-					<View id="vw_title_listakioscos">
-						<Label id="title_listakioscos">Lista de Kioscos de servicios</Label>						
+					<ImageView id="background_image" />
+					<View id="vista_de_acomodo">
+						<Label id="title_listakioscos" />
+						<TableView id="lista_kioscos" onClick="click_opc"/>
 					</View>
-					<TableView id="lista_kioscos" onClick="click_opc"/>		
 				</View>
 			</View>
+			<!-- ********************************************************************************** -->
 			
+			<!-- Lista de trámites
+					- Ventana emergente que muestra la lista de tramites
+				 ********************************************************************************** -->
 			<View id="vistatramites" class="subview">
 				<View id="subviewchildren" class="subviewchildren">
 					<View width="100%" height=Ti.UI.SIZE> 
@@ -35,7 +49,11 @@
 					<TableView id="lista_tramiteskioscos" onClick="click_tramitekiosco"/>
 				</View>				
 			</View>
+			<!-- ********************************************************************************** -->
 			
+			<!-- Ficha RETyS
+					- Ventana emergente que muestra la ficha RETyS
+				 ********************************************************************************** -->
 			<View id="vistaficharetys" class="subview">
 				<View id="subviewficharetyschildren" class="subviewchildren">
 					<View width="100%" height=Ti.UI.SIZE> 
@@ -47,14 +65,25 @@
 					<ScrollView id="scrllvw" showVerticalScrollIndicator="true" showHorizontalScrollIndicator="true" height="99%" width="99%" />
 				</View>				
 			</View>	
+			<!-- ********************************************************************************** -->
 		</View>
+		
+		<!-- Banner de imagenes de estado
+				- No conectado a internet
+				- No GPS
+			 ********************************************************************************** -->
 		<View class="toastbanner">
-			<ImageView id="toastINTERNET" image="/images/own/48x48/no_internet.png" message="No conectado a internet..." configure='false' onClick="toastNotification" visible=false />
-			<ImageView id="toastGPS" left=10 class="toast" message="Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS..." configure='true' code=null onClick="toastNotification" visible=false />
+			<ImageView id="toastINTERNET" class="toast" image="/images/own/128x128/no_internet.png" message="No conectado a internet..." configure='false' onClick="toastNotification" visible=false />
+			<ImageView id="toastGPS" class="toast" message="Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS..." configure='true' code=null onClick="toastNotification" visible=false />
 		</View>	
+		<!-- ********************************************************************************** -->
+		
+		<!-- Boton para centrar posicion en el mapa
+		 	 ********************************************************************************** -->
 		<View class="botonera_inferior_derecha">
-			<ImageView id="centrarposicion" class="toast" image="/images/own/48x48/target.png" message="Presione para centrar su posición en el mapa..." onClick="centrarposicion" onLongpress="centrarposicioninfo" visible=false />
+			<ImageView id="mapConfigs" class="toast" left="10" image="/images/own/128x128/settings.png" />
+			<ImageView id="centrarposicion" class="toast" image="/images/own/128x128/gps.png" onClick="centrarposicion" visible=false />
 		</View>
-	    
+	    <!-- ********************************************************************************** -->
 	</Window>
 </Alloy>
