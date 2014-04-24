@@ -11,7 +11,7 @@
 	right				: 3
 },
 ".activityIndicator":{	
-	color				: 'black',
+	color				: Alloy.Globals.Fuente.colorActivityIndicator,
 	font: {
 		fontFamily		: Alloy.Globals.Fuente.fontFamily, 
 		fontSize		: Alloy.Globals.Fuente.tamanioActivityIndicator, 

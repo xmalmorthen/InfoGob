@@ -51,14 +51,10 @@
                     </intent-filter>
                 </activity>
             </application>
-            <uses-sdk android:minSdkVersion="11" />
+            <uses-sdk android:minSdkVersion="11"/>
             <uses-sdk android:targetSdkVersion="11"/>
-            <supports-screens
-	            android:smallScreens="false"
-	            android:normalScreens="true"
-	            android:largeScreens="true"
-	            android:anyDensity="false"
-        	/>
+            <supports-screens android:anyDensity="false"
+                android:largeScreens="true" android:normalScreens="true" android:smallScreens="false"/>
         </manifest>
         <tool-api-level>11</tool-api-level>
         <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
@@ -82,7 +78,7 @@
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
-    <sdk-version>3.2.2.GA</sdk-version>
+    <sdk-version>3.2.3.RC</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>

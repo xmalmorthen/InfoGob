@@ -78,7 +78,7 @@ var ObtenerPosicionGPS = function(callback){
 			GPS.active = false;					
 		}
 		
-		GPS.provider 		= e.provider.name;
+		GPS.provider 		= typeof e.provider != 'undefined' ? e.provider.name : null;
 		GPS.error.success 	= e.success;
 		GPS.error.codigo 	= e.code;
 		GPS.error.error 	= e.error;

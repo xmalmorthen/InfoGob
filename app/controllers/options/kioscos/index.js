@@ -105,11 +105,11 @@ var
 obtengpsyverificaestatus = function(){
 	if (ventanaactiva == 1) {		
 		ObtenerPosicionGPS(VerificaGPS);		
-	}		
+	}
 },
 open = function(e){
-	ObtenerPosicionGPS(VerificaGPS);
-	openedflag = 1;	
+	openedflag = 1;
+	obtengpsyverificaestatus();
 },
 focus = function(e){
 	focusedflag = 1;
@@ -249,6 +249,7 @@ ObtenerKioscosFormateado = function (tipo_retorno){
 
 
 var 
+mapaParcial = false,
 mapaIniciado = false,
 InicializaMapa = function(){
 	if (GPS.active === true) {
@@ -260,69 +261,28 @@ InicializaMapa = function(){
 	   	};
 		$.vista_mapa.region = region;
 		mapaIniciado = true;
+		mapaParcial = false;
 	};
 },
 MuestraKioscosMapa = function(){ //funcion que georeferencia los kioscos en el mapa
-	if (!mapaIniciado) { //Si el mapa no ha sido iniciado
+	if (!mapaIniciado || !mapaParcial) {		
 		InicializaMapa();
-		
-		var listakioscos = ObtenerKioscosFormateado(); //Obtener lista de Kioscos
-		for (var i=0; i < listakioscos.length; i++) {
-			var 
-				lat = listakioscos[i].lat,
-				lon = listakioscos[i].lng;				
-					
-			var annotView = Titanium.UI.createView({
-			    width 						: Titanium.UI.SIZE,
-				height 						: Titanium.UI.SIZE,
-				layout						: 'vertical'
-			});
-			
-			var lblTitle = Titanium.UI.createLabel({
-				text 						: listakioscos[i].descripcion,
-				width 						: Titanium.UI.SIZE,
-				height 						: Titanium.UI.SIZE,
-				left						: 1,
-				color						: 'white',
-			    font:{
-			    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
-			    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteSubTitulo, 
-			    	fontWeight				: 'bold'
-				}
-			});
-			
-			var lblSubTitle = Titanium.UI.createLabel({
-				text 						: listakioscos[i].domicilio,
-				width 						: Titanium.UI.SIZE,
-				height 						: Titanium.UI.SIZE,
-				left						: 1,
-				color						: '#cacaca',
-			    font:{
-			    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
-			    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto,
-			    	fontWeight				: 'bold'
-				}
-			});
-			annotView.add(lblTitle);
-			annotView.add(lblSubTitle);
-			
-			if (GPS.active === true && (typeof(listakioscos[i].distance) == 'undefined') ) {				
-				var distance = countDistanceByMiles(GPS.geolocalization.latitude,
-											    	GPS.geolocalization.longitude,
-											    	lat,
-											    	lon
-					 						   	   );
-		   		listakioscos[i].distance = distance;
-			
-				var distanceVW = Titanium.UI.createView({
+		if (!mapaParcial) {		
+			mapaParcial = true;		
+			var listakioscos = ObtenerKioscosFormateado(); //Obtener lista de Kioscos
+			for (var i=0; i < listakioscos.length; i++) {
+				var 
+					lat = listakioscos[i].lat,
+					lon = listakioscos[i].lng;				
+						
+				var annotView = Titanium.UI.createView({
 				    width 						: Titanium.UI.SIZE,
 					height 						: Titanium.UI.SIZE,
-					right						: 1,
-					layout						: 'horizontal'
+					layout						: 'vertical'
 				});
 				
-				var lbldistance = Titanium.UI.createLabel({
-					text 						: listakioscos[i].distance,
+				var lblTitle = Titanium.UI.createLabel({
+					text 						: listakioscos[i].descripcion,
 					width 						: Titanium.UI.SIZE,
 					height 						: Titanium.UI.SIZE,
 					left						: 1,
@@ -334,39 +294,83 @@ MuestraKioscosMapa = function(){ //funcion que georeferencia los kioscos en el m
 					}
 				});
 				
-				var lbltxt = Titanium.UI.createLabel({
-					text 						: ' Km aprox.',
+				var lblSubTitle = Titanium.UI.createLabel({
+					text 						: listakioscos[i].domicilio,
 					width 						: Titanium.UI.SIZE,
 					height 						: Titanium.UI.SIZE,
-					color						: '#cacaca',
 					left						: 1,
-					bottom						: 2,
+					color						: '#cacaca',
 				    font:{
 				    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
-				    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto
+				    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto,
+				    	fontWeight				: 'bold'
 					}
 				});
+				annotView.add(lblTitle);
+				annotView.add(lblSubTitle);
 				
-				distanceVW.add(lbldistance);
-				distanceVW.add(lbltxt);
+				if (GPS.active === true && (typeof(listakioscos[i].distance) == 'undefined') ) {				
+					var distance = countDistanceByMiles(GPS.geolocalization.latitude,
+												    	GPS.geolocalization.longitude,
+												    	lat,
+												    	lon
+						 						   	   );
+			   		listakioscos[i].distance = distance;
 				
-				annotView.add(distanceVW);
-			}
-			
-			var anno = Ti.Map.createAnnotation({
-		        animate				: true,
-		        image				: "/images/own/48x48/map_marker.png",
-		        pincolor			: Ti.Map.ANNOTATION_RED,
-		        latitude			: lat,
-		        longitude			: lon,		        
-		        //subtitle			: listakioscos[i].domicilio,
-		        //title				: listakioscos[i].descripcion + ' | Distancia aproximada: ' + listakioscos[i].distance + ' km',
-		        id 					: listakioscos[i].id_kiosco,
-		        rightView 			: annotView		        
-		    });
-			$.vista_mapa.addAnnotation(anno);			
-		};
-	};
+					var distanceVW = Titanium.UI.createView({
+					    width 						: Titanium.UI.SIZE,
+						height 						: Titanium.UI.SIZE,
+						right						: 1,
+						layout						: 'horizontal'
+					});
+					
+					var lbldistance = Titanium.UI.createLabel({
+						text 						: listakioscos[i].distance,
+						width 						: Titanium.UI.SIZE,
+						height 						: Titanium.UI.SIZE,
+						left						: 1,
+						color						: 'white',
+					    font:{
+					    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+					    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteSubTitulo, 
+					    	fontWeight				: 'bold'
+						}
+					});
+					
+					var lbltxt = Titanium.UI.createLabel({
+						text 						: ' Km aprox.',
+						width 						: Titanium.UI.SIZE,
+						height 						: Titanium.UI.SIZE,
+						color						: '#cacaca',
+						left						: 1,
+						bottom						: 2,
+					    font:{
+					    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+					    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto
+						}
+					});
+					
+					distanceVW.add(lbldistance);
+					distanceVW.add(lbltxt);
+					
+					annotView.add(distanceVW);
+				}
+				
+				var anno = Ti.Map.createAnnotation({
+			        animate				: true,
+			        image				: "/images/own/48x48/map_marker.png",
+			        pincolor			: Ti.Map.ANNOTATION_RED,
+			        latitude			: lat,
+			        longitude			: lon,		        
+			        //subtitle			: listakioscos[i].domicilio,
+			        //title				: listakioscos[i].descripcion + ' | Distancia aproximada: ' + listakioscos[i].distance + ' km',
+			        id 					: listakioscos[i].id_kiosco,
+			        rightView 			: annotView		        
+			    });
+				$.vista_mapa.addAnnotation(anno);			
+			};
+		}
+	}
     $.activityIndicator.hide();
 },
 MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
@@ -625,10 +629,10 @@ var DespliegaFichaRETyS = function(id_ficha_retys){
 		//Crea bloque de titulo
 		function CrearLabelTitulo(label){
 			var TitleLabel = Ti.UI.createLabel({
-				color					: Alloy.Globals.Fuente.colorTexto,
+				color					: Alloy.Globals.Fuente.colorSubtitulo,
 				font: {
 			        fontFamily			: Alloy.Globals.Fuente.fontFamily,
-			        fontSize			: Alloy.Globals.Fuente.tamanioFuenteTitulo,
+			        fontSize			: Alloy.Globals.Fuente.tamanioFuenteSubTitulo + 7,
 			        fontWeight			: 'bold'
 			    },
 			    width					: "40%",
@@ -643,7 +647,8 @@ var DespliegaFichaRETyS = function(id_ficha_retys){
 		function CrearLabelData(obj){
 			var rowdata  = Ti.UI.createView({
 				width					: Ti.UI.SIZE,
-				height					: Ti.UI.SIZE
+				height					: Ti.UI.SIZE,
+				layout					: 'vertical'
 			}),
 			dato = false;
 				
@@ -875,12 +880,14 @@ var ConsultaFichaRETyS = function(id_ficha_retys,callback){
 					json = JSON.parse(this.responseText);
 				} else {
 					errorresponse.show();
+					$.activityIndicator.hide();
 					return;					
 				}
 			}
 			catch (e) {
 				Ti.API.debug(e.message);
 		  		errorresponse.show();
+		  		$.activityIndicator.hide();
 			}
 						
 			if (json.length == 0) {
@@ -910,6 +917,11 @@ var ConsultaFichaRETyS = function(id_ficha_retys,callback){
 		$.activityIndicator.hide();
 	}	
 	
+};
+
+
+var openMapPreferences = function(){
+	Titanium.UI.Android.openPreferences();
 };
 
 cambia_vista(1);

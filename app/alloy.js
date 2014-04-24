@@ -54,7 +54,7 @@ Alloy.Globals.Fuente = {
  	tamanioFuenteLista		: (TamanioTextoBase + 3) + 'dp',
  	tamanioFuenteSubLista	: (TamanioTextoBase - 1) + 'dp',
  	tamanioFuenteTexto		: (TamanioTextoBase - 1)  + 'dp',
- 	tamanioActivityIndicator: (TamanioTextoBase) + 'dp'
+ 	tamanioActivityIndicator: (TamanioTextoBase + 7) + 'dp'
 };
 //******************************************************************************************************
 
@@ -62,7 +62,8 @@ Alloy.Globals.Fuente = {
 Alloy.Globals.databasepath = '/databases/'; //Ruta a base de datos
 //Base de datos
 Alloy.Globals.databases = {
-	kioscos: 'kioscos.sqlite' //Kioscos
+	settings				: 'settings.sqlite', //configuraciones
+	kioscos					: 'kioscos.sqlite' //Kioscos
 };
 //******************************************************************************************************
 

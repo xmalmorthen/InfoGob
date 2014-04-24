@@ -3,15 +3,19 @@
 	exitOnClose					: "false"
 },
 "#activityIndicator":{
-	color: 'black',
-	font: {fontFamily:'Helvetica Neue', fontSize:26, fontWeight:'bold'},
-	message: 'Cargando...',
-	style:Titanium.UI.ActivityIndicatorStyle.BIG,
-	bottom:5,
-	right:5,
-	height:Ti.UI.SIZE,
-	width:Ti.UI.SIZE,
-	zIndex:9999	
+	color						: Alloy.Globals.Fuente.colorActivityIndicator,
+	font: {
+		fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+		fontSize				: Alloy.Globals.Fuente.tamanioActivityIndicator, 
+		fontWeight				: 'bold'
+	},
+	message						: Alloy.Globals.resources.ActivityIndicator,
+	style						: Alloy.Globals.Theme.activityindicator.style,
+	bottom						: '10dp',
+	right						: '5dp',
+	height						: Ti.UI.SIZE,
+	width						: Ti.UI.SIZE,
+	zIndex						: 9999
 },
 "#botonera_kioscos":{
 	layout						: "horizontal",

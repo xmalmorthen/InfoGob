@@ -89,9 +89,18 @@
 		<!-- Boton para centrar posicion en el mapa
 		 	 ********************************************************************************** -->
 		<View class="botonera_inferior_derecha">
-			<ImageView id="mapConfigs" class="toast" left="10" image="/images/own/128x128/settings.png" />
+			<Picker id="mapConfigs" selectionIndicator="true" >
+	            <PickerColumn id="column1">
+	                <PickerRow title="Normal"/>
+	                <PickerRow title="Satelital"/>
+	                <PickerRow title="Terreno"/>
+	                <PickerRow title="Híbrido"/>
+	            </PickerColumn>            
+	        </Picker>
+			<!--<ImageView id="mapConfigs" class="toast" left="10" image="/images/own/128x128/settings.png" onClick="openMapPreferences" />-->
 			<ImageView id="centrarposicion" class="toast" image="/images/own/128x128/gps.png" onClick="centrarposicion" visible=false />
 		</View>
 	    <!-- ********************************************************************************** -->
+        
 	</Window>
 </Alloy>
