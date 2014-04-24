@@ -5,6 +5,7 @@ Titanium.Geolocation.distanceFilter = 10;
 //Estructura de datos
 var GPS = {
 	active : false,
+	provider : null,
 	error: {
 		success: null,
 		codigo: null,
@@ -52,18 +53,16 @@ var ConfigurarGPS = function (){
         action : 'android.settings.LOCATION_SOURCE_SETTINGS'
     });	       		       	
     var curActivity = Ti.Android.currentActivity;
-    curActivity.startActivity(settingsIntent);
+    curActivity.startActivityForResult(settingsIntent,function(){
+    	ObtenerPosicionGPS();
+    });
 };
 
 //Función para obtener la posicion GPS
-var ObtenerPosicionGPS = function(){
-	GPS.active = false;
-	GPS.error.codigo = null;
-	GPS.error.mensaje = null;
-			
+var ObtenerPosicionGPS = function(callback){
 	Titanium.Geolocation.getCurrentPosition(function(e)
 	{		
-		if (e.success && e.error == null)
+		if ( e.success && e.error == null && e.provider.name == 'gps' )
 		{	
 			GPS.geolocalization.longitude = e.coords.longitude;
 			GPS.geolocalization.latitude = e.coords.latitude;
@@ -74,16 +73,25 @@ var ObtenerPosicionGPS = function(){
 			GPS.geolocalization.timestamp = e.coords.timestamp;
 			GPS.geolocalization.altitudeAccuracy = e.coords.altitudeAccuracy;
 			
-			GPS.active = true;
-			return;
+			GPS.active = true;				
+		} else {
+			GPS.active = false;					
 		}
 		
-		GPS.active = false;
-		GPS.error.success = e.success ? e.success : null;
-		GPS.error.codigo = e.code ? e.code : null;
-		GPS.error.error = e.error ? e.error : null;
-		GPS.error.mensaje = e.code ? traducircodigodeerror(e.code) : null;
+		GPS.provider 		= e.provider.name;
+		GPS.error.success 	= e.success;
+		GPS.error.codigo 	= e.code;
+		GPS.error.error 	= e.error;
+		GPS.error.mensaje 	= traducircodigodeerror(e.code);
+		
+		if (typeof callback != 'undefined') callback();
 		
 		Ti.API.info("getCurrentPosition : GPS ACTIVE: " + GPS.active + " - SUCCESS: " + GPS.error.success + " - CODIGO: " + GPS.error.codigo + " - ERROR: " + GPS.error.error + " - MENSAJE: " + GPS.error.mensaje);
 	});	
+};
+
+var countDistanceByMiles = function(cLat, cLon, lt, ln) {
+    var distance = 3959 * Math.acos(Math.cos((cLat * Math.PI) / 180) * Math.cos((lt * Math.PI) / 180) * Math.cos((ln * Math.PI) / 180 - (cLon * Math.PI) / 180) + Math.sin((cLat * Math.PI) / 180) * Math.sin((lt * Math.PI) / 180));
+    distance = Math.round(( (distance / 0.62137) * 10)) / 10;
+    return distance;
 };

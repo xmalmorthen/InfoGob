@@ -3,6 +3,11 @@ Alloy.Globals.Width = Titanium.Platform.displayCaps.platformWidth; //Dimensión 
 Alloy.Globals.Height = Titanium.Platform.displayCaps.platformHeight; //Dimensión en Alto
 //******************************************************************************************************
 
+//Configs
+Alloy.Globals.cnfg = {
+	wstimeout			: 5000
+};
+
 //Theme
 Alloy.Globals.Theme = {
 	backgroundColor 	: '#cacaca',
@@ -20,7 +25,6 @@ Alloy.Globals.Menue ={
 	borderwidth			: '3',
 	borderradius		: '10'
 };
-
 
 var 
 	TamanioImagenBase = 60,
@@ -53,8 +57,6 @@ Alloy.Globals.Fuente = {
  	tamanioActivityIndicator: (TamanioTextoBase) + 'dp'
 };
 //******************************************************************************************************
-
-Alloy.Globals.defaultFontSize = 10; //Tamaño de fuente por default
 
 //Path de base de datos
 Alloy.Globals.databasepath = '/databases/'; //Ruta a base de datos

@@ -1,5 +1,7 @@
 Ti.include("/etc/internet.js");
 Ti.include("/etc/gps.js");
+//Ti.include("/etc/LatLon.js");
+
 
 var search = Titanium.UI.createSearchBar({
 	barColor		: Alloy.Globals.Theme.searchbarcolor,
@@ -24,11 +26,10 @@ $.lista_kioscos.searchHidden = true;
 
 
 var
-	openedflag = 0, //bandera utilizada para saber si la ventana se encuentra abierta;
-	focusedflag = 0, //bandera utilizada para saber si la ventana tiene el foco establecido
-	ventanaactiva = 1, //bandera que indica la ventana activa 1=mapa 2=lista
-	locationAdded = false; //bandera utilizada para saber si el handle de localizacion ha sido establecido
-
+	openedflag 		= 0, //bandera utilizada para saber si la ventana se encuentra abierta;
+	focusedflag		= 0, //bandera utilizada para saber si la ventana tiene el foco establecido
+	ventanaactiva 	= 1, //bandera que indica la ventana activa 1=mapa 2=lista
+	locationAdded 	= false; //bandera utilizada para saber si el handle de localizacion ha sido establecido
 
 $.toastINTERNET.visible = !verificasihayinternet();
 
@@ -41,40 +42,28 @@ Titanium.Network.addEventListener('change', function(e)
 var VerificaGPS = function(){
 	if (ventanaactiva == 1) //Si la ventana activa es la de mapa, verificamos el estado del GPS
 	{	
-		if (GPS.error.error != null || GPS.error.codigo != null) {
-			
-			if ($.toastGPS.code == GPS.error.error) return;
-						
-			var err = GPS.error.error + "...";
-			switch (GPS.error.codigo){
-				case null:
-				case 0:
-					$.toastGPS.image="/images/own/128x128/no_gps.png";
-					$.toastGPS.message= "GPS desactivado o no se encuentra señal GPS válida...";
-					$.toastGPS.configure='true';
-				break;
-				case Ti.Geolocation.ERROR_LOCATION_UNKNOWN:
-				case Ti.Geolocation.ERROR_DENIED:
-				case Ti.Geolocation.ERROR_NETWORK:
-				case Ti.Geolocation.ERROR_HEADING_FAILURE:
-				case Ti.Geolocation.ERROR_REGION_MONITORING_DENIED:
-				case Ti.Geolocation.ERROR_REGION_MONITORING_FAILURE:
-				case Ti.Geolocation.ERROR_REGION_MONITORING_DELAYED:
-					$.toastGPS.image="/images/own/128x128/err_gps.png";
-					$.toastGPS.message= err;
-					$.toastGPS.configure='false';
-				break;	
-			}
-			GPS.active = false;
-		}	
-		$.toastGPS.visible = GPS.active == false ? true : false;		
-		$.centrarposicion.visible = GPS.active == true ? true : false;		
-		$.toastGPS.code = $.centrarposicion.visible == false ? GPS.error.error : null;
-		$.vista_mapa.userLocation = GPS.active == true ? true : false;
+		$.toastGPS.visible 			= GPS.active === false  ? true : false; //activar el icono de no gps activo		
+		$.centrarposicion.visible 	= GPS.active === true ? true : false; //ocultar el icono de centrar posicion gps
+		$.toastGPS.code 			= GPS.active === false ? GPS.error.error : null;
+		$.vista_mapa.userLocation 	= GPS.active === true ? true : false;
+		
+		
+		if (GPS.provider != 'gps') {
+			$.toastGPS.image="/images/own/128x128/no_gps.png";
+			$.toastGPS.message= "GPS desactivado o no se encuentra señal GPS válida...";
+			$.toastGPS.configure='true';				
+		} else {
+			$.toastGPS.image="/images/own/128x128/err_gps.png";
+			$.toastGPS.message= "No se encuentra señal GPS ";
+			$.toastGPS.configure='false';
+		}
 		
 		MuestraKioscosMapa();
+		
 	} else {
-		$.centrarposicion.visible = false; //Si la ventana activa no es la de mapa, ocultamos el boton de centrado de GPS		
+		if ($.centrarposicion.visible === true) {
+			$.centrarposicion.visible = false; //Si la ventana activa no es la de mapa, ocultamos el boton de centrado de GPS
+		}		
 	}
 };
 
@@ -89,7 +78,7 @@ function cambia_vista(opc){
 			$.vista_lista.zIndex = 1;
 			$.vista_mapa.zIndex = 2;
 			ventanaactiva = 1;
-			MuestraKioscosMapa();
+			//MuestraKioscosMapa();
 		break;
 		case 2:
 			$.mapConfigs.visible = false;
@@ -114,13 +103,12 @@ var open_view_lista = function(e){
 
 var 
 obtengpsyverificaestatus = function(){
-	if (ventanaactiva == 1) {
-		ObtenerPosicionGPS();
-		VerificaGPS();
+	if (ventanaactiva == 1) {		
+		ObtenerPosicionGPS(VerificaGPS);		
 	}		
 },
 open = function(e){
-	ObtenerPosicionGPS();
+	ObtenerPosicionGPS(VerificaGPS);
 	openedflag = 1;	
 },
 focus = function(e){
@@ -152,13 +140,14 @@ locationCallback = function(e){
 		$.index.fireEvent('focus');
 	}
 		
-	GPS.active = false;
-	GPS.error.success = e.success ? e.success : null;
-	GPS.error.codigo = e.code ? e.code : null;
-	GPS.error.error = e.error ? e.error : null;
-	GPS.error.mensaje = e.code ? traducircodigodeerror(e.code) : null;
-		
-	if (e.success && e.error == null)
+	GPS.active 			= false;	
+	GPS.provider 		= 'gps';
+	GPS.error.success 	= e.success;
+	GPS.error.codigo 	= e.code;
+	GPS.error.error 	= e.error;
+	GPS.error.mensaje 	= traducircodigodeerror(e.code);
+	
+	if ( e.success && e.error == null && e.provider.name == 'gps' )
 	{	
 		GPS.geolocalization.longitude = e.coords.longitude;
 		GPS.geolocalization.latitude = e.coords.latitude;
@@ -169,10 +158,11 @@ locationCallback = function(e){
 		GPS.geolocalization.timestamp = e.coords.timestamp;
 		GPS.geolocalization.altitudeAccuracy = e.coords.altitudeAccuracy;
 		
-		GPS.active = true;
-		return;
-	}	
-	
+		GPS.active = true;				
+	} else {
+		GPS.active = false;					
+	}
+		
 	VerificaGPS();
 	
 	Ti.API.info("locationCallback : GPS ACTIVE: " + GPS.active + " - SUCCESS: " + GPS.error.success + " - CODIGO: " + GPS.error.codigo + " - ERROR: " + GPS.error.error + " - MENSAJE: " + GPS.error.mensaje);
@@ -186,18 +176,82 @@ $.index.addEventListener('blur', blur);
 $.index.addEventListener('close',close);
 
 var 
-	db = null,
-	query = null;
+	db = null,						//variable de base de datos
+	query = null,
+	lista_kioscos_alfabeto = [],	//lista de kioscos por orden alfabético
+	lista_kioscos_distancia = [];	//lista de kioscos por orden de distancia
 
 var ObtenKioscosBDLocal = function(){
 	db = Ti.Database.install(Alloy.Globals.databasepath + Alloy.Globals.databases.kioscos, 'kioscos');
-	return db.execute('SELECT id,descripcion,domicilio,lat,lng FROM tbl_kioscos');
+	return db.execute('SELECT id,descripcion,domicilio,lat,lng FROM tbl_kioscos  order by descripcion');
+},
+/*
+ * tipo_retorno : 	1 = ordenado por alfabeto
+ * 					2 = ordenado por distancia
+ */
+ObtenerKioscosFormateado = function (tipo_retorno){
+	if (typeof tipo_retorno == 'undefined' ||  GPS.active === false) tipo_retorno = 1;
+		
+	switch (tipo_retorno) {
+	    case 1:  // ordenado por alfabeto
+	    	if (lista_kioscos_alfabeto.length <= 0)
+	    	{
+	    		query = ObtenKioscosBDLocal();
+	    		var lista = [];
+	    		while (query.isValidRow())
+				{
+					kiosco = {
+				        title							: query.fieldByName('descripcion'),
+					    id_kiosco						: query.fieldByName('id'),
+					    descripcion						: query.fieldByName('descripcion'),
+					    domicilio						: query.fieldByName('domicilio'),
+					    lat								: query.fieldByName('lat'),
+					    lng								: query.fieldByName('lng')
+				    };		
+					lista_kioscos_alfabeto.push(kiosco);
+					query.next();
+				}
+	    	};
+	    	return lista_kioscos_alfabeto; 
+	    break;
+	    case 2:  // ordenado por distancia
+	    	if (lista_kioscos_distancia.length <= 0) {
+	    		query = ObtenKioscosBDLocal();
+    			
+    			var lista = [];
+	    		while (query.isValidRow())
+				{
+					var distance = countDistanceByMiles(GPS.geolocalization.latitude,
+													    GPS.geolocalization.longitude,
+													    query.fieldByName('lat'),
+													    query.fieldByName('lng')
+							 						   );
+										
+					kiosco = {
+				        title							: query.fieldByName('descripcion'),
+					    id_kiosco						: query.fieldByName('id'),
+					    descripcion						: query.fieldByName('descripcion'),
+					    domicilio						: query.fieldByName('domicilio'),
+					    lat								: query.fieldByName('lat'),
+					    lng								: query.fieldByName('lng'),
+					    distance						: distance
+				    };		
+					lista_kioscos_distancia.push(kiosco);
+					query.next();
+				}
+	    	}; 
+	    	return lista_kioscos_distancia; 	    	   
+	    break;
+	    default:
+	      return lista_kioscos_alfabeto;
+	};
 };
+
 
 var 
 mapaIniciado = false,
 InicializaMapa = function(){
-	if (GPS.active) {
+	if (GPS.active === true) {
 		var region = {
 	        latitude:  GPS.geolocalization.latitude,
 	        longitude: GPS.geolocalization.longitude,
@@ -212,36 +266,117 @@ MuestraKioscosMapa = function(){ //funcion que georeferencia los kioscos en el m
 	if (!mapaIniciado) { //Si el mapa no ha sido iniciado
 		InicializaMapa();
 		
-		var listakioscos = ObtenKioscosBDLocal(); //Obtener lista de Kioscos
-		while (listakioscos.isValidRow())
-		{
-			var anno = Ti.Map.createAnnotation({
-		        animate: true,
-		        image: "/images/own/32x32/pin_map.png",
-		        pincolor: Ti.Map.ANNOTATION_RED,
-		        latitude: listakioscos.fieldByName('lat'),
-		        longitude: listakioscos.fieldByName('lng'),		        
-		        subtitle: listakioscos.fieldByName('domicilio'),
-		        title: listakioscos.fieldByName('descripcion'),
-		        id : listakioscos.fieldByName('id')		        
-		    });
-			$.vista_mapa.addAnnotation(anno);
+		var listakioscos = ObtenerKioscosFormateado(); //Obtener lista de Kioscos
+		for (var i=0; i < listakioscos.length; i++) {
+			var 
+				lat = listakioscos[i].lat,
+				lon = listakioscos[i].lng;				
+					
+			var annotView = Titanium.UI.createView({
+			    width 						: Titanium.UI.SIZE,
+				height 						: Titanium.UI.SIZE,
+				layout						: 'vertical'
+			});
 			
-			listakioscos.next();
+			var lblTitle = Titanium.UI.createLabel({
+				text 						: listakioscos[i].descripcion,
+				width 						: Titanium.UI.SIZE,
+				height 						: Titanium.UI.SIZE,
+				left						: 1,
+				color						: 'white',
+			    font:{
+			    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+			    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteSubTitulo, 
+			    	fontWeight				: 'bold'
+				}
+			});
+			
+			var lblSubTitle = Titanium.UI.createLabel({
+				text 						: listakioscos[i].domicilio,
+				width 						: Titanium.UI.SIZE,
+				height 						: Titanium.UI.SIZE,
+				left						: 1,
+				color						: '#cacaca',
+			    font:{
+			    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+			    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto,
+			    	fontWeight				: 'bold'
+				}
+			});
+			annotView.add(lblTitle);
+			annotView.add(lblSubTitle);
+			
+			if (GPS.active === true && (typeof(listakioscos[i].distance) == 'undefined') ) {				
+				var distance = countDistanceByMiles(GPS.geolocalization.latitude,
+											    	GPS.geolocalization.longitude,
+											    	lat,
+											    	lon
+					 						   	   );
+		   		listakioscos[i].distance = distance;
+			
+				var distanceVW = Titanium.UI.createView({
+				    width 						: Titanium.UI.SIZE,
+					height 						: Titanium.UI.SIZE,
+					right						: 1,
+					layout						: 'horizontal'
+				});
+				
+				var lbldistance = Titanium.UI.createLabel({
+					text 						: listakioscos[i].distance,
+					width 						: Titanium.UI.SIZE,
+					height 						: Titanium.UI.SIZE,
+					left						: 1,
+					color						: 'white',
+				    font:{
+				    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+				    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteSubTitulo, 
+				    	fontWeight				: 'bold'
+					}
+				});
+				
+				var lbltxt = Titanium.UI.createLabel({
+					text 						: ' Km aprox.',
+					width 						: Titanium.UI.SIZE,
+					height 						: Titanium.UI.SIZE,
+					color						: '#cacaca',
+					left						: 1,
+					bottom						: 2,
+				    font:{
+				    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+				    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto
+					}
+				});
+				
+				distanceVW.add(lbldistance);
+				distanceVW.add(lbltxt);
+				
+				annotView.add(distanceVW);
+			}
+			
+			var anno = Ti.Map.createAnnotation({
+		        animate				: true,
+		        image				: "/images/own/48x48/map_marker.png",
+		        pincolor			: Ti.Map.ANNOTATION_RED,
+		        latitude			: lat,
+		        longitude			: lon,		        
+		        //subtitle			: listakioscos[i].domicilio,
+		        //title				: listakioscos[i].descripcion + ' | Distancia aproximada: ' + listakioscos[i].distance + ' km',
+		        id 					: listakioscos[i].id_kiosco,
+		        rightView 			: annotView		        
+		    });
+			$.vista_mapa.addAnnotation(anno);			
 		};
-		listakioscos.close();
 	};
     $.activityIndicator.hide();
 },
 MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
 	var 
-		listakioscos = ObtenKioscosBDLocal(), //Obtener lista de Kioscos
-		Data = [];
-	
-	//Constructor de la lista a partir de la tabla de base de datos
-	var veces = 0;
-	while (listakioscos.isValidRow())
-	{	
+		Data = [],
+		listakioscos = ObtenerKioscosFormateado(2); //Obtener lista de Kioscos
+
+	var veces = 0;	
+	for (var i=0; i < listakioscos.length; i++) {
+		
 		//Fila del tableview
 		var row = Ti.UI.createTableViewRow({
 			layout							:'vertical',
@@ -251,13 +386,20 @@ MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
 		    top								: 1,
 		    bottom							: 1,
 		    rightImage						: '/images/own/32x32/align_just.png',	
-		    title							: listakioscos.fieldByName('descripcion'),
-		    id_kiosco						: listakioscos.fieldByName('id'),
-		    descripcion						: listakioscos.fieldByName('descripcion'),
-		    domicilio						: listakioscos.fieldByName('domicilio'),
-		    lat								: listakioscos.fieldByName('lat'),
-		    lng								: listakioscos.fieldByName('lng')
+		    title							: listakioscos[i].descripcion,
+		    id_kiosco						: listakioscos[i].id_kiosco,
+		    descripcion						: listakioscos[i].descripcion,
+		    domicilio						: listakioscos[i].domicilio,
+		    lat								: listakioscos[i].lat,
+		    lng								: listakioscos[i].lng
 	  	});	
+	  	
+	  	
+	  	var vw = Ti.UI.createView({
+	  		height							: Ti.UI.SIZE,
+	  		width							: '99%',
+	  		layout							: 'horizontal'
+	  	});
 	  	
 	  	//Etiqueta de título
 		var Title = Ti.UI.createLabel({
@@ -267,13 +409,42 @@ MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
         		fontSize					: Alloy.Globals.Fuente.tamanioFuenteTitulo,
         		fontWeight					: 'bold'				
 	    	},
-	    	left							: 5, 
+	    	left							: 2, 
 		    top								: 1,
-		    width							: Ti.UI.SIZE,
+		    width							: '70%',
 		    height							: Ti.UI.SIZE,
-		    text							: listakioscos.fieldByName('descripcion')
+		    text							: listakioscos[i].descripcion
 		});
-	  	row.add(Title);
+	  	vw.add(Title);
+	  	
+	  	if (GPS.active === true) {
+	  		if ( typeof(listakioscos[i].distance) == 'undefined') {				
+				var distance = countDistanceByMiles(GPS.geolocalization.latitude,
+											    	GPS.geolocalization.longitude,
+											    	lat,
+											    	lon
+					 						   	   );
+		   		listakioscos[i].distance = distance;
+	   		}
+		
+		  	//Etiqueta de distancia
+			var Dist = Ti.UI.createLabel({
+			    color							: Alloy.Globals.Fuente.colorTitulo,
+			    font:{
+			    	fontFamily					: Alloy.Globals.Fuente.fontFamily,
+	        		fontSize					: Alloy.Globals.Fuente.tamanioFuenteTitulo,
+	        		fontWeight					: 'bold'				
+		    	},
+		    	left							: 10, 
+			    top								: 1,
+			    width							: Ti.UI.SIZE,
+			    height							: Ti.UI.SIZE,
+			    text							: listakioscos[i].distance + ' Km aprox.'
+			});
+		  	vw.add(Dist);
+	  	};
+	  	
+	  	row.add(vw);
 	  	
 	  	//Etiqueta de subtítulo
 	  	var SubTitle = Ti.UI.createLabel({
@@ -287,20 +458,12 @@ MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
 		 	bottom							: 10,
 		    width							: Ti.UI.SIZE,
 		    height							: Ti.UI.SIZE,
-		    text							: listakioscos.fieldByName('domicilio')			    
+		    text							: listakioscos[i].domicilio			    
 	  	});
 	  	row.add(SubTitle);
 	  	
-		Data.push(row); 
-		
-		veces++;
-		
-		if (veces == 15) {
-			
-	  	listakioscos.next();
-	  	
-	  	}
-	}
+		Data.push(row);
+	}	
 	$.lista_kioscos.data = Data;
 	
 	$.activityIndicator.hide();
@@ -384,38 +547,36 @@ GeneraListaTramites = function(id_kiosco){
 	{	
 		//Fila del tableview
 		var row = Ti.UI.createTableViewRow({
-		    backgroundSelectedColor:'#cacaca',
-		    selectedColor: "#cccccc",			    
-		    height:Ti.UI.SIZE,
-		    width:Ti.UI.SIZE,
-		    layout: 'vertical',
-		    rightImage : '/images/own/16x16/image_text.png',
-		    top: 1,
-		    bottom: 1, 
-		    title: 			listatramiteskioscos.fieldByName('descripcion'),		    
-		    id_tramite:		listatramiteskioscos.fieldByName('id'),
-		    id_ficha_retys:	listatramiteskioscos.fieldByName('id_ficha_retys'),
-		    descripcion: 	listatramiteskioscos.fieldByName('descripcion')
+			layout							: 'vertical',
+			selectedBackgroundColor			: "#cccccc",
+		    top								: 1,
+		    bottom							: 1,
+		    rightImage 						: '/images/own/16x16/image_text.png',
+		    //height						: Ti.UI.SIZE,
+		    //width							: Ti.UI.SIZE,
+		    title							: listatramiteskioscos.fieldByName('descripcion'),		    
+		    id_tramite						: listatramiteskioscos.fieldByName('id'),
+		    id_ficha_retys					: listatramiteskioscos.fieldByName('id_ficha_retys'),
+		    descripcion						: listatramiteskioscos.fieldByName('descripcion')
 	  	});
+	  	  		  	
 	  	//Etiqueta de título
 		var Title = Ti.UI.createLabel({
-		    color:'Black',
-		    font:{
-		    	fontFamily:'Arial', 
-		    	fontSize:Alloy.Globals.defaultFontSize + 12
-		    },
-	    	left:2, 
-		    top: 2,
-		    width:Ti.UI.SIZE,
-		    height: Ti.UI.SIZE,
-		    text: 			listatramiteskioscos.fieldByName('descripcion')
+		    color							: Alloy.Globals.Fuente.colorTexto,
+		    font: {
+		        fontFamily					: Alloy.Globals.Fuente.fontFamily,
+		        fontSize					: Alloy.Globals.Fuente.tamanioFuenteLista,
+		        fontWeight					: 'bold'
+		    },		    
+	    	left							: 2, 
+		    top								: 5,
+		    bottom							: 5,
+		    width							: '80%',
+		    height							: Ti.UI.SIZE,
+		    text							: listatramiteskioscos.fieldByName('descripcion')
 		});
 	  	row.add(Title);
-	  	
-	  	if (veces < listatramiteskioscos.rowCount) {		  	
-	  		row.add(Ti.UI.createView({top:1, bottom:5,height: "1dp",width: "95%",backgroundColor:"#cacaca"}));
-	  	}
-								
+	  								
 		Data.push(row); 
 		
 		veces++;		
@@ -442,13 +603,13 @@ click_tramitekiosco = function(e){
 };
 
 $.index.addEventListener('android:back', function(e) {
-	if ($.vistaficharetys.visible) {
-		$.vistaficharetys.visible = false;
-	} else if ($.vistatramites.visible) {
-		$.vistatramites.visible = false;
+	if ($.vistaficharetys.visible === true) {
+		Closesubviewficha();
+	} else if ($.vistatramites.visible === true) {
+		Closesubviewtramites();
 	} else {
 		$.index.close();
-	} 
+	};	 
 });
 
 var 
@@ -461,47 +622,46 @@ Closesubviewficha = function(){
 
 var DespliegaFichaRETyS = function(id_ficha_retys){
 	ConsultaFichaRETyS(id_ficha_retys, function (data) {
-				
+		//Crea bloque de titulo
 		function CrearLabelTitulo(label){
 			var TitleLabel = Ti.UI.createLabel({
-				color:'black',
+				color					: Alloy.Globals.Fuente.colorTexto,
 				font: {
-			        fontFamily:'Helveltica',
-			        fontSize: '18dp',
-			        fontStyle: 'normal',
-			        fontWeight: 'bold'
+			        fontFamily			: Alloy.Globals.Fuente.fontFamily,
+			        fontSize			: Alloy.Globals.Fuente.tamanioFuenteTitulo,
+			        fontWeight			: 'bold'
 			    },
-			    width:"27%",
-				height:Ti.UI.SIZE,
-				left: 1,
-			    text:label
+			    width					: "40%",
+				height					: Ti.UI.SIZE,
+				left					: 1,
+			    text					: label
 			});
 			return TitleLabel;			
 		};
 		
+		//Crea bloque de datos
 		function CrearLabelData(obj){
 			var rowdata  = Ti.UI.createView({
-			    layout:"vertical",
-				width:Ti.UI.SIZE,
-				height:Ti.UI.SIZE
+				width					: Ti.UI.SIZE,
+				height					: Ti.UI.SIZE
 			}),
-				dato = false;
+			dato = false;
 				
 			if (typeof obj === 'object') {
 			
 				for(var item in obj) {
 					if (obj.length > 0){
 						var DataLabel = Ti.UI.createLabel({
-							color:'black',
+							color					: Alloy.Globals.Fuente.colorTexto,
 							font: {
-						        fontFamily:'Helveltica',
-						        fontSize: '18dp',
-						        fontStyle: 'normal',		        
+						        fontFamily			: Alloy.Globals.Fuente.fontFamily,
+						        fontSize			: Alloy.Globals.Fuente.tamanioFuenteLista,
+						        fontWeight			: 'bold'		        
 						    },
-						    left:5,
-							width:"69%",
-							height:Ti.UI.SIZE,
-						    text:obj[item]
+						    left					: 5,
+							width					: "55%",
+							height					: Ti.UI.SIZE,
+						    text					: obj[item]
 						});
 						rowdata.add(DataLabel);
 						dato = true;
@@ -510,16 +670,16 @@ var DespliegaFichaRETyS = function(id_ficha_retys){
 			} else {
 				if (obj.length > 0){
 					var DataLabel = Ti.UI.createLabel({
-						color:'black',
+						color					: Alloy.Globals.Fuente.colorTexto,
 						font: {
-					        fontFamily:'Helveltica',
-					        fontSize: '18dp',
-					        fontStyle: 'normal',		        
+					        fontFamily			: Alloy.Globals.Fuente.fontFamily,
+					        fontSize			: Alloy.Globals.Fuente.tamanioFuenteLista,
+					        fontWeight			: 'bold'		        
 					    },
-					    left:5,
-						width:"69%",
-						height:Ti.UI.SIZE,
-					    text:obj
+					    left					: 5,
+						width					: "55%",
+						height					: Ti.UI.SIZE,
+					    text					: obj
 					});
 					rowdata.add(DataLabel);
 					dato = true;
@@ -528,16 +688,15 @@ var DespliegaFichaRETyS = function(id_ficha_retys){
 			
 			if (!dato){
 				var DataLabel = Ti.UI.createLabel({
-					color:'black',
+					color						: Alloy.Globals.Fuente.colorTexto,
 					font: {
-				        fontFamily:'Helveltica',
-				        fontSize: '18dp',
-				        fontStyle: 'normal',		        
+				        fontFamily				: Alloy.Globals.Fuente.fontFamily,
+				        fontSize				: Alloy.Globals.Fuente.tamanioFuenteLista,		        
 				    },
-				    left:5,
-					width:"69%",
-					height:Ti.UI.SIZE,
-				    text:'---'
+				    left						: 5,
+					width						: "55%",
+					height						: Ti.UI.SIZE,
+				    text						: '---'
 				});
 				rowdata.add(DataLabel);
 			}
@@ -545,12 +704,13 @@ var DespliegaFichaRETyS = function(id_ficha_retys){
 			return rowdata;			
 		}
 		
+		//Crea bloque con titulo y datos
 		function CreaBloque(titulo,data){
 			//vista principal
 			var vista  = Ti.UI.createView({
-			    layout:"horizontal",
-				width:Ti.UI.SIZE,
-				height:Ti.UI.SIZE,			
+			    layout							: "horizontal",
+				width							: Ti.UI.SIZE,
+				height							: Ti.UI.SIZE,			
 			});	
 			
 			vista.add( CrearLabelTitulo(titulo));		
@@ -559,73 +719,103 @@ var DespliegaFichaRETyS = function(id_ficha_retys){
 			return vista;
 		}
 		
+		//Quitar la información anterior de la vista
 		for (var d = $.scrllvw.children.length-1; d >= 0; d--) {
 		    $.scrllvw.remove($.scrllvw.children[d]);
 		}
 				
 		//vista principal
 		var data_ficha_retys = Ti.UI.createView({		    
-		    layout:"vertical",
-			left:5,
-			right:5,
-			top:5,
-			bottom:5,
-			width:Ti.UI.SIZE,
-			height:Ti.UI.SIZE
+		    layout								: "vertical",
+			left								: 5,
+			right								: 5,
+			top									: 5,
+			bottom								: 5,
+			width								: Ti.UI.SIZE,
+			height								: Ti.UI.SIZE
 		});
+		
+		/*var data = {
+			nombre 					: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			descripcion 			: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			tipo					: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',	
+			fecha_validacion		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			a_quien_va_dirigido		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			requisitos				: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			documentos				: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			observaciones			: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			costos					: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			costos_nota				: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			forma_pago				: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			pasos					: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			tiempo_respuesta		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			formatos_autorizados	: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			medios_impugnacion		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			Afirmativa_Ficta		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			responsable : {
+					ubicacion		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+					dependencia		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+					responsable		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+					correo			: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+					telefonos		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+					extension		: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+					horario_oficina	: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			},
+			normatividad 			: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+		};*/
 					
 		data_ficha_retys.add( CreaBloque('Nombre',data.nombre) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Descripción',data.descripcion) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Tipo',data.tipo) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Fecha de validación',data.fecha_validacion) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('¿A quién va dirigido?',data.a_quien_va_dirigido) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Requisitos',data.requisitos) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 						
 		data_ficha_retys.add( CreaBloque('Documentos',data.documentos) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 
 		data_ficha_retys.add( CreaBloque('Observaciones',data.observaciones) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));		
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));		
 		
 		data_ficha_retys.add( CreaBloque('Costos',data.costos) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Nota de Costos',data.costos_nota) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Formas de pago',data.forma_pago) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Pasos a seguir para realizar el trámite',data.pasos) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Tiempo de respuesta',data.tiempo_respuesta) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Formatos autorizados',data.formatos_autorizados) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Medios de impugnación',data.medios_impugnacion) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		data_ficha_retys.add( CreaBloque('Afirmativa Ficta',data.Afirmativa_Ficta) );
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 		
 		var rowdata  = Ti.UI.createView({
-		    layout:"vertical",
-			width:Ti.UI.SIZE,
-			height:Ti.UI.SIZE
+		    layout						: "vertical",
+			width						: Ti.UI.SIZE,
+			height						: Ti.UI.SIZE
 		});		
 		rowdata.add( CrearLabelData( "Ubicación: " + data.responsable.ubicacion ) );
 		rowdata.add( CrearLabelData( "Dependencia: " + data.responsable.dependencia ) );
@@ -642,12 +832,13 @@ var DespliegaFichaRETyS = function(id_ficha_retys){
 		vista.add( CrearLabelTitulo('Responsable'));		
 		vista.add( rowdata);
 		data_ficha_retys.add(vista);
-		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor:"#cacaca"}));
+		data_ficha_retys.add(Ti.UI.createView({top:5, bottom:5,height: "1dp",width: "99%",backgroundColor: Alloy.Globals.Theme.dividerColor}));
 				
 		data_ficha_retys.add( CreaBloque('Normatividad',data.normatividad) );
 		
 		$.scrllvw.add(data_ficha_retys);
-				
+		$.scrllvw.scrollTo(0,0);
+						
 		$.vistaficharetys.zIndex = 11;
 		$.vistaficharetys.visible = true;
 		
@@ -670,7 +861,7 @@ var ConsultaFichaRETyS = function(id_ficha_retys,callback){
 				    title: 'Ficha RETyS'
 			 }),			 
 	sendit = Ti.Network.createHTTPClient({
-	 	timeout : 15000,
+	 	timeout : Alloy.Globals.cnfg.wstimeout,
 	 	onerror : function(e) {	
 	  		Ti.API.debug(e.error);
 	  		errorresponse.show();
@@ -696,7 +887,7 @@ var ConsultaFichaRETyS = function(id_ficha_retys,callback){
 				nodata.show();
 		 	} else {
 		 		if (json.exito == 1) {
-	 				callback (json);
+		 			if (typeof callback != 'undefined') callback (json);
 	 			} else {
 	 				nodata.show();
 	 			}

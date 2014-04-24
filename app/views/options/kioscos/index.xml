@@ -26,7 +26,7 @@
 				<View ns="Ti.Map" id="vista_mapa" onClick="click_map" />
 				<!-- LISTA -->
 				<View id="vista_lista">
-					<ImageView id="background_image" />
+					<ImageView id="background_image" image = '/images/own/128x128/note_search.png' />
 					<View id="vista_de_acomodo">
 						<Label id="title_listakioscos" />
 						<TableView id="lista_kioscos" onClick="click_opc"/>
@@ -38,31 +38,39 @@
 			<!-- Lista de trámites
 					- Ventana emergente que muestra la lista de tramites
 				 ********************************************************************************** -->
-			<View id="vistatramites" class="subview">
+			<View id="vistatramites" visible=false>
+				<View class="subview" />				
 				<View id="subviewchildren" class="subviewchildren">
-					<View width="100%" height=Ti.UI.SIZE> 
-						<ImageView width=48 height=48 top=7 left=5 image="/images/own/48x48/list_ingredients.png"/>
+					<View class="headersubviewchildren"> 
+						<ImageView class="imgheadersubviewchildren" image= "/images/own/128x128/note_starred.png"/>
 						<Label class="header_titulo">Lista de trámites...</Label>
-						<ImageView width=32 height=32 top=7 right=10 image="/images/own/32x32/delete.png" onClick="Closesubviewtramites" />	
+						<ImageView class="btnclose" onClick="Closesubviewtramites" />	
 					</View>					
 					<View top=5 class="divider" />
-					<TableView id="lista_tramiteskioscos" onClick="click_tramitekiosco"/>
-				</View>				
+					<View>
+						<ImageView id="background_image" image = '/images/own/128x128/file_starred.png' />
+						<TableView id="lista_tramiteskioscos" onClick="click_tramitekiosco"/>	
+					</View>					
+				</View>							
 			</View>
 			<!-- ********************************************************************************** -->
 			
 			<!-- Ficha RETyS
 					- Ventana emergente que muestra la ficha RETyS
 				 ********************************************************************************** -->
-			<View id="vistaficharetys" class="subview">
+			<View id="vistaficharetys" visible=false>
+				<View  class="subview" />
 				<View id="subviewficharetyschildren" class="subviewchildren">
-					<View width="100%" height=Ti.UI.SIZE> 
-						<ImageView width=48 height=48 top=7 left=5 image="/images/own/48x48/doc_lines.png"/>
+					<View class="headersubviewchildren"> 
+						<ImageView class="imgheadersubviewchildren" image= "/images/own/128x128/note.png"/>
 						<Label class="header_titulo">Ficha RETyS</Label>
-						<ImageView width=32 height=32 top=7 right=10 image="/images/own/32x32/delete.png" onClick="Closesubviewficha" />	
+						<ImageView class="btnclose" onClick="Closesubviewficha" />	
 					</View>
 					<View top=5 class="divider"/>
-					<ScrollView id="scrllvw" showVerticalScrollIndicator="true" showHorizontalScrollIndicator="true" height="99%" width="99%" />
+					<View>
+						<ImageView id="background_image" image = '/images/own/128x128/note_tagged.png' />
+						<ScrollView id="scrllvw" />
+					</View>					
 				</View>				
 			</View>	
 			<!-- ********************************************************************************** -->

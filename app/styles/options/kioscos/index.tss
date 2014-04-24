@@ -69,12 +69,11 @@
 	zIndex						: 1	
 },
 "#background_image":{
-	image				: '/images/own/128x128/note_search.png',
-	height				: Alloy.Globals.Imagen.background,
-	width				: Alloy.Globals.Imagen.background,
-	right				: 2,
-	bottom				: 2,
-	opacity				: 0.4
+	height						: Alloy.Globals.Imagen.background,
+	width						: Alloy.Globals.Imagen.background,
+	right						: 2,
+	bottom						: 2,
+	opacity						: 0.4
 },
 "#vista_de_acomodo":{
 	top							: Alloy.Globals.Imagen.grande, // Se utiliza imagen grande con respecto al tamaño pequeño de la botonera para que ajuste mejor
@@ -82,6 +81,7 @@
 },
 "#title_listakioscos":{	
 	color						: Alloy.Globals.Fuente.colorTitulo,
+	left						: 5,
 	font: {
         fontFamily				: Alloy.Globals.Fuente.fontFamily,
         fontSize				: Alloy.Globals.Fuente.tamanioFuenteTitulo,
@@ -94,40 +94,64 @@
 	right						: 5 
 },
 ".subview": {
-  	width:'100%',
-  	height:'100%',
-  	visible:false
+  	width						: '100%',
+  	height						: '100%',
+  	backgroundColor				: '#6F6E6E',
+  	opacity						: 0.7
 },
 ".subviewchildren": {
-	borderColor:'#888',
-	borderWidth:2,
-	borderRadius:8,
-	backgroundColor:'#F7F7F7',
-  	width:'80%',
-  	height:'80%',
-  	layout:'vertical'
+	borderColor					: '#888',
+	borderWidth					: 2,
+	borderRadius				: 8,
+	backgroundColor				: Alloy.Globals.Theme.backgroundColor,
+  	width						: '85%',
+  	height						: '85%',
+  	layout						: 'vertical'
 },
-".divider":{
-	top:1,
-	height: "1dp",
-	width: "70%",
-	left:"0dp",
-	top:"1dp",
-	backgroundColor:"#000"
+'.headersubviewchildren':{
+	width						: "100%",
+	height						: Ti.UI.SIZE
+},
+'.imgheadersubviewchildren':{
+	width						: Alloy.Globals.Imagen.pequenia,
+	height						: Alloy.Globals.Imagen.pequenia,
+	top							: 7,
+	left						: 5
 },
 ".header_titulo": {
-	color: "#000",
+	color						: Alloy.Globals.Fuente.colorTitulo,
+	width						: '70%',
 	font: {
-        fontFamily:'Helveltica',
-        fontSize: '30dp',
-        fontStyle: 'normal',
-        fontWeight: 'bold'
+        fontFamily				: Alloy.Globals.Fuente.fontFamily,
+        fontSize				: Alloy.Globals.Fuente.tamanioFuenteTitulo,
+        fontWeight				: 'bold'
     },
-	left:55,
-	top:17
+	left						: Alloy.Globals.Imagen.mediana,
+	bottom						: 1
+},
+".btnclose":{
+	width						: Alloy.Globals.Imagen.miniatura,
+	height						: Alloy.Globals.Imagen.miniatura,
+	top							: 5,
+	right						: 10,
+	image						: "/images/own/128x128/bullet_deny.png"
+},
+".divider":{
+	top							: 1,
+	height						: "1dp",
+	width						: "70%",
+	left						: "0dp",
+	top							: "1dp",
+	backgroundColor				: Alloy.Globals.Theme.dividerColor
 },
 "#lista_tramiteskioscos":{
-	left:10
+	left						: 10
+},
+'#scrllvw':{
+	showVerticalScrollIndicator	: "true",
+	showHorizontalScrollIndicator: "true",
+	height						: "99%",
+	width						: "99%"
 },
 ".toastbanner":{
 	top							: 5,

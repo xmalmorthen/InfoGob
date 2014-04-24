@@ -66,6 +66,7 @@
 },
 "#scroll_vw":{
 	top								: 1,
+	bottom							: 1,
 	height							: '84dp',
 	width							: 'auto',
 	showVerticalScrollIndicator		: true,
@@ -82,6 +83,7 @@
     top								: 5,
     left							: 15,
     right							: 15,
+    bottom							: 5,
     width							: 'auto',
     height							: 'auto'
 },
