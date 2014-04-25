@@ -19,6 +19,32 @@
 			</View>
 			<!-- ********************************************************************************** -->
 			
+			<!-- Banner de imagenes de estado
+				- No conectado a internet
+				- No GPS
+			 ********************************************************************************** -->
+			<View class="toastbanner">
+				<ImageView id="toastINTERNET" class="toast" image="/images/own/128x128/no_internet.png" message="No conectado a internet..." configure='false' onClick="toastNotification" visible=false />
+				<ImageView id="toastGPS" class="toast" message="Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS..." configure='true' code=null onClick="toastNotification" visible=false />
+			</View>	
+			<!-- ********************************************************************************** -->
+			
+			<!-- Boton para centrar posicion en el mapa y tipo de mapa
+			 	 ********************************************************************************** -->
+			<View class="botonera_inferior_derecha">
+				<View id="mapConfigs">
+					<Picker onChange="changeMapType">
+			            <PickerColumn id="column1">
+			                <PickerRow title="Estandar"/>
+			                <PickerRow title="Satelital"/>
+			                <PickerRow title="Híbrido"/>
+			            </PickerColumn>            
+			        </Picker>
+		        </View>
+				<ImageView id="centrarposicion" class="toast" image="/images/own/128x128/gps.png" onClick="centrarposicion" visible=false />
+			</View>
+		    <!-- ********************************************************************************** -->
+						
 			<!-- Area de contenido
 				 ********************************************************************************** -->
 			<View id="content_kioscos">
@@ -34,7 +60,7 @@
 				</View>
 			</View>
 			<!-- ********************************************************************************** -->
-			
+						
 			<!-- Lista de trámites
 					- Ventana emergente que muestra la lista de tramites
 				 ********************************************************************************** -->
@@ -75,32 +101,6 @@
 			</View>	
 			<!-- ********************************************************************************** -->
 		</View>
-		
-		<!-- Banner de imagenes de estado
-				- No conectado a internet
-				- No GPS
-			 ********************************************************************************** -->
-		<View class="toastbanner">
-			<ImageView id="toastINTERNET" class="toast" image="/images/own/128x128/no_internet.png" message="No conectado a internet..." configure='false' onClick="toastNotification" visible=false />
-			<ImageView id="toastGPS" class="toast" message="Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS..." configure='true' code=null onClick="toastNotification" visible=false />
-		</View>	
-		<!-- ********************************************************************************** -->
-		
-		<!-- Boton para centrar posicion en el mapa
-		 	 ********************************************************************************** -->
-		<View class="botonera_inferior_derecha">
-			<Picker id="mapConfigs" selectionIndicator="true" >
-	            <PickerColumn id="column1">
-	                <PickerRow title="Normal"/>
-	                <PickerRow title="Satelital"/>
-	                <PickerRow title="Terreno"/>
-	                <PickerRow title="Híbrido"/>
-	            </PickerColumn>            
-	        </Picker>
-			<!--<ImageView id="mapConfigs" class="toast" left="10" image="/images/own/128x128/settings.png" onClick="openMapPreferences" />-->
-			<ImageView id="centrarposicion" class="toast" image="/images/own/128x128/gps.png" onClick="centrarposicion" visible=false />
-		</View>
-	    <!-- ********************************************************************************** -->
         
 	</Window>
 </Alloy>

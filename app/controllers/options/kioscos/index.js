@@ -919,9 +919,22 @@ var ConsultaFichaRETyS = function(id_ficha_retys,callback){
 	
 };
 
-
-var openMapPreferences = function(){
-	Titanium.UI.Android.openPreferences();
+var changeMapType = function(e){
+	//alert(e.rowIndex);
+	
+	var mapType = Ti.Map.STANDARD_TYPE;	
+	switch (e.rowIndex){
+		case 0:
+			mapType = Titanium.Map.STANDARD_TYPE;	
+		break;
+		case 1:
+			mapType =  Titanium.Map.SATELLITE_TYPE;
+		break;		
+		case 2:
+			mapType = Titanium.Map.HYBRID_TYPE;
+		break;
+	};
+	$.vista_mapa.mapType = mapType;	
 };
 
 cambia_vista(1);

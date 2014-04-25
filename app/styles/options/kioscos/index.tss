@@ -162,7 +162,8 @@
 	right						: 5,
 	width						: Ti.UI.SIZE,
 	height						: Ti.UI.SIZE,
-	layout						: "horizontal"
+	layout						: "horizontal",
+	zIndex						: 2
 },
 ".toast":{
 	width						: Alloy.Globals.Imagen.miniatura,
@@ -174,5 +175,14 @@
 	right						: 5,
 	width						: Ti.UI.SIZE,
 	height						: Ti.UI.SIZE,
-	layout						: "horizontal"
+	layout						: "horizontal",
+	zIndex						: 2
+},
+"#mapConfigs":{
+	backgroundColor				: Alloy.Globals.Theme.dividerColor,
+	height						: Ti.UI.SIZE,
+	width 						: Ti.UI.SIZE,
+	borderRadius				: 5,
+	opacity						: 0.7,
+	right						: 6
 }

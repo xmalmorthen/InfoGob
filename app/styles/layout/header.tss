@@ -1,14 +1,14 @@
 "#header_image":{
 	image				: "/images/own/128x128/tag_info.png", 
-	width 				: Alloy.Globals.Imagen.superenorme, 
-	height 				: Alloy.Globals.Imagen.superenorme,
+	width 				: Alloy.Globals.Imagen.enorme, 
+	height 				: Alloy.Globals.Imagen.enorme,
 	left				: 1
 },
 "#vw_header_labels":{
 	layout				: 'vertical',
 	height				: Ti.UI.SIZE,
 	width				: Ti.UI.SIZE,
-	left				: Alloy.Globals.Imagen.superenorme,
+	left				: Alloy.Globals.Imagen.enorme,
 	bottom				: 1
 },
 "#header_titulo": {
