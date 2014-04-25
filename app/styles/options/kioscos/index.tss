@@ -184,5 +184,6 @@
 	width 						: Ti.UI.SIZE,
 	borderRadius				: 5,
 	opacity						: 0.7,
+	left						: 10,
 	right						: 6
 }

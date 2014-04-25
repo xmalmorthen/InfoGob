@@ -22,18 +22,13 @@
 			<!-- Banner de imagenes de estado
 				- No conectado a internet
 				- No GPS
+				- Tipo de mapa
 			 ********************************************************************************** -->
 			<View class="toastbanner">
 				<ImageView id="toastINTERNET" class="toast" image="/images/own/128x128/no_internet.png" message="No conectado a internet..." configure='false' onClick="toastNotification" visible=false />
 				<ImageView id="toastGPS" class="toast" message="Servicio de posicionamiento no habilitado o se ha perdio la conexión al GPS..." configure='true' code=null onClick="toastNotification" visible=false />
-			</View>	
-			<!-- ********************************************************************************** -->
-			
-			<!-- Boton para centrar posicion en el mapa y tipo de mapa
-			 	 ********************************************************************************** -->
-			<View class="botonera_inferior_derecha">
 				<View id="mapConfigs">
-					<Picker onChange="changeMapType">
+					<Picker onChange="changeMapType" bubbleParent=false>
 			            <PickerColumn id="column1">
 			                <PickerRow title="Estandar"/>
 			                <PickerRow title="Satelital"/>
@@ -41,6 +36,12 @@
 			            </PickerColumn>            
 			        </Picker>
 		        </View>
+			</View>	
+			<!-- ********************************************************************************** -->
+			
+			<!-- Boton para centrar posicion en el mapa
+			 	 ********************************************************************************** -->
+			<View class="botonera_inferior_derecha">				
 				<ImageView id="centrarposicion" class="toast" image="/images/own/128x128/gps.png" onClick="centrarposicion" visible=false />
 			</View>
 		    <!-- ********************************************************************************** -->

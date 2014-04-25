@@ -78,7 +78,6 @@ function cambia_vista(opc){
 			$.vista_lista.zIndex = 1;
 			$.vista_mapa.zIndex = 2;
 			ventanaactiva = 1;
-			//MuestraKioscosMapa();
 		break;
 		case 2:
 			$.mapConfigs.visible = false;
@@ -249,128 +248,129 @@ ObtenerKioscosFormateado = function (tipo_retorno){
 
 
 var 
-mapaParcial = false,
-mapaIniciado = false,
+tipomapamostrado = null, // 1 = sin distancia, 2 = con distancia
 InicializaMapa = function(){
 	if (GPS.active === true) {
-		var region = {
+		/*var region = {
 	        latitude:  GPS.geolocalization.latitude,
 	        longitude: GPS.geolocalization.longitude,
 	        latitudeDelta: 0.025,
 	        longitudeDelta: 0.025
 	   	};
-		$.vista_mapa.region = region;
-		mapaIniciado = true;
-		mapaParcial = false;
+		$.vista_mapa.region = region;*/
 	};
 },
-MuestraKioscosMapa = function(){ //funcion que georeferencia los kioscos en el mapa
-	if (!mapaIniciado || !mapaParcial) {		
-		InicializaMapa();
-		if (!mapaParcial) {		
-			mapaParcial = true;		
-			var listakioscos = ObtenerKioscosFormateado(); //Obtener lista de Kioscos
-			for (var i=0; i < listakioscos.length; i++) {
-				var 
-					lat = listakioscos[i].lat,
-					lon = listakioscos[i].lng;				
-						
-				var annotView = Titanium.UI.createView({
-				    width 						: Titanium.UI.SIZE,
-					height 						: Titanium.UI.SIZE,
-					layout						: 'vertical'
-				});
+MuestraKioscosMapa = function(){ //funcion que georeferencia los kioscos en el mapa	
+	//InicializaMapa();
+	var tipomapaamostrar = GPS.active === true ? 1 : 0; 
+	
+	if (tipomapamostrado == tipomapaamostrar) {
+		$.activityIndicator.hide();
+		return;
+	} 
+	
+	tipomapamostrado = tipomapaamostrar;
+	
+	var listakioscos = ObtenerKioscosFormateado(); //Obtener lista de Kioscos
+	for (var i=0; i < listakioscos.length; i++) {
+		var 
+			lat = listakioscos[i].lat,
+			lon = listakioscos[i].lng;				
 				
-				var lblTitle = Titanium.UI.createLabel({
-					text 						: listakioscos[i].descripcion,
-					width 						: Titanium.UI.SIZE,
-					height 						: Titanium.UI.SIZE,
-					left						: 1,
-					color						: 'white',
-				    font:{
-				    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
-				    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteSubTitulo, 
-				    	fontWeight				: 'bold'
-					}
-				});
-				
-				var lblSubTitle = Titanium.UI.createLabel({
-					text 						: listakioscos[i].domicilio,
-					width 						: Titanium.UI.SIZE,
-					height 						: Titanium.UI.SIZE,
-					left						: 1,
-					color						: '#cacaca',
-				    font:{
-				    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
-				    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto,
-				    	fontWeight				: 'bold'
-					}
-				});
-				annotView.add(lblTitle);
-				annotView.add(lblSubTitle);
-				
-				if (GPS.active === true && (typeof(listakioscos[i].distance) == 'undefined') ) {				
-					var distance = countDistanceByMiles(GPS.geolocalization.latitude,
-												    	GPS.geolocalization.longitude,
-												    	lat,
-												    	lon
-						 						   	   );
-			   		listakioscos[i].distance = distance;
-				
-					var distanceVW = Titanium.UI.createView({
-					    width 						: Titanium.UI.SIZE,
-						height 						: Titanium.UI.SIZE,
-						right						: 1,
-						layout						: 'horizontal'
-					});
-					
-					var lbldistance = Titanium.UI.createLabel({
-						text 						: listakioscos[i].distance,
-						width 						: Titanium.UI.SIZE,
-						height 						: Titanium.UI.SIZE,
-						left						: 1,
-						color						: 'white',
-					    font:{
-					    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
-					    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteSubTitulo, 
-					    	fontWeight				: 'bold'
-						}
-					});
-					
-					var lbltxt = Titanium.UI.createLabel({
-						text 						: ' Km aprox.',
-						width 						: Titanium.UI.SIZE,
-						height 						: Titanium.UI.SIZE,
-						color						: '#cacaca',
-						left						: 1,
-						bottom						: 2,
-					    font:{
-					    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
-					    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto
-						}
-					});
-					
-					distanceVW.add(lbldistance);
-					distanceVW.add(lbltxt);
-					
-					annotView.add(distanceVW);
+		var annotView = Titanium.UI.createView({
+		    width 						: Titanium.UI.SIZE,
+			height 						: Titanium.UI.SIZE,
+			layout						: 'vertical'
+		});
+		
+		var lblTitle = Titanium.UI.createLabel({
+			text 						: listakioscos[i].descripcion,
+			width 						: Titanium.UI.SIZE,
+			height 						: Titanium.UI.SIZE,
+			left						: 1,
+			color						: 'white',
+		    font:{
+		    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+		    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteSubTitulo, 
+		    	fontWeight				: 'bold'
+			}
+		});
+		
+		var lblSubTitle = Titanium.UI.createLabel({
+			text 						: listakioscos[i].domicilio,
+			width 						: Titanium.UI.SIZE,
+			height 						: Titanium.UI.SIZE,
+			left						: 1,
+			color						: '#cacaca',
+		    font:{
+		    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+		    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto,
+		    	fontWeight				: 'bold'
+			}
+		});
+		annotView.add(lblTitle);
+		annotView.add(lblSubTitle);
+		
+		if (GPS.active === true && (typeof(listakioscos[i].distance) == 'undefined') ) {				
+			var distance = countDistanceByMiles(GPS.geolocalization.latitude,
+										    	GPS.geolocalization.longitude,
+										    	lat,
+										    	lon
+				 						   	   );
+	   		listakioscos[i].distance = distance;
+		
+			var distanceVW = Titanium.UI.createView({
+			    width 						: Titanium.UI.SIZE,
+				height 						: Titanium.UI.SIZE,
+				right						: 1,
+				layout						: 'horizontal'
+			});
+			
+			var lbldistance = Titanium.UI.createLabel({
+				text 						: listakioscos[i].distance,
+				width 						: Titanium.UI.SIZE,
+				height 						: Titanium.UI.SIZE,
+				left						: 1,
+				color						: 'white',
+			    font:{
+			    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+			    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteSubTitulo, 
+			    	fontWeight				: 'bold'
 				}
-				
-				var anno = Ti.Map.createAnnotation({
-			        animate				: true,
-			        image				: "/images/own/48x48/map_marker.png",
-			        pincolor			: Ti.Map.ANNOTATION_RED,
-			        latitude			: lat,
-			        longitude			: lon,		        
-			        //subtitle			: listakioscos[i].domicilio,
-			        //title				: listakioscos[i].descripcion + ' | Distancia aproximada: ' + listakioscos[i].distance + ' km',
-			        id 					: listakioscos[i].id_kiosco,
-			        rightView 			: annotView		        
-			    });
-				$.vista_mapa.addAnnotation(anno);			
-			};
+			});
+			
+			var lbltxt = Titanium.UI.createLabel({
+				text 						: ' Km aprox.',
+				width 						: Titanium.UI.SIZE,
+				height 						: Titanium.UI.SIZE,
+				color						: '#cacaca',
+				left						: 1,
+				bottom						: 2,
+			    font:{
+			    	fontFamily				: Alloy.Globals.Fuente.fontFamily, 
+			    	fontSize				: Alloy.Globals.Fuente.tamanioFuenteTexto
+				}
+			});
+			
+			distanceVW.add(lbldistance);
+			distanceVW.add(lbltxt);
+			
+			annotView.add(distanceVW);
 		}
-	}
+		
+		var anno = Ti.Map.createAnnotation({
+	        animate				: true,
+	        image				: "/images/own/48x48/map_marker.png",
+	        pincolor			: Ti.Map.ANNOTATION_RED,
+	        latitude			: lat,
+	        longitude			: lon,		        
+	        //subtitle			: listakioscos[i].domicilio,
+	        //title				: listakioscos[i].descripcion + ' | Distancia aproximada: ' + listakioscos[i].distance + ' km',
+	        id 					: listakioscos[i].id_kiosco,
+	        rightView 			: annotView		        
+	    });
+		$.vista_mapa.addAnnotation(anno);			
+	};
     $.activityIndicator.hide();
 },
 MuestraListaKioscos = function(){ //funcion que muestra la lista de kioscos
@@ -928,7 +928,7 @@ var changeMapType = function(e){
 			mapType = Titanium.Map.STANDARD_TYPE;	
 		break;
 		case 1:
-			mapType =  Titanium.Map.SATELLITE_TYPE;
+			mapType = Titanium.Map.SATELLITE_TYPE;
 		break;		
 		case 2:
 			mapType = Titanium.Map.HYBRID_TYPE;
