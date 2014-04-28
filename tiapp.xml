@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
+    <property name="acs-push-type-development" type="string">gcm</property>
+    <property name="acs-push-type-production" type="string">gcm</property>
+    <property name="acs-push-type" type="string">gcm</property>
+    <property name="acs-oauth-secret-development" type="string">MfYpRLT3RFVHNi7utugXibd2oM5VpnmD</property>
+    <property name="acs-oauth-key-development" type="string">yMRi3dRzpZhXiqyuHJtjVDrVpOeOZkdt</property>
+    <property name="acs-api-key-development" type="string">JnDfN1nAjsl1itHNKxPG8TJ9nKvckYW3</property>
+    <property name="acs-oauth-secret-production" type="string">JebPlqYuUcAooJUZl35OZcGKmqQlZSoE</property>
+    <property name="acs-oauth-key-production" type="string">hlrK0LOMOL0gvH2MCXbazm9YtpZexfJp</property>
+    <property name="acs-api-key-production" type="string">Q6yticSrUainIHJppMCIGoLSSLphCgB5</property>
     <id>com.developc.infogob</id>
     <name>InfoGob</name>
     <version>1.0</version>
@@ -41,18 +50,11 @@
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest>
             <application>
-                <activity 	
-                	android:alwaysRetainTaskState="true"
-                    android:configChanges="keyboardHidden|orientation" />
+                <activity android:alwaysRetainTaskState="true" android:configChanges="keyboardHidden|orientation"/>
             </application>
-            <uses-sdk 
-            	android:minSdkVersion="11"
-        		android:targetSdkVersion="11"/>
-            <supports-screens 
-            	android:anyDensity="false"
-                android:largeScreens="true" 
-                android:normalScreens="true" 
-                android:smallScreens="false"/>
+            <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="11"/>
+            <supports-screens android:anyDensity="false"
+                android:largeScreens="true" android:normalScreens="true" android:smallScreens="false"/>
         </manifest>
         <tool-api-level>11</tool-api-level>
     </android>
@@ -65,7 +67,10 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
+        <module platform="commonjs" version="3.2.2">ti.cloud</module>
         <module platform="android">ti.map</module>
+        <module deploy-type="production" platform="android" version="3.2.1">ti.cloudpush</module>
+        <module deploy-type="development" platform="android" version="3.2.1">ti.cloudpush</module>
     </modules>
     <deployment-targets>
         <target device="iphone">false</target>
