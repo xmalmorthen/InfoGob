@@ -41,21 +41,20 @@
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest>
             <application>
-                <activity 	android:alwaysRetainTaskState="true"
-                    		android:configChanges="keyboardHidden|orientation">
-                    <intent-filter>
-                        <action android:name="android.intent.action.MAIN"/>
-                        <category android:name="android.intent.category.LAUNCHER"/>
-                    </intent-filter>
-                </activity>
+                <activity 	
+                	android:alwaysRetainTaskState="true"
+                    android:configChanges="keyboardHidden|orientation" />
             </application>
-            <uses-sdk android:minSdkVersion="11"/>
-            <uses-sdk android:targetSdkVersion="11"/>
-            <supports-screens android:anyDensity="false"
-                android:largeScreens="true" android:normalScreens="true" android:smallScreens="false"/>
+            <uses-sdk 
+            	android:minSdkVersion="11"
+        		android:targetSdkVersion="11"/>
+            <supports-screens 
+            	android:anyDensity="false"
+                android:largeScreens="true" 
+                android:normalScreens="true" 
+                android:smallScreens="false"/>
         </manifest>
         <tool-api-level>11</tool-api-level>
-        <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
     </android>
     <mobileweb>
         <precache/>
